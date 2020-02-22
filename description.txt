@@ -1,0 +1,9 @@
+OBJECTIF:
+
+Matching postal code between users
+
+Tu es un conducteur et tu indique ton point de départ et ton lieu de travail. Définis la tolérance (en minutes de détour). 
+
+tu es un piéton, tu définis une zone de départ et un point d'arriveré et vérifie les matching routes.
+
+Des matchs te sont proposés.

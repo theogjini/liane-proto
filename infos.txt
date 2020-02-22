@@ -1,0 +1,3 @@
+url quebec :
+
+http://download.geofabrik.de/north-america/canada/quebec-latest.osm.pbf
