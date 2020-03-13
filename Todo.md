@@ -24,3 +24,6 @@
 -Chacune des deux personnes reçoit le mesage d'acceptation dans un canal de communication.
 
 -Ce canal de commmunication permet aux deux personnes de discuter entre elles.
+
+
+https://www.schemecolor.com/jungle-jungle.php

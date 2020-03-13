@@ -15,7 +15,6 @@ export default function Driver() {
         setState(formattedString)
     }
     return (<div>
-        <h1>Pedestrian</h1>
         <form onSubmit={handleSubmit}>
             <div>From
                 <input type="text" onChange={event => changeValue(event, start, setStart)}
@@ -26,6 +25,6 @@ export default function Driver() {
                 pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" value={arrival} placeholder="Postal code to arrival" /></div>
             <button>Find lianas!</button>
         </form>
-        <Link to="/">Home</Link>
+        <Link to="/dashboard">Dashboard</Link>
     </div >)
 }

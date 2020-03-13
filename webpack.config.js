@@ -93,6 +93,8 @@ module.exports = {
         loader: "babel-loader"
       }
     },
+    { test: /\.json$/, loader: 'json-loader' },
+    // other loaders 
     {
       test: /\.html$/,
       use: [{

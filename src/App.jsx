@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
-import Home from './Home.jsx'
-import Driver from './Throw.jsx/index.js'
-import Pedestrian from './Pedestrian.jsx'
+import Home from './Home/Home.jsx'
+import Throw from './Throw/Throw.jsx'
+import Find from './Find/Find.jsx'
+import Dashboard from './Dashboard/Dashboard.jsx'
 
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
         <Route exact={true} path="/dashboard" render={routerData => <Dashboard />} />
         <Route exact={true} path="/find-liana" render={routerData => <Find />} />
         <Route exact={true} path="/throw-liana" render={routerData => <Throw />} />
+        {/* <Route exact={true} path="/chatroom/:chatroomId" render={routerData => <Throw />} /> */}
     </BrowserRouter>)
 }
 
