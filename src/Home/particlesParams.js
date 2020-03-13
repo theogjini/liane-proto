@@ -21,17 +21,17 @@ export const particlesParams = {
       ],
       "images": [
         {
-          "src": "/uploads/monkeys/bigleaf.svg",
+          "src": "/assets/monkeys/bigleaf.svg",
           "height": 50,
           "width": 50
         },
         {
-          "src": "/uploads/monkeys/flatleaf.svg",
+          "src": "/assets/monkeys/flatleaf.svg",
           "height": 50,
           "width": 50
         },
         {
-          "src": "/uploads/monkeys/thinleaf.svg",
+          "src": "/assets/monkeys/thinleaf.svg",
           "height": 50,
           "width": 50
         }

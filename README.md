@@ -1,3 +1,4 @@
+# Install project
 
 node version >= 10
 
@@ -16,3 +17,7 @@ node version >= 10
 `npm start`
 
 http://localhost:4000
+
+# Specification
+
+See [TODO](doc/Todo.md)

@@ -1,6 +1,6 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin")
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 const InjectPlugin = require('webpack-inject-plugin').default;
-const path = require("path")
+const path = require("path");
 
 let pollServer =
   `  let __init_status = false
@@ -59,7 +59,7 @@ let pollServer =
   }
   
   __init_magic_reload()
-`
+`;
 
 
 module.exports = {
@@ -128,4 +128,4 @@ module.exports = {
     javascript: "./src/index.jsx",
     html: "./public/index.html"
   }
-}
+};
