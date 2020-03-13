@@ -23,4 +23,6 @@ package-lock.json
 yarn-lock.json
 yarn.lock
 
+.idea/
+
 config.json

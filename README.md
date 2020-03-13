@@ -1,5 +1,18 @@
-To start the server, run `nodemon server.js`
 
-Modify the `server.js` file to add endpoints
+node version >= 10
 
-The frontend code goes in the `/src` directory
+`npm install`
+
+`vi config.json`
+
+```json
+{
+  "url": "mongourl"
+}
+```
+
+`npm install`
+
+`npm start`
+
+http://localhost:4000
