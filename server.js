@@ -47,10 +47,10 @@ function catchAll(fn) {
 
 app.post('/throw',
   catchAll(async (req, res) => {
-    const start = req.body.start;
-    const end = req.body.end;
-    const travel = {start, end};
-    await dbo.collection("travels").insertOne(travel);
+    // const start = req.body.start;
+    // const end = req.body.end;
+    // const travel = {start, end};
+    // await dbo.collection("travels").insertOne(travel);
     res.send(JSON.stringify({success: true}))
   }));
 

@@ -71,7 +71,7 @@ module.exports = {
   devtool: "source-map",
   output: {
     publicPath: '/',
-    path: path.join(__dirname, "build"),
+    path: path.join(__dirname, "/server/build"),
   },
   devServer: {
     port: 3000,

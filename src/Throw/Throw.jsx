@@ -49,18 +49,19 @@ export default function Throw() {
             </div>
             <div>To<input type="text" onChange={event => changeValue(event, end, setEnd)}
                 value={end} placeholder="Postal code to arrival" /></div>
-            <button>Set a liana</button>
-        </form>
-        {recurrence ?
-            (<DayTable>
-                <Monday onClick={event => addDay(event, 0)} active={days[0]}>Monday</Monday>
-                <Tuesday onClick={event => addDay(event, 1)} active={days[1]}>Tuesday</Tuesday>
-                <Wednesday onClick={event => addDay(event, 2)} active={days[2]}>Wednesday</Wednesday>
-                <Thursday onClick={event => addDay(event, 3)} active={days[3]}>Thursday</Thursday>
-                <Friday onClick={event => addDay(event, 4)} active={days[4]}>Friday</Friday>
-            </DayTable>) : (<div></div>)}
+            {recurrence ?
+                (<DayTable>
+                    <Monday onClick={event => addDay(event, 0)} active={days[0]}>Mon.</Monday>
+                    <Tuesday onClick={event => addDay(event, 1)} active={days[1]}>Tues.</Tuesday>
+                    <Wednesday onClick={event => addDay(event, 2)} active={days[2]}>Wed.</Wednesday>
+                    <Thursday onClick={event => addDay(event, 3)} active={days[3]}>Thu.</Thursday>
+                    <Friday onClick={event => addDay(event, 4)} active={days[4]}>Fri.</Friday>
+                </DayTable>) : (<div></div>)}
 
-        <button onClick={changeRecurrence}>{recurrence ? 'Unique travel' : 'Reccurent travel'}</button>
+            <div><button onClick={changeRecurrence}>{recurrence ? 'Unique travel' : 'Reccurent travel'}</button></div>
+
+            <div><button>Set a liana</button></div>
+        </form>
         <div>
             <Link to="/dashboard">Dashboard</Link>
         </div>

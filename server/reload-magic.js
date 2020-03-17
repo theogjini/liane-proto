@@ -1,5 +1,5 @@
 var WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 40510});
+  wss = new WebSocketServer({ port: 40510 });
 wlist = [];
 wss.on('connection', function (ws) {
   wlist.push(ws);
@@ -7,7 +7,7 @@ wss.on('connection', function (ws) {
 });
 
 
-const {spawn} = require('child_process');
+const { spawn } = require('child_process');
 const chokidar = require('chokidar');
 
 
@@ -65,7 +65,7 @@ let pollServer =
 `;
 
 
-chokidar.watch(__dirname + '/build', {ignored: /(^|[\/\\])\../}).on('all', (event, path) => {
+chokidar.watch(__dirname + '/build', { ignored: /(^|[\/\\])\../ }).on('all', (event, path) => {
   webpackError = undefined;
   while (wlist.length > 0) {
     try {
