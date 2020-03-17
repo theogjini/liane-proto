@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch server server/index.js",
+    "start": "nodemon server.js",
     "build": "webpack --mode production"
   },
   "keywords": [],

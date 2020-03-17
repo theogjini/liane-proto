@@ -1,6 +1,6 @@
-const config = require("./config.json");
+const config = require("./server/config.json");
 
-const monkeys = require("./monkeys.json");
+const monkeys = require("./server/monkeys.json");
 
 const {uniqueNamesGenerator, adjectives, colors} = require("unique-names-generator");
 
@@ -10,7 +10,7 @@ const app = express();
 const sha1 = require('sha1');
 const cookieParser = require('cookie-parser');
 const uuidv1 = require('uuid/v1');
-const reloadMagic = require('./reload-magic.js');
+const reloadMagic = require('./server/reload-magic.js');
 const MongoDB = require('mongodb');
 const MongoClient = MongoDB.MongoClient;
 const ObjectID = MongoDB.ObjectID;
