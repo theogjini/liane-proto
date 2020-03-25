@@ -101,4 +101,38 @@ const Friday = styled.div`
     transition: 0.2s ease-in-out;
 `
 
-export { ThrowComponent, DayTable, Monday, Tuesday, Wednesday, Thursday, Friday };
+const Saturday = styled.div`
+    border: 2px solid black;
+    padding: 5px;
+    width: 55px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 30px;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: ${props => props.active ? '#092649' : 'white'};
+    color: ${props => !props.active ? '#092649' : 'white'};
+    font-weight: bold;
+    font-size: ${props => props.active ? '18px' : '14px'};
+    transition: 0.2s ease-in-out;
+`
+
+const Sunday = styled.div`
+    border: 2px solid black;
+    padding: 5px;
+    width: 55px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 30px;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: ${props => props.active ? '#FFEB3B' : 'white'};
+    color: ${props => !props.active ? '#FFEB3B' : 'white'};
+    font-weight: bold;
+    font-size: ${props => props.active ? '18px' : '14px'};
+    transition: 0.2s ease-in-out;
+`
+
+export { ThrowComponent, DayTable, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday };

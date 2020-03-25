@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import { ThrowComponent, DayTable, Monday, Tuesday, Wednesday, Thursday, Friday } from './style';
-import { Link, useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { ThrowComponent, DayTable, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday } from './style';
+import { Link, useHistory } from 'react-router-dom';
 
 class DayTravel {
     constructor(goTime, returnTime) {
         this.goTime = goTime
         this.returnTime = returnTime
+        this.unique = null
     };
     isSelected() {
         return this.goTime || this.returnTime
-    }
+    };
 }
 
 export default function Throw(props) {
@@ -20,15 +21,11 @@ export default function Throw(props) {
 
     const [recurrence, setReccurrence] = useState(true)
 
-    const [days, setDays] = useState([null, null, null, null, null])
-
-    const [date, setDate] = useState('')
-
-    const [time, setTime] = useState('')
+    const [days, setDays] = useState([null, null, null, null, null, null, null])
 
     useEffect(() => {
-        let now = new Date()
-        console.log(now)
+        let date = new Date()
+        console.log(date)
     })
 
     async function handleSubmit(event) {
@@ -109,6 +106,20 @@ export default function Throw(props) {
                         <div>
                             <Friday onClick={event => addDay(event, 4)} active={days[4]}>Fri.</Friday>
                             {days[4] && (<div>
+                                <div><input type="time" /></div>
+                                <div><input type="time" /></div>
+                            </div>)}
+                        </div>
+                        <div>
+                            <Saturday onClick={event => addDay(event, 5)} active={days[5]}>Sat.</Saturday>
+                            {days[5] && (<div>
+                                <div><input type="time" /></div>
+                                <div><input type="time" /></div>
+                            </div>)}
+                        </div>
+                        <div>
+                            <Sunday onClick={event => addDay(event, 6)} active={days[6]}>Sun.</Sunday>
+                            {days[6] && (<div>
                                 <div><input type="time" /></div>
                                 <div><input type="time" /></div>
                             </div>)}

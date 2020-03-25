@@ -22,6 +22,8 @@ export default function Dashboard() {
         <Day onClick={event => handleDayClick(event, 'wednesday')} active={day === 'wednesday'}>Wed.</Day>
         <Day onClick={event => handleDayClick(event, 'thursday')} active={day === 'thursday'}>Thu.</Day>
         <Day onClick={event => handleDayClick(event, 'friday')} active={day === 'friday'}>Fri.</Day>
+        <Day onClick={event => handleDayClick(event, 'saturday')} active={day === 'saturday'}>Sat.</Day>
+        <Day onClick={event => handleDayClick(event, 'sunday')} active={day === 'sunday'}>Sun.</Day>
       </Nav>
       <div>
         {!day ? (<div style={{ textAlign: 'center', fontFamily: 'Open Sans' }}>Hello {avatar.name}</div>) :

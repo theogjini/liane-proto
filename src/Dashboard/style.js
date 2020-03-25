@@ -5,7 +5,9 @@ const positions = {
     tuesday: '#674bf5',
     wednesday: '#e20404',
     thursday: '#3db1c5',
-    friday: '#FF9800'
+    friday: '#FF9800',
+    saturday: '#092649',
+    sunday: '#FFEB3B',
 };
 
 const Main = styled.div`
@@ -21,7 +23,7 @@ const Nav = styled.div`
     }};
     height: 150px;
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     transition: 0.6s ease-in-out;
 `
@@ -59,7 +61,7 @@ const Day = styled.div`
     justify-content: center;
     top: ${props => props.active ? '30%' : '18%'};;
     height: 50%;
-    font-size: ${props => props.active ? '30px' : '18px'};
+    font-size: ${props => props.active ? '25px' : '18px'};
     font-weight: ${props => props.active ? 600 : 500};
     transition: 0.2s ease-in-out;
     /* text-shadow: 2px 2px 7px #000000; */
