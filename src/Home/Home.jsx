@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HomeComponent, Button, Title, Span, Love } from './style';
+import { HomeComponent, Button, Title, Span, Bounce } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './particles.css'
@@ -33,7 +33,7 @@ export default function Home() {
                     {!avatar.name && (<h4 style={{ textAlign: "center" }}>Welcome!! It seems that it's your first time coming! Let's start by choosing an avatar!</h4>)}
                     {avatar.name && (<Link to="/dashboard">
                         <h3 style={{ fontStyle: "italic" }}>{avatar.name}</h3>
-                        <Span style={{ backgroundColor: avatar.original.split("_")[1] }}><img src={avatar.path} height="100px" /></Span>
+                        <Bounce><Span ><img src={avatar.path} height="100px" /></Span></Bounce>
                         {/* {avatar.name && (<Link to='/dashboard'><Love>I love it!!</Love></Link>)} */}
                     </Link>
                     )}
@@ -45,3 +45,4 @@ export default function Home() {
         </div>)
 }
 
+// style={{ backgroundColor: avatar.original.split("_")[1] }}

@@ -34,29 +34,32 @@ const Title = styled.div`
     font-weight: 700;
 `;
 
+const Bounce = styled.div`
+    animation: chimp 1s ease-in-out infinite ;
+    @keyframes chimp {
+    0% {transform: translateY(0);}
+    50%   {transform: translateY(-10px);}
+    100%   {transform: translateY(0px);}
+    }
+`
+
 const Span = styled.div`
     text-align: center;
     width: 100px;
     margin: auto;
-    height: 100px;
-    animation: chimp 1s ease-in-out infinite alternate;
-    @keyframes chimp {
-    from {transform: translateY(0);}
-    to   {transform: translateY(-10px);}
-        }
     border-radius: 50%;
+    height: 100px;
+    animation: funny 1.5s ease-in-out infinite alternate;
+    @keyframes funny {
+    0% {transform: rotate(0);}
+    20% {transform: rotate(7deg);}
+    40% {transform: rotate(-10deg);}
+    60% {transform: rotate(12deg);}
+    80% {transform: rotate(-10deg);}
+    90% {transform: rotate(7deg);}
+    100% {transform: rotate(0deg);}
+    }
 `;
 
-const Love = styled.div`
-    text-align: center;
-    font-family: 'material-icons';
-    background-color: pink;
-    display: inline-block;
-    animation: heart 1s ease-in-out infinite alternate;
-    @keyframes heart {
-    from {transform: translateY(0);}
-    to   {transform: translateY(-10px);}
-        }
-`
 
-export { Button, HomeComponent, Title, Span, Love };
+export { Button, HomeComponent, Title, Span, Bounce };

@@ -2,7 +2,7 @@ const config = require("./server/config.json");
 
 const monkeys = require("./server/monkeys.json");
 
-const {uniqueNamesGenerator, adjectives, colors} = require("unique-names-generator");
+const { uniqueNamesGenerator, adjectives, colors } = require("unique-names-generator");
 
 const express = require('express');
 const app = express();
@@ -10,7 +10,7 @@ const app = express();
 const sha1 = require('sha1');
 const cookieParser = require('cookie-parser');
 const uuidv1 = require('uuid/v1');
-const reloadMagic = require('./server/reload-magic.js');
+const reloadMagic = require('./reload-magic.js');
 const MongoDB = require('mongodb');
 const MongoClient = MongoDB.MongoClient;
 const ObjectID = MongoDB.ObjectID;
@@ -19,11 +19,20 @@ const capitalize = require('capitalize');
 let dbo = undefined;
 const url = config.url;
 
-MongoClient.connect(url, {newUrlParser: true}, (err, client) => {
+MongoClient.connect(url, { newUrlParser: true }, (err, client) => {
   dbo = client.db("liane")
 });
 
-const avatarsPaths = ["/assets/monkeys/chimp.png", "/assets/monkeys/lemur.png", "/assets/monkeys/gorilla.png"];
+const avatarsPaths = [
+  "/assets/monkeys/chimp.png",
+  "/assets/monkeys/lemur.svg",
+  "/assets/monkeys/gorilla.png",
+  "/assets/monkeys/baboon.svg",
+  "/assets/monkeys/chimp2.svg",
+  "/assets/monkeys/gorilla2.svg",
+  "/assets/monkeys/monk2.svg",
+  "/assets/monkeys/monk3.svg",
+];
 
 
 reloadMagic(app);
@@ -51,18 +60,18 @@ app.post('/throw',
     // const end = req.body.end;
     // const travel = {start, end};
     // await dbo.collection("travels").insertOne(travel);
-    res.send(JSON.stringify({success: true}))
+    res.send(JSON.stringify({ success: true }))
   }));
 
 app.post('/pop-avatar', (req, res) => {
-  const uniqueMonkeyName = uniqueNamesGenerator({dictionaries: [adjectives, colors, monkeys.names]});
+  const uniqueMonkeyName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, monkeys.names] });
   const formattedName = capitalize.words(uniqueMonkeyName.split("_").join(" "));
   const uniqueMonkey = {
     name: formattedName,
     original: uniqueMonkeyName,
     path: avatarsPaths[Math.floor(Math.random() * avatarsPaths.length)]
   };
-  res.send(JSON.stringify({success: true, uniqueMonkey}))
+  res.send(JSON.stringify({ success: true, uniqueMonkey }))
 });
 
 // Your endpoints go before this line

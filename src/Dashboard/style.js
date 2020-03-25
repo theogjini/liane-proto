@@ -17,7 +17,7 @@ const Nav = styled.div`
     background: ${props => {
         let pos = positions[props.position]
         console.log('props:', pos)
-        return props.position ? pos : '#61a60d'
+        return props.position ? pos : '#d2d2d2'
     }};
     height: 150px;
     display: grid;
