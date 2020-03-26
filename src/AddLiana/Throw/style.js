@@ -8,16 +8,14 @@ const ThrowComponent = styled.div`
 
 const DayTable = styled.div`
     margin: auto;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: block;
     max-width: 290px;
     margin-top: 25px;
     margin-bottom: 25px;
 `
 
 const Monday = styled.div`
-    border: 2px solid black;
+    border: 2px solid #cccccc;
     padding: 5px;
     width: 55px;
     justify-content: center;
@@ -34,7 +32,7 @@ const Monday = styled.div`
 `
 
 const Tuesday = styled.div`
-    border: 2px solid black;
+    border: 2px solid #cccccc;
     padding: 5px;
     width: 55px;
     justify-content: center;
@@ -51,7 +49,7 @@ const Tuesday = styled.div`
 `
 
 const Wednesday = styled.div`
-    border: 2px solid black;
+    border: 2px solid #cccccc;
     padding: 5px;
     width: 55px;
     justify-content: center;
@@ -68,7 +66,7 @@ const Wednesday = styled.div`
 `
 
 const Thursday = styled.div`
-    border: 2px solid black;
+    border: 2px solid #cccccc;
     padding: 5px;
     width: 55px;
     justify-content: center;
@@ -85,7 +83,7 @@ const Thursday = styled.div`
 `
 
 const Friday = styled.div`
-    border: 2px solid black;
+    border: 2px solid #cccccc;
     padding: 5px;
     width: 55px;
     justify-content: center;
@@ -102,7 +100,7 @@ const Friday = styled.div`
 `
 
 const Saturday = styled.div`
-    border: 2px solid black;
+    border: 2px solid #cccccc;
     padding: 5px;
     width: 55px;
     justify-content: center;
@@ -119,7 +117,7 @@ const Saturday = styled.div`
 `
 
 const Sunday = styled.div`
-    border: 2px solid black;
+    border: 2px solid #cccccc;
     padding: 5px;
     width: 55px;
     justify-content: center;

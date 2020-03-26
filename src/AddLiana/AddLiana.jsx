@@ -14,11 +14,13 @@ export default function AddLiana() {
     }
 
     return (
-        <div style={{ position: 'relative' }}>
-            <div style={{ marginBottom: '50px', position: 'relative', display: 'flex', justifyContent: 'center' }}>
-                <PageTitle active={driver} onClick={event => changePage(event, 'driver')}>Driver</PageTitle>
-                <PageTitle active={!driver} onClick={changePage}>Passenger</PageTitle>
-                <Underline active={driver} />
+        <div>
+            <div style={{ marginBottom: '50px', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: 'inline-block', position: 'relative' }}>
+                    <PageTitle active={driver} onClick={event => changePage(event, 'driver')}>Driver</PageTitle>
+                    <PageTitle active={!driver} onClick={changePage}>Passenger</PageTitle>
+                    <Underline active={driver} />
+                </div>
             </div>
             {driver && (<Throw active={driver} />)}
             {!driver && (<Find active={!driver} />)}
