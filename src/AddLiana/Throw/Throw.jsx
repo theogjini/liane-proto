@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ThrowComponent, DayTable, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday } from './style';
+import { ThrowComponent, DayTable, Day, Button } from './style';
 import { Link, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
+import { week } from '../../utils.js';
+import { useSelector } from 'react-redux';
 
 class DayTravel {
     constructor(goTime, returnTime) {
@@ -28,13 +30,21 @@ export default function Throw(props) {
         return days;
     };
 
-    const [end, setEnd] = useState("")
+    const history = useHistory();
 
-    const [start, setStart] = useState("")
+    const avatar = useSelector(state => state.avatar);
 
-    const [recurrence, setReccurrence] = useState(true)
+    useEffect(() => {
+        if (!avatar.name) history.push('/');
+    })
 
-    const [days, setDays] = useState(defaultDaysState)
+    const [end, setEnd] = useState("");
+
+    const [start, setStart] = useState("");
+
+    const [days, setDays] = useState(defaultDaysState);
+
+    const disableValidation = end === "" || start === "";
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -90,70 +100,26 @@ export default function Throw(props) {
             </div>
             <div>To<input type="text" onChange={event => changeValue(event, end, setEnd)}
                 value={end} placeholder="Postal code to arrival" /></div>
-            {recurrence ?
-                (<div>
-                    <DayTable>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Monday onClick={event => addDay(event, 0)} active={days[0]}>Mon.</Monday>
-                            {days[0] && (<div>
-                                <div><TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, 0)} default={days[0] ? days[0].goTime : none} /></div>
-                                <div><TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, 0)} /></div>
-                            </div>)}
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div>
+                <DayTable>
+                    {week.map((day, idx) => {
+                        return (<div key={day.key} style={{ display: 'flex', alignItems: 'center' }}>
+                            <Day currentDay={day.key} onClick={event => addDay(event, idx)} active={days[idx]}>{day.short}</Day>
+                            {days[idx] && (<div>
+                                <div style={{ display: 'inline-block' }}>
+                                    <TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, idx)} default={days[idx] ? days[idx].goTime : none} />
+                                    <TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, idx)} />
+                                </div>
 
-                            <Tuesday onClick={event => addDay(event, 1)} active={days[1]}>Tues.</Tuesday>
-                            {days[1] && (<div>
-                                <div><TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, 1)} default={days[1] ? days[1].goTime : none} /></div>
-                                <div><TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, 1)} /></div>
                             </div>)}
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Wednesday onClick={event => addDay(event, 2)} active={days[2]}>Wed.</Wednesday>
-                            {days[2] && (<div>
-                                <div><TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, 2)} default={days[2] ? days[2].goTime : none} /></div>
-                                <div><TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, 2)} /></div>
-                            </div>)}
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Thursday onClick={event => addDay(event, 3)} active={days[3]}>Thu.</Thursday>
-                            {days[3] && (<div>
-                                <div><TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, 3)} default={days[3] ? days[3].goTime : none} /></div>
-                                <div><TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, 3)} /></div>
-                            </div>)}
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Friday onClick={event => addDay(event, 4)} active={days[4]}>Fri.</Friday>
-                            {days[4] && (<div>
-                                <div><TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, 4)} default={days[4] ? days[4].goTime : none} /></div>
-                                <div><TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, 4)} /></div>
-                            </div>)}
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Saturday onClick={event => addDay(event, 5)} active={days[5]}>Sat.</Saturday>
-                            {days[5] && (<div>
-                                <div><TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, 5)} default={days[5] ? days[5].goTime : none} /></div>
-                                <div><TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, 5)} /></div>
-                            </div>)}
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Sunday onClick={event => addDay(event, 6)} active={days[6]}>Sun.</Sunday>
-                            {days[6] && (<div>
-                                <div><TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, 6)} default={days[6] ? days[6].goTime : none} /></div>
-                                <div><TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, 6)} /></div>
-                            </div>)}
-                        </div>
-                    </DayTable>
-                </div>) : (
-                    <div>
-                        <input type="date" name="date" onChange={handleTimeChange}></input>
-                        <input type="time" name="date" onChange={handleDateChange}></input>
-                    </div>
-                )}
-            <div><button>Set a liana</button></div>
+                        </div>)
+                    })}
+                </DayTable>
+            </div>
+            <div><Button disabled={disableValidation}>Set a liana</Button></div>
         </form>
         <div>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/dashboard"><img src={avatar.path} height="50px" />Dashboard</Link>
         </div>
     </ThrowComponent >);
 };

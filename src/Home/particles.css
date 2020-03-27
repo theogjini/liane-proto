@@ -1,6 +1,7 @@
 .particles {
     position: absolute;
     z-index: 0;
+    left: 0;
     background: linear-gradient(#fcfff5, #61a60d);
     height: 100%; 
     width: 100%;

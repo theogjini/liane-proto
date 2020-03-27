@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const typeColor = {
-    Return: 'linear-gradient(to right, #fcfff5, #cccccc)',
-    Go: 'linear-gradient(to left, #fcfff5, #cccccc)',
+    Go: 'linear-gradient(to right, #fcfff5, #cccccc)',
+    Return: 'linear-gradient(to left, #fcfff5, #cccccc)',
 }
 
 const TimeSelectorContainer = styled.div`
@@ -23,6 +23,8 @@ const LightBox = styled.div`
 `
 
 const Button = styled.button`
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     position: relative;
     width: 90px;
     padding: 3px;
@@ -34,6 +36,7 @@ const Button = styled.button`
     align-content: center;
     :focus {
         outline: none;
+        /* background: ${props => typeColor[props.type]}; */
     }
     img {
         margin-left: 20px; 
@@ -41,7 +44,9 @@ const Button = styled.button`
 `
 
 const DropdownMenu = styled.div`
+    cursor: pointer;
     position: absolute;
+    -webkit-tap-highlight-color: transparent;
     top: 23px;
     left: -1px;
     z-index: 120;

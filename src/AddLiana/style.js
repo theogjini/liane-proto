@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const PageTitle = styled.h1`
+    cursor: pointer;
     position: relative; 
     display: inline-block;
     margin: 15px;
