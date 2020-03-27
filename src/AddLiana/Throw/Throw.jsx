@@ -118,8 +118,8 @@ export default function Throw(props) {
             </div>
             <div><Button disabled={disableValidation}>Set a liana</Button></div>
         </form>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Link to="/dashboard"><img src={avatar.path} height="30px" />Dashboard</Link>
+        <div>
+            <Link style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} to="/dashboard"><img src={avatar.path} height="30px" />Dashboard</Link>
         </div>
     </ThrowComponent >);
 };

@@ -32,7 +32,6 @@ const Button = styled.button`
     border: 2px solid black;
     color: black;
     cursor: pointer;
-    margin-bottom: 5px;
     :disabled {
         border: 2px solid #c2c2c2c2;
         color: #c2c2c2c2;
