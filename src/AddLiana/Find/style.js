@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 
 const FindComponent = styled.div`
-    font-family: 'Open Sans';
     text-align: center;
 `
 

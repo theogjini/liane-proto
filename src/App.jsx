@@ -7,9 +7,9 @@ import Dashboard from './Dashboard/Dashboard.jsx'
 
 export default function App() {
     return (<BrowserRouter>
-        <Route exact={true} path="/" render={routerData => <Home />} />
-        <Route exact={true} path="/dashboard" render={routerData => <Dashboard />} />
-        <Route exact={true} path="/add-liana" render={routerData => <AddLiana />} />
+        <Route exact={true} path="/" render={() => <Home />} />
+        <Route exact={true} path="/dashboard" render={() => <Dashboard />} />
+        <Route exact={true} path="/add-liana" render={() => <AddLiana />} />
         {/* <Route exact={true} path="/chatroom/:chatroomId" render={routerData => <Throw />} /> */}
     </BrowserRouter>)
 }

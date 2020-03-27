@@ -43,7 +43,7 @@ export default function Dashboard() {
       </Nav>
       <div>
         {day === 'profile' ? (
-          <div style={{ textAlign: 'center', fontFamily: 'Open Sans' }}>
+          <div style={{ textAlign: 'center' }}>
             Hello {avatar.name}
             <div>
               <img src={avatar.path} height="150px" />

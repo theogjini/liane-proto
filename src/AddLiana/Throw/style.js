@@ -11,7 +11,6 @@ const dayColor = {
 };
 
 const ThrowComponent = styled.div`
-    font-family: 'Open Sans';
     text-align: center;
 `
 
@@ -25,7 +24,6 @@ const DayTable = styled.div`
 
 const Button = styled.button`
     background-color: white;
-    font-family: 'Open Sans';
     font-size: 1.5rem;
     border-radius: 5px;
     font-weight: 600;

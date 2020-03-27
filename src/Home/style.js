@@ -4,7 +4,6 @@ const Button = styled.button`
     width: 50%;
     bottom: 50%;
     margin: auto;
-    font-family: 'Open Sans';
     font-weight: 700;
     font-size: 26px;
     padding: 10px;
@@ -17,7 +16,6 @@ const Button = styled.button`
 const HomeComponent = styled.div`
     position: relative;
     display: grid;
-    font-family: 'Open Sans';
     grid-template-rows: 33% 33% 33%;
     height: 100vh;
     color: white;
@@ -25,12 +23,12 @@ const HomeComponent = styled.div`
 `;
 
 const Title = styled.div`
-    font-family: 'Caveat';
+    font-family: 'Baloo 2', cursive;
     text-align: center;
     width:100%;
     margin-top: 20px;
     font-size: 150px;
-    color: #009688;
+    color: #FFDD55;
     font-weight: 700;
 `;
 
