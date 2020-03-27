@@ -14,7 +14,7 @@ const Underline = styled.div`
     position: absolute;
     content: '';
     height: 5px;
-    width: ${props => props.active ? '70px' : '115px'};
+    width: ${props => props.active ? '70px' : '120px'};
     background-color: ${props => props.active ? '#28f738' : '#ac6dff'};
     top: 50px;
     margin-left: ${props => props.active ? '15px' : '115px'};
@@ -22,4 +22,14 @@ const Underline = styled.div`
     border-radius: 5px;
 `
 
-export { PageTitle, Underline };
+const LinkContainer = styled.div`
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    width: 100%;
+`
+
+export { PageTitle, Underline, LinkContainer };

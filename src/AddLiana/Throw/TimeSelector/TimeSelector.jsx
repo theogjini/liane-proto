@@ -42,7 +42,7 @@ export default function TimeSelector(props) {
         {isDropdownDisplayed && <LightBox onClick={displayDropdown}></LightBox>}
         <Button type={selectorType} onClick={displayDropdown} active={isATimeSelected}>{selectedTime}<img src={chevronPath} height="16" />
             <DropdownMenu type={selectorType} active={isDropdownDisplayed}>
-                {time.map(hour => <option key={hour} value={hour} onClick={handleSelectTime}>{hour}</option>)}
+                {time.map(hour => <option key={hour} value={hour} onClick={handleSelectTime}>{hour + "h"}</option>)}
             </DropdownMenu>
         </Button>
 

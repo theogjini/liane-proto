@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Find from './Find/Find.jsx';
 import Throw from './Throw/Throw.jsx';
-import { PageTitle, Underline } from './style';
+import { Link, useHistory } from 'react-router-dom';
+import { PageTitle, Underline, LinkContainer } from './style';
+import { useSelector } from 'react-redux';
+
 
 export default function AddLiana() {
     const [driver, setDriver] = useState(true);
-    // const [passenger, setPassenger] = useState(true);
+
+    const avatar = useSelector(state => state.avatar);
+
+    const history = useHistory();
+
+    useEffect(() => {
+        if (!avatar.name) history.push('/');
+    })
 
     function changePage(event, page) {
         event.preventDefault();
@@ -14,8 +24,8 @@ export default function AddLiana() {
     }
 
     return (
-        <div>
-            <div style={{ marginBottom: '50px', display: 'flex', justifyContent: 'center' }}>
+        <div height="95vh">
+            <div style={{ marginBottom: '25px', display: 'flex', justifyContent: 'center' }}>
                 <div style={{ display: 'inline-block', position: 'relative' }}>
                     <PageTitle active={driver} onClick={event => changePage(event, 'driver')}>Driver</PageTitle>
                     <PageTitle active={!driver} onClick={changePage}>Passenger</PageTitle>
@@ -24,6 +34,9 @@ export default function AddLiana() {
             </div>
             {driver && (<Throw active={driver} />)}
             {!driver && (<Find active={!driver} />)}
+            <LinkContainer>
+                <Link style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} to="/dashboard"><img src={avatar.path} height="30px" />Dashboard</Link>
+            </LinkContainer>
         </div >
     )
 };

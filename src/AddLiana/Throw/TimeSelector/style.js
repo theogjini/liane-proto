@@ -8,6 +8,8 @@ const typeColor = {
 const TimeSelectorContainer = styled.div`
     background-color: none;
     border: none;
+    display: inline-block;
+    margin-right: 5px;
     :focus {
         outline: none;
     }
@@ -30,6 +32,7 @@ const Button = styled.button`
     padding: 3px;
     background: ${props => props.active ? typeColor[props.type] : 'white'};
     border: 1px solid #cccccc;
+    margin: 5px auto;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;

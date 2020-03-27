@@ -16,17 +16,17 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!avatar.name) history.push('/');
-  })
+  });
 
   function handleDayClick(event, day) {
     event.preventDefault();
     setDay(day)
-  }
+  };
 
   function handleSeeMyProfile(event) {
     event.preventDefault();
     setDay('profile')
-  }
+  };
 
   return (
     <Main>
@@ -35,7 +35,7 @@ export default function Dashboard() {
       <Nav position={day}>
         {week.map(currentDay => {
           return (
-            <Day onClick={event => handleDayClick(event, currentDay.key)} active={day === currentDay.key}>
+            <Day key={currentDay.key} onClick={event => handleDayClick(event, currentDay.key)} active={day === currentDay.key}>
               {day === currentDay.key ? currentDay.cap : currentDay.short}
             </Day>
           )
@@ -53,4 +53,4 @@ export default function Dashboard() {
           (<h1 style={{ display: 'flex' }}>{capitalize(day)}</h1>)}
       </div>
     </Main>)
-}
+};

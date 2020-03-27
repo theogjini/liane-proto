@@ -1,23 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { ThrowComponent, DayTable, Day, Button } from './style';
+import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer } from './style';
 import { Link, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
 import { week } from '../../utils.js';
 import { useSelector } from 'react-redux';
+import Switch from '@material-ui/core/Switch';
+// import DatePicker from 'react-datepicker';
+// import "react-datepicker/dist/react-datepicker.css";
 
 class DayTravel {
     constructor(goTime, returnTime) {
         this.goTime = goTime
         this.returnTime = returnTime
-        this.unique = null
     };
     isSelected() {
         return this.goTime || this.returnTime
     };
-}
+};
+
+class UniqueDayTravel {
+    constructor(goTime, goDate) {
+        this.goTime = goTime
+        this.goDate = goDate
+    };
+    updateGoTime(newTime) {
+        this.state.gotime = newTime
+    };
+    updateGoDate(newDate) {
+        this.state.goDate = newTime
+    };
+};
 
 export default function Throw(props) {
+
+    const avatar = useSelector(state => state.avatar);
+
+    const [end, setEnd] = useState("");
+
+    const [start, setStart] = useState("");
+
+    const [recurrence, setRecurrence] = useState(true);
 
     const defaultDaysState = () => {
         let date = new Date().getDay();
@@ -30,21 +53,9 @@ export default function Throw(props) {
         return days;
     };
 
-    const history = useHistory();
-
-    const avatar = useSelector(state => state.avatar);
-
-    useEffect(() => {
-        if (!avatar.name) history.push('/');
-    })
-
-    const [end, setEnd] = useState("");
-
-    const [start, setStart] = useState("");
-
     const [days, setDays] = useState(defaultDaysState);
 
-    const disableValidation = end === "" || start === "";
+    const [uniqueTravel, setUniqueTravel] = useState([new UniqueDayTravel('', '')]);
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -57,6 +68,8 @@ export default function Throw(props) {
         if (parsed.success)
             alert("your travel has been added")
     };
+
+    const disableValidation = end === "" || start === "";
 
     function changeValue(event, state, setState) {
         let formattedString = event.target.value.toUpperCase();
@@ -72,9 +85,24 @@ export default function Throw(props) {
         setDays(selectedDays);
     };
 
-    function handleDateChange(event) {
+    function handleRecurrenceChange() {
+        setRecurrence(!recurrence);
+    };
+
+    function handleUniqueTimeChange(event) {
         event.preventDefault();
-        setDate(event.target.value);
+        let newDaysArray = uniqueTravel.slice();
+        newDaysArray[0].goTime = event.currentTarget.value;
+        console.log('GoTimeSelected:', newDaysArray)
+        setUniqueTravel(newDaysArray);
+    };
+
+    function handleChangeUniqueTravelDate(event) {
+        event.preventDefault();
+        let newDaysArray = uniqueTravel.slice();
+        newDaysArray[0].goDate = event.target.value;
+        console.log('GoTimeSelected:', newDaysArray)
+        setUniqueTravel(newDaysArray);
     };
 
     function handleGoTimeChange(event, day) {
@@ -93,33 +121,41 @@ export default function Throw(props) {
 
     return (<ThrowComponent active={props.active}>
         <form onSubmit={handleSubmit}>
-            <div>From
-                <input type="text" onChange={event => changeValue(event, start, setStart)}
+            <InputContainer>From
+                <Input type="text" onChange={event => changeValue(event, start, setStart)}
                     value={start} placeholder="Postal code to start"
                 />
-            </div>
-            <div>To<input type="text" onChange={event => changeValue(event, end, setEnd)}
-                value={end} placeholder="Postal code to arrival" /></div>
-            <div>
-                <DayTable>
-                    {week.map((day, idx) => {
-                        return (<div key={day.key} style={{ display: 'flex', alignItems: 'center' }}>
-                            <Day currentDay={day.key} onClick={event => addDay(event, idx)} active={days[idx]}>{day.short}</Day>
-                            {days[idx] && (<div>
-                                <div style={{ display: 'inline-block' }}>
-                                    <TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, idx)} default={days[idx] ? days[idx].goTime : none} />
-                                    <TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, idx)} />
-                                </div>
+            </InputContainer>
+            <InputContainer>To<Input type="text" onChange={event => changeValue(event, end, setEnd)}
+                value={end} placeholder="Postal code to arrival" />
+            </InputContainer>
+            <label style={{ display: 'flex', maxWidth: '290px', margin: 'auto', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Switch onClick={handleRecurrenceChange} checked={recurrence} />
+                <h3>{recurrence ? 'Recurrent travel' : 'Unique travel'}</h3>
+            </label>
+            {recurrence ?
+                (<div>
+                    <DayTable>
+                        {week.map((day, idx) => {
+                            return (<div key={day.key} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Day currentDay={day.key} onClick={event => addDay(event, idx)} active={days[idx]}>{day.short}</Day>
+                                {days[idx] && (<div>
+                                    <div style={{ display: 'inline-block' }}>
+                                        <TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, idx)} default={days[idx] ? days[idx].goTime : none} />
+                                        <TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, idx)} />
+                                    </div>
 
-                            </div>)}
-                        </div>)
-                    })}
-                </DayTable>
-            </div>
+                                </div>)}
+                            </div>)
+                        })}
+                    </DayTable>
+                </div>) : (
+                    <div>
+                        <DateSelector type="date" value={uniqueTravel[0].goDate ? uniqueTravel[0].goDate : 'Choose a date'} onChange={handleChangeUniqueTravelDate} />
+                        <TimeSelector go={true} onChangeProp={handleUniqueTimeChange} />
+                    </div>
+                )}
             <div><Button disabled={disableValidation}>Set a liana</Button></div>
         </form>
-        <div>
-            <Link style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} to="/dashboard"><img src={avatar.path} height="30px" />Dashboard</Link>
-        </div>
     </ThrowComponent >);
 };

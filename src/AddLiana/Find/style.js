@@ -4,62 +4,56 @@ import styled from 'styled-components';
 const FindComponent = styled.div`
     text-align: center;
 `
-
-const DayTable = styled.div`
-    display:grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+const Button = styled.button`
+    background-color: white;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    font-weight: 600;
+    border: 2px solid #f50057;
+    color: #f50057;
+    cursor: pointer;
     margin-top: 25px;
-    margin-bottom: 25px;
+    transition: 0.2s ease-in-out;
+    :disabled {
+        border: 2px solid #c2c2c2c2;
+        color: #c2c2c2c2;
+        cursor: default;
+    }
 `
 
-const Monday = styled.div`
-    border: 2px solid black;
-    padding: 5px;
+const DateSelector = styled.input`
+    border: none;
+    font-family: 'Baloo';
+    border-bottom: 2px solid #cccccc;
+`
+
+const InputContainer = styled.div`
+    display: flex;
+    max-width: 290px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+`
+
+const Input = styled.input`
+    padding: 10px;
+    border: 1px solid #cccccc;
     border-radius: 5px;
-    margin: 10px;
-    background-color: ${props => props.active ? '#58da58' : 'white'};
-    color: ${props => !props.active ? '#58da58' : 'white'};
-    font-size: 14px;
+    transition: 0.2s ease-in-out;
+
+    ::placeholder {
+        font: 400 16px 'Baloo';
+        transition: 0.2s ease-out;
+        color: #444;
+    }
+    
+    :focus {
+        outline: none;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        ::placeholder {
+            opacity: 0;
+        }
+    }
 `
 
-const Tuesday = styled.div`
-    border: 2px solid black;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 10px;
-    background-color: ${props => props.active ? '#674bf5' : 'white'};
-    color: ${props => !props.active ? '#674bf5' : 'white'};
-    font-size: 14px;
-`
-
-const Wednesday = styled.div`
-    border: 2px solid black;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 10px;
-    background-color: ${props => props.active ? '#e20404' : 'white'};
-    color: ${props => !props.active ? '#e20404' : 'white'};
-    font-size: 14px;
-`
-
-const Thursday = styled.div`
-    border: 2px solid black;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 10px;
-    background-color: ${props => props.active ? '#3db1c5' : 'white'};
-    color: ${props => !props.active ? '#3db1c5' : 'white'};
-    font-size: 14px;    
-`
-
-const Friday = styled.div`
-    border: 2px solid black;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 10px;
-    background-color: ${props => props.active ? '#FF9800' : 'white'};
-    color: ${props => !props.active ? '#FF9800' : 'white'};
-    font-size: 14px;
-`
-
-export { FindComponent, DayTable, Monday, Tuesday, Wednesday, Thursday, Friday };
+export { FindComponent, Input, InputContainer, DateSelector, Button };
