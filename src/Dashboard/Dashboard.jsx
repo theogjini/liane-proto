@@ -3,6 +3,7 @@ import { Day, Main, Nav, Throw, Me } from './style';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { week } from '../utils.js';
+import capitalize from 'capitalize';
 
 export default function Dashboard() {
 
@@ -49,7 +50,7 @@ export default function Dashboard() {
             </div>
           </div>
         ) :
-          (<div>{day}</div>)}
+          (<h1 style={{ display: 'flex' }}>{capitalize(day)}</h1>)}
       </div>
     </Main>)
 }
