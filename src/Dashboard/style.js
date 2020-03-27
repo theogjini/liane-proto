@@ -12,7 +12,6 @@ const positions = {
 };
 
 const Main = styled.div`
-font-family: 'Open Sans';
 position: relative;
 height: 95vh;
 `

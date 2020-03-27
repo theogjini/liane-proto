@@ -5,7 +5,6 @@ const PageTitle = styled.h1`
     position: relative; 
     display: inline-block;
     margin: 15px;
-    font-family: 'Open Sans';
     font-size: 1.5rem;
     color: ${props => props.active ? 'black' : 'lightGray'};
     transition: 0.2s ease-in-out;

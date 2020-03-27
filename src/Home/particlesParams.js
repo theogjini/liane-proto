@@ -38,7 +38,7 @@ export const particlesParams = {
       ]
     },
     "color": {
-      "value": "#DDD"
+      "value": "#013b1c"
     },
     "size": {
       "value": 40,

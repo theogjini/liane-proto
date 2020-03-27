@@ -13,6 +13,7 @@ export default function Home() {
     const avatar = useSelector(state => state.avatar)
     console.log(avatar)
     console.log(particlesParams)
+    
     async function pop() {
         let request = await fetch('/pop-avatar', { method: "POST" })
         let parse = await request.json()
@@ -20,8 +21,8 @@ export default function Home() {
             console.log(parse.uniqueMonkey)
             dispatch({ type: "GET_AVATAR", avatar: parse.uniqueMonkey })
         }
-        return
-    };
+    }
+    
     return (
         <div>
             <Particles zIndex={0} className="particles" params={particlesParams} />
