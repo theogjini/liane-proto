@@ -88,6 +88,7 @@ const Seats = styled.div`
 const MonkeyHead = styled.div`
     display: ${props => props.added ? 'block' : 'none'};
     img {
+        user-select: none;
         width: 23px;
         height: 23px;
     }
@@ -123,6 +124,15 @@ const Plus = styled.div`
     cursor: pointer;
     font-weight: 600;
     color: green;
+    user-select: none;
 `
 
-export { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus };
+const UniqueTravel = styled.div`
+    display: flex;
+    max-width: 340px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+`
+
+export { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel };

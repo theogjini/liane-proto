@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus } from './style';
+import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel } from './style';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
 import { week } from '../../utils.js';
@@ -96,6 +96,24 @@ export default function Throw(props) {
         setUniqueTravel(newDaysArray);
     };
 
+    function handleUniqueAddSeat(event) {
+        event.preventDefault();
+        let newDaysArray = uniqueTravel.slice();
+        if (newDaysArray[0].seatsAvailable === 4) return
+        newDaysArray[0].seatsAvailable += 1;
+        console.log('RetunrSeatsSelected:', newDaysArray[0])
+        setDays(newDaysArray)
+    };
+
+    function handleUniqueRemoveSeat(event, day) {
+        event.preventDefault();
+        let newDaysArray = uniqueTravel.slice();
+        if (newDaysArray[0].seatsAvailable === 0) return
+        newDaysArray[0].seatsAvailable -= 1;
+        console.log('RetunrSeatsSelected:', newDaysArray[0])
+        setDays(newDaysArray)
+    };
+
     function handleGoTimeChange(event, day) {
         let newDaysArray = days.slice();
         newDaysArray[day].goTime = event.currentTarget.value;
@@ -165,10 +183,19 @@ export default function Throw(props) {
                         })}
                     </DayTable>
                 </div>) : (
-                    <div>
-                        <DateSelector type="date" value={uniqueTravel[0].goDate} onChange={handleChangeUniqueTravelDate} />
-                        <TimeSelector go={true} default={uniqueTravel[0].goTime} onChangeProp={handleUniqueTimeChange} />
-                    </div>
+                    <UniqueTravel>
+                        <div>
+                            <DateSelector type="date" value={uniqueTravel[0].goDate} onChange={handleChangeUniqueTravelDate} />
+                            <TimeSelector go={true} default={uniqueTravel[0].goTime} onChangeProp={handleUniqueTimeChange} />
+                        </div>
+                        <Seats onClick={handleUniqueRemoveSeat}>
+                            <MonkeyHead added={uniqueTravel[0].seatsAvailable >= 1}><img src='assets/icons/happy-monkey.svg' /></MonkeyHead>
+                            <MonkeyHead added={uniqueTravel[0].seatsAvailable >= 2}><img src='assets/icons/happy-monkey.svg' /></MonkeyHead>
+                            <MonkeyHead added={uniqueTravel[0].seatsAvailable >= 3}><img src='assets/icons/happy-monkey.svg' /></MonkeyHead>
+                            <MonkeyHead added={uniqueTravel[0].seatsAvailable >= 4}><img src='assets/icons/happy-monkey.svg' /></MonkeyHead>
+                        </Seats >
+                        <Plus onClick={handleUniqueAddSeat}>+</Plus>
+                    </UniqueTravel>
                 )}
             <div><Button disabled={disableValidation}>Set a liana</Button></div>
         </form>
