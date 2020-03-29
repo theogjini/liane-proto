@@ -17,7 +17,7 @@ const ThrowComponent = styled.div`
 const DayTable = styled.div`
     margin: 0px auto;
     display: block;
-    max-width: 290px;
+    max-width: 340px;
 `
 
 const Button = styled.button`
@@ -71,6 +71,28 @@ const InputContainer = styled.div`
     align-items: center;
     margin: 10px auto;
 `
+const Seats = styled.div`
+    -webkit-tap-highlight-color: transparent;
+    height: 50px; 
+    width: 50px; 
+    cursor: pointer;
+    background-image: url('/assets/icons/liane.svg'); 
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    display: grid;
+    grid-template-areas: "a a"
+                         "a a";
+`
+
+
+const MonkeyHead = styled.div`
+    display: ${props => props.added ? 'block' : 'none'};
+    img {
+        width: 23px;
+        height: 23px;
+    }
+`
+
 
 const Input = styled.input`
     padding: 10px;
@@ -93,4 +115,14 @@ const Input = styled.input`
     }
 `
 
-export { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer };
+const Plus = styled.div`
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    font-size: 30px; 
+    margin-left: 5px; 
+    cursor: pointer;
+    font-weight: 600;
+    color: green;
+`
+
+export { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus };
