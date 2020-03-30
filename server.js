@@ -6,11 +6,13 @@ const { uniqueNamesGenerator, adjectives, colors } = require("unique-names-gener
 
 const express = require('express');
 const app = express();
+const multer = require('multer');
 
 const sha1 = require('sha1');
 const cookieParser = require('cookie-parser');
 const uuidv1 = require('uuid/v1');
 const reloadMagic = require('./reload-magic.js');
+const upload = multer({ dest: __dirname + '/uploads/itemImages' });
 const MongoDB = require('mongodb');
 const MongoClient = MongoDB.MongoClient;
 const ObjectID = MongoDB.ObjectID;
@@ -54,15 +56,6 @@ function catchAll(fn) {
   }
 }
 
-app.post('/throw',
-  catchAll(async (req, res) => {
-    // const start = req.body.start;
-    // const end = req.body.end;
-    // const travel = {start, end};
-    // await dbo.collection("travels").insertOne(travel);
-    res.send(JSON.stringify({ success: true }))
-  }));
-
 app.post('/pop-avatar', (req, res) => {
   const uniqueMonkeyName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, monkeys.names] });
   const formattedName = capitalize.words(uniqueMonkeyName.split("_").join(" "));
@@ -73,6 +66,26 @@ app.post('/pop-avatar', (req, res) => {
   };
   res.send(JSON.stringify({ success: true, uniqueMonkey }))
 });
+
+app.post('/throw', upload.none(),
+  catchAll(async (req, res) => {
+    const start = req.body.start;
+    const end = req.body.end;
+    const travel = JSON.parse(req.body.schedule);
+    const travelToAdd = { start, end, travel };
+    console.log('travelToAdd: ', travelToAdd);
+    dbo.collection("travels").insertOne(travelToAdd);
+    res.send(JSON.stringify({ success: true }))
+  }));
+
+app.post('/find', upload.none(),
+  catchAll(async (req, res) => {
+    const userSearch = { start: req.body.start, end: req.body.end };
+    const travels = await dbo.collection('travels').find().toArray();
+    const results = await travels.filter(travel => travel.start === req.body.start && travel.end === req.body.end)
+    console.log('travels found:', results);
+    res.send(JSON.stringify({ success: true, results }));
+  }));
 
 // Your endpoints go before this line
 

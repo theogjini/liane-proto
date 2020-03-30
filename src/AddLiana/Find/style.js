@@ -42,14 +42,15 @@ const Input = styled.input`
     transition: 0.2s ease-in-out;
 
     ::placeholder {
-        font: 400 16px 'Baloo';
+        font-weight: 600;
+
         transition: 0.2s ease-out;
-        color: #444;
+        color: lightgray;
     }
     
     :focus {
         outline: none;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
         ::placeholder {
             opacity: 0;
         }

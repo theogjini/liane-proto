@@ -56,9 +56,9 @@ const Day = styled.div`
 `
 
 const DateSelector = styled.input`
+    display: block;
     border: none;
-    font-family: 'Baloo';
-    border-bottom: 2px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
     :focus {
         outline: none;
     }
@@ -71,6 +71,7 @@ const InputContainer = styled.div`
     align-items: center;
     margin: 10px auto;
 `
+
 const Seats = styled.div`
     -webkit-tap-highlight-color: transparent;
     height: 50px; 
@@ -84,16 +85,15 @@ const Seats = styled.div`
                          "a a";
 `
 
-
 const MonkeyHead = styled.div`
-    display: ${props => props.added ? 'block' : 'none'};
     img {
         user-select: none;
-        width: 23px;
-        height: 23px;
+        width: ${props => props.added ? '23px' : '0'};
+        height: ${props => props.added ? '23px' : '0'};
+        transition-duration: 0.2s;
+        transition-property: width height;
     }
 `
-
 
 const Input = styled.input`
     padding: 10px;
@@ -102,14 +102,14 @@ const Input = styled.input`
     transition: 0.2s ease-in-out;
 
     ::placeholder {
-        font: 400 16px 'Baloo';
+        font-weight: 600;
         transition: 0.2s ease-out;
-        color: #444;
+        color: lightgray;
     }
     
     :focus {
         outline: none;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
         ::placeholder {
             opacity: 0;
         }

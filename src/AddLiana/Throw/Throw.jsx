@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel } from './style';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
-import { week } from '../../utils.js';
+import { week, formatInput } from '../../utils.js';
 import { useSelector } from 'react-redux';
 import Switch from '@material-ui/core/Switch';
 
@@ -42,7 +42,7 @@ export default function Throw(props) {
         let nextHour = parseInt(currentHour) + 1 + ':00';
         let day = [new DayTravel(nextHour, '', currentDate)];
         return day;
-    }
+    };
 
     const [days, setDays] = useState(defaultDaysState);
 
@@ -51,11 +51,14 @@ export default function Throw(props) {
     const disableValidation = end === "" || start === "";
 
     async function handleSubmit(event) {
-        event.preventDefault()
-        if (start === "" || end === "") return alert("Please enter start and arrival")
-        const data = new FormData()
-        data.append("start", start)
-        data.append("end", end)
+        event.preventDefault();
+        if (disableValidation) return alert("Please enter start and arrival");
+        const schedule = recurrence ? days : uniqueTravel;
+        const data = new FormData();
+        data.append("start", start);
+        data.append("end", end);
+        data.append("schedule", JSON.stringify(schedule));
+        console.log('sent data', data)
         let req = await fetch('/throw', { method: 'POST', body: data })
         let parsed = await req.json()
         if (parsed.success)
@@ -63,8 +66,8 @@ export default function Throw(props) {
     };
 
     function changeValue(event, setState) {
-        let formattedString = event.target.value.toUpperCase();
-        setState(formattedString);
+        let formattedInput = formatInput(event.target.value);
+        setState(formattedInput);
     };
 
     function addDay(event, day) {
@@ -149,12 +152,12 @@ export default function Throw(props) {
     return (<ThrowComponent active={props.active}>
         <form onSubmit={handleSubmit}>
             <InputContainer>From
-                <Input type="text" onChange={event => changeValue(event, start, setStart)}
-                    value={start} placeholder="Postal code to start"
+                <Input type="text" onChange={event => changeValue(event, setStart)}
+                    value={start} placeholder="Postal code"
                 />
             </InputContainer>
-            <InputContainer>To<Input type="text" onChange={event => changeValue(event, end, setEnd)}
-                value={end} placeholder="Postal code to arrival" />
+            <InputContainer>To<Input type="text" onChange={event => changeValue(event, setEnd)}
+                value={end} placeholder="Postal code" />
             </InputContainer>
             <label style={{ display: 'flex', maxWidth: '290px', margin: 'auto', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Switch onClick={handleRecurrenceChange} checked={recurrence} />

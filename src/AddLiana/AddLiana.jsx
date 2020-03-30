@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Find from './Find/Find.jsx';
 import Throw from './Throw/Throw.jsx';
 import { Link, useHistory } from 'react-router-dom';
-import { PageTitle, Underline, LinkContainer } from './style';
+import { PageTitle, Underline, LinkContainer, AddLianaContainer } from './style';
 import { useSelector } from 'react-redux';
 
 
@@ -24,7 +24,7 @@ export default function AddLiana() {
     }
 
     return (
-        <div height="95vh">
+        <AddLianaContainer >
             <div style={{ marginBottom: '25px', display: 'flex', justifyContent: 'center' }}>
                 <div style={{ display: 'inline-block', position: 'relative' }}>
                     <PageTitle active={driver} onClick={event => changePage(event, 'driver')}>Driver</PageTitle>
@@ -35,8 +35,8 @@ export default function AddLiana() {
             {driver && (<Throw active={driver} />)}
             {!driver && (<Find active={!driver} />)}
             <LinkContainer>
-                <Link style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} to="/dashboard"><img src={avatar.path} height="30px" />Dashboard</Link>
+                <Link to="/dashboard"><img src={avatar.path} /></Link>
             </LinkContainer>
-        </div >
+        </AddLianaContainer >
     )
 };

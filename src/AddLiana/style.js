@@ -23,13 +23,23 @@ const Underline = styled.div`
 `
 
 const LinkContainer = styled.div`
+    cursor: pointer;
     position: absolute;
-    bottom: 10px;
-    left: 0;
+    right: 50px;
+    bottom: 20px;
+    font-size: 30px;
+    font-weight: 600;
     display: flex;
-    margin: auto;
+    align-items: center;
     justify-content: center;
-    width: 100%;
+    img {
+        height: 50px;
+    }
 `
 
-export { PageTitle, Underline, LinkContainer };
+const AddLianaContainer = styled.div`
+    position: relative;
+    height: 95vh;
+`
+
+export { PageTitle, Underline, LinkContainer, AddLianaContainer };
