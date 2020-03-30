@@ -90,8 +90,9 @@ const MonkeyHead = styled.div`
         user-select: none;
         width: ${props => props.added ? '23px' : '0'};
         height: ${props => props.added ? '23px' : '0'};
-        transition-duration: 0.2s;
+        transition-duration: 0.15s;
         transition-property: width height;
+        transition-timing-function:  cubic-bezier(0.64, 0.57, 0.67, 1.53);
     }
 `
 

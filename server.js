@@ -18,8 +18,12 @@ const MongoClient = MongoDB.MongoClient;
 const ObjectID = MongoDB.ObjectID;
 const capitalize = require('capitalize');
 
+app.use(cookieParser());
+
 let dbo = undefined;
 const url = config.url;
+
+let sessions = [];
 
 MongoClient.connect(url, { newUrlParser: true }, (err, client) => {
   dbo = client.db("liane")
@@ -54,12 +58,25 @@ function catchAll(fn) {
       next(e);
     }
   }
-}
+};
+
+app.get('/recall-avatar',
+  catchAll(async (req, res) => {
+    const sessionId = req.cookies.sid;
+    console.log('avatar back:', sessions);
+    console.log('sessionId:', sessionId);
+    const avatar = sessions[sessionId];
+    if (sessions[sessionId]) {
+      console.log('success', sessions[sessionId])
+      return res.send(JSON.stringify({ success: true, avatar }))
+    };
+    res.send(JSON.stringify({ success: false }))
+  }));
 
 app.post('/pop-avatar', (req, res) => {
   const uniqueMonkeyName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, monkeys.names] });
   const formattedName = capitalize.words(uniqueMonkeyName.split("_").join(" "));
-  const uniqueMonkey = {
+  let uniqueMonkey = {
     name: formattedName,
     original: uniqueMonkeyName,
     path: avatarsPaths[Math.floor(Math.random() * avatarsPaths.length)]
@@ -67,12 +84,22 @@ app.post('/pop-avatar', (req, res) => {
   res.send(JSON.stringify({ success: true, uniqueMonkey }))
 });
 
+app.post('/select-avatar', upload.none(),
+  catchAll(async (req, res) => {
+    const user = JSON.parse(req.body.avatar);
+    const sessionId = uuidv1();
+    sessions[sessionId] = user;
+    res.cookie('sid', sessionId);
+    res.send(JSON.stringify({ success: true }))
+  }));
+
 app.post('/throw', upload.none(),
   catchAll(async (req, res) => {
+    const user = sessions[req.cookies.sid];
     const start = req.body.start;
     const end = req.body.end;
     const travel = JSON.parse(req.body.schedule);
-    const travelToAdd = { start, end, travel };
+    const travelToAdd = { start, end, travel, user };
     console.log('travelToAdd: ', travelToAdd);
     dbo.collection("travels").insertOne(travelToAdd);
     res.send(JSON.stringify({ success: true }))

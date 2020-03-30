@@ -14,10 +14,10 @@ const Underline = styled.div`
     position: absolute;
     content: '';
     height: 5px;
-    width: ${props => props.active ? '70px' : '120px'};
+    width: ${props => props.active ? '70px' : '125px'};
     background-color: ${props => props.active ? '#28f738' : '#ac6dff'};
     top: 50px;
-    margin-left: ${props => props.active ? '15px' : '115px'};
+    margin-left: ${props => props.active ? '15px' : '43%'};
     transition: 0.3s ease-out;
     border-radius: 5px;
 `

@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 
+const colors = {
+    monday: '#58da58',
+    tuesday: '#674bf5',
+    wednesday: '#e20404',
+    thursday: '#3db1c5',
+    friday: '#FF9800',
+    saturday: '#1757a5',
+    sunday: '#d4b230',
+};
+
 
 const FindComponent = styled.div`
     text-align: center;
@@ -57,4 +67,18 @@ const Input = styled.input`
     }
 `
 
-export { FindComponent, Input, InputContainer, DateSelector, Button };
+const ListElem = styled.li`
+    list-style-type: none;
+    display: grid;
+    scroll-snap-align: start;
+    grid-template-areas: "a b b b b b b b"
+                         "a c c c c c c c";    
+`
+
+const Results = styled.div`
+    max-height: 300px;
+    overflow: auto;
+    scroll-behavior: smooth;
+`
+
+export { FindComponent, Input, InputContainer, DateSelector, Button, ListElem, Results };

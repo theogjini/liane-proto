@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel } from './style';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
-import { week, formatInput } from '../../utils.js';
+import { week, formatInput, checkZipFormat } from '../../utils.js';
 import { useSelector } from 'react-redux';
 import Switch from '@material-ui/core/Switch';
 
@@ -50,9 +50,12 @@ export default function Throw(props) {
 
     const disableValidation = end === "" || start === "";
 
+    const checkZipFormatting = checkZipFormat(end) && checkZipFormat(start);
+
     async function handleSubmit(event) {
         event.preventDefault();
         if (disableValidation) return alert("Please enter start and arrival");
+        if (!checkZipFormatting) return alert("Zipcode must be a valid canadian format: A1A-1A1");
         const schedule = recurrence ? days : uniqueTravel;
         const data = new FormData();
         data.append("start", start);
@@ -200,7 +203,7 @@ export default function Throw(props) {
                         <Plus onClick={handleUniqueAddSeat}>+</Plus>
                     </UniqueTravel>
                 )}
-            <div><Button disabled={disableValidation}>Set a liana</Button></div>
+            <div><Button disabled={!checkZipFormatting}>Set a liana</Button></div>
         </form>
     </ThrowComponent >);
 };

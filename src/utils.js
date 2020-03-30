@@ -25,4 +25,14 @@ const formatInput = (input) => {
     return finalOutput
 };
 
-export { week, formatInput };
+const checkZipFormat = (input) => {
+    const valueTable = [false, true, false, false, true, false, true]; // type A1A-1A1
+    const inputToArray = input.split("");
+    let verification = inputToArray.every((char, idx) => {
+        let currentLetterIsNaN = parseInt(char) >= 0 && parseInt(char) <= 9;
+        return currentLetterIsNaN === valueTable[idx];
+    });
+    return verification && input.length === 7;
+};
+
+export { week, formatInput, checkZipFormat };
