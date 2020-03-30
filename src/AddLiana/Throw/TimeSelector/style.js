@@ -57,13 +57,13 @@ const DropdownMenu = styled.div`
     width: 90px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     border-radius: 5px;
-    transition: 0.2s cubic-bezier(0.445, 0.360, 0.240, 1.400);
+    transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);;
     height: ${props => props.active ? '108px' : '0'};
     overflow: auto;
     option {
         margin: 3px;
         text-align: left;
-        transition: 0.2s cubic-bezier(0.445, 0.360, 0.240, 1.400);
+        transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);;
         display: ${props => props.active ? 'block' : 'none'};
         border-bottom: 2px solid white; 
     }
