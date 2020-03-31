@@ -76,9 +76,13 @@ const ListElem = styled.li`
 `
 
 const Results = styled.div`
-    max-height: 300px;
+    max-height: 350px;
     overflow: auto;
+    -webkit-scroll-behavior: smooth;
+    -moz-scroll-behavior: smooth;
+    -ms-scroll-behavior: smooth;
     scroll-behavior: smooth;
+    margin-top: 25px;
 `
 
 export { FindComponent, Input, InputContainer, DateSelector, Button, ListElem, Results };
