@@ -1,7 +1,23 @@
 class User {
-    constructor(name) {
-        this.name = name
-    }
+    constructor(name, original, path, username) {
+        this.infos = {
+            name,
+            original,
+            path,
+            registered: true,
+            travels: {
+                monday: [],
+                tuesday: [],
+                wednesday: [],
+                thursday: [],
+                friday: [],
+                saturday: [],
+                sunday: [],
+            },
+        };
+        this.username = username;
+        this.password = password;
+    };
 };
 
 function catchAll(fn) {
@@ -12,7 +28,7 @@ function catchAll(fn) {
             console.error(e);
             next(e);
         }
-    }
+    };
 };
 
-module.exports = { User, catchAll }
+module.exports = { User, catchAll };

@@ -30,7 +30,7 @@ const Button = styled.button`
     position: relative;
     width: 90px;
     padding: 3px;
-    background: ${props => props.active ? typeColor[props.type] : 'white'};
+    background: ${props => props.active ? typeColor[props.selector] : 'white'};
     border: 1px solid #cccccc;
     margin: 5px auto;
     border-radius: 5px;
@@ -39,7 +39,7 @@ const Button = styled.button`
     align-content: center;
     :focus {
         outline: none;
-        /* background: ${props => typeColor[props.type]}; */
+        /* background: ${props => typeColor[props.selector]}; */
     }
     img {
         margin-left: 20px; 
@@ -53,7 +53,7 @@ const DropdownMenu = styled.div`
     top: 23px;
     left: -1px;
     z-index: 120;
-    background-image: ${props => typeColor[props.type]};
+    background-image: ${props => typeColor[props.selector]};
     width: 90px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     border-radius: 5px;

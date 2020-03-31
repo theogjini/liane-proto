@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Day, Main, Nav, Throw, Me } from './style';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { week } from '../utils.js';
 import capitalize from 'capitalize';
 
@@ -48,6 +48,7 @@ export default function Dashboard() {
             <div>
               <img src={avatar.path} height="150px" />
             </div>
+            {!avatar.registered && <div>If you want to save your avatar<Link to="/sign-in">Sign Up</Link></div>}
           </div>
         ) :
           (<h1 style={{ display: 'flex' }}>{capitalize(day)}</h1>)}

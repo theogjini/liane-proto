@@ -36,13 +36,14 @@ export default function Find(props) {
     }
     return (<FindComponent active={props.active}>
         <form onSubmit={handleSubmit}>
-            <InputContainer>From
+            <InputContainer validZip={!checkZipFormat(start) && start.length === 7}>From
                 <Input type="text" onChange={event => changeValue(event, setStart)}
-                    value={start} placeholder="Postal code"
-                />
+                    value={start} placeholder="Postal code" spellCheck="false" />
             </InputContainer>
-            <InputContainer>To<Input type="text" onChange={event => changeValue(event, setEnd)}
-                value={end} placeholder="Postal code" /></InputContainer>
+            <InputContainer validZip={!checkZipFormat(end) && end.length === 7}>To
+                <Input type="text" onChange={event => changeValue(event, setEnd)}
+                    value={end} placeholder="Postal code" spellCheck="false" />
+            </InputContainer>
             <div><Button disabled={!checkZipFormatting}>Find a liana</Button></div>
         </form>
         <Results>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HomeComponent, Button, Title, Span, Bounce } from './style';
+import { HomeComponent, Button, Title, Span, Bounce, LinkContainer } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './particles.css';
@@ -69,8 +69,9 @@ export default function Home() {
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Button onClick={pop}>Pop it</Button>
                 </div>
-            </HomeComponent >
+                <LinkContainer>
+                    <Link to="/sign-in">Sign in</Link>
+                </LinkContainer>
+            </HomeComponent>
         </div>)
-}
-
-// style={{ backgroundColor: avatar.original.split("_")[1] }}
+};

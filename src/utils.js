@@ -32,7 +32,7 @@ const checkZipFormat = (input) => {
         let currentLetterIsNaN = parseInt(char) >= 0 && parseInt(char) <= 9;
         return currentLetterIsNaN === valueTable[idx];
     });
-    return verification && input.length === 7;
+    return verification && input.length === valueTable.length;
 };
 
 export { week, formatInput, checkZipFormat };

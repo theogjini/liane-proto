@@ -39,7 +39,7 @@ const Bounce = styled.div`
     50%   {transform: translateY(-10px);}
     100%   {transform: translateY(0px);}
     }
-`
+`;
 
 const Span = styled.div`
     text-align: center;
@@ -59,5 +59,17 @@ const Span = styled.div`
     }
 `;
 
+const LinkContainer = styled.div`
+    cursor: pointer;
+    position: absolute;
+    right: 50px;
+    bottom: 60px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
-export { Button, HomeComponent, Title, Span, Bounce };
+
+export { Button, HomeComponent, Title, Span, Bounce, LinkContainer };

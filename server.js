@@ -3,11 +3,14 @@ const express = require('express');
 const app = express();
 const multer = require('multer');
 
+// Automatic reload
+const reloadMagic = require('./reload-magic.js');
+reloadMagic(app);
+
 // Utilities
 const sha1 = require('sha1');
 const cookieParser = require('cookie-parser');
 const uuidv1 = require('uuid/v1');
-const reloadMagic = require('./reload-magic.js');
 const upload = multer({ dest: __dirname + '/uploads/itemImages' });
 const capitalize = require('capitalize'); const config = require("./server/config.json");
 const { uniqueNamesGenerator, adjectives, colors } = require("unique-names-generator");
@@ -23,15 +26,13 @@ let dbo = undefined;
 MongoClient.connect(url, { newUrlParser: true }, (err, client) => {
   dbo = client.db("liane")
 });
-let sessions = []; //cookies
+let sessions = []; // Cookies
 
 // Build
 app.use('/', express.static('build'));
 app.use('/assets', express.static('assets'));
 app.use(cookieParser());
 
-// Automatic reload
-reloadMagic(app);
 
 // Endpoints
 app.get('/recall-avatar',
@@ -76,10 +77,31 @@ app.post('/throw', upload.none(),
     const user = sessions[req.cookies.sid];
     const start = req.body.start;
     const end = req.body.end;
-    const travel = JSON.parse(req.body.schedule);
-    const travelToAdd = { start, end, travel, user };
-    console.log('travelToAdd: ', travelToAdd);
-    dbo.collection("travels").insertOne(travelToAdd);
+    const schedule = JSON.parse(req.body.schedule);
+    schedule.forEach((dayTravel, idx) => {
+      if (dayTravel != null) {
+        const newId = new ObjectID();
+        const newChatRoomId = new ObjectID();
+        console.log('newId', newId);
+        const travelToAdd = {
+          _id: newId,
+          _chatroomId: newChatRoomId,
+          start,
+          end,
+          day: idx,
+          driver: user,
+          seatsAvailable: dayTravel.seatsAvailable,
+          attendees: [],
+          requests: [],
+          goTime: dayTravel.goTime,
+          returnTime: dayTravel.returnTime,
+          goDate: dayTravel.goDate ? dayTravel.goDate : null
+        };
+        console.log('travelToAdd: ', travelToAdd);
+        dbo.collection("travels").insertOne(travelToAdd);
+        dbo.collection("chatrooms").insertOne({ _id: newChatRoomId });
+      }
+    })
     res.send(JSON.stringify({ success: true }))
   })
 );

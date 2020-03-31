@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel } from './style';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
 import { week, formatInput, checkZipFormat } from '../../utils.js';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Switch from '@material-ui/core/Switch';
 
 class DayTravel {
     constructor(goTime, returnTime, goDate) {
-        this.goTime = goTime
-        this.returnTime = returnTime
-        this.goDate = goDate
-        this.seatsAvailable = 0
+        this.goTime = goTime;
+        this.returnTime = returnTime;
+        this.goDate = goDate;
+        this.seatsAvailable = 0;
+        this.attendees = [];
     };
     isSelected() {
         return this.goTime || this.returnTime
@@ -25,6 +27,10 @@ export default function Throw(props) {
     const [start, setStart] = useState("");
 
     const [recurrence, setRecurrence] = useState(true);
+
+    const avatar = useSelector(state => state.avatar);
+
+    const history = useHistory();
 
     const defaultDaysState = () => {
         let date = new Date().getDay();
@@ -54,8 +60,8 @@ export default function Throw(props) {
 
     async function handleSubmit(event) {
         event.preventDefault();
+        // if (!avatar.registered) return history.push('/sign-in');
         if (disableValidation) return alert("Please enter start and arrival");
-        if (!checkZipFormatting) return alert("Zipcode must be a valid canadian format: A1A-1A1");
         const schedule = recurrence ? days : uniqueTravel;
         const data = new FormData();
         data.append("start", start);
@@ -154,13 +160,13 @@ export default function Throw(props) {
 
     return (<ThrowComponent active={props.active}>
         <form onSubmit={handleSubmit}>
-            <InputContainer>From
+            <InputContainer validZip={!checkZipFormat(start) && start.length === 7} > From
                 <Input type="text" onChange={event => changeValue(event, setStart)}
-                    value={start} placeholder="Postal code"
-                />
+                    value={start} placeholder="Postal code" spellCheck="false" />
             </InputContainer>
-            <InputContainer>To<Input type="text" onChange={event => changeValue(event, setEnd)}
-                value={end} placeholder="Postal code" />
+            <InputContainer validZip={!checkZipFormat(end) && end.length === 7}>To
+                <Input type="text" onChange={event => changeValue(event, setEnd)}
+                    value={end} placeholder="Postal code" spellCheck="false" />
             </InputContainer>
             <label style={{ display: 'flex', maxWidth: '290px', margin: 'auto', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Switch onClick={handleRecurrenceChange} checked={recurrence} />
@@ -203,7 +209,7 @@ export default function Throw(props) {
                         <Plus onClick={handleUniqueAddSeat}>+</Plus>
                     </UniqueTravel>
                 )}
-            <div><Button disabled={!checkZipFormatting}>Set a liana</Button></div>
+            <div><Button type="submit" disabled={!checkZipFormatting}>Set a liana</Button></div>
         </form>
     </ThrowComponent >);
 };
