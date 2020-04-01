@@ -1,10 +1,11 @@
 class User {
-    constructor(name, original, path, username) {
+    constructor(username, password, user, id) {
+        this._id = id;
         this.infos = {
-            name,
-            original,
-            path,
-            registered: true,
+            name: user.name,
+            original: user.original,
+            path: user.path,
+            registered: id,
             travels: {
                 monday: [],
                 tuesday: [],

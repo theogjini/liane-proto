@@ -56,6 +56,7 @@ const Button = styled.button`
     cursor: pointer;
     margin-top: 25px;
     transition: 0.2s ease-in-out;
+    
     :disabled {
         border: 2px solid #c2c2c2c2;
         color: #c2c2c2c2;
@@ -64,11 +65,25 @@ const Button = styled.button`
 `
 
 const InputContainer = styled.div`
+    position: relative;
     display: flex;
     max-width: 290px;
     justify-content: space-between;
     align-items: center;
     margin: 10px auto;
+
+    ::after {
+        position: absolute;
+        content: ${props => `${props.error}`};
+        color: red;
+        opacity: ${props => props.error ? '1' : '0'};
+        right: 80px;
+        top: 0px;
+        font-family: 'Baloo', sans-serif;
+        font-size: 10px;
+        -webkit-transition: 0.2s ease-in-out;
+        transition: 0.2s ease-in-out;
+    }
 `
 
 const Input = styled.input`
@@ -86,7 +101,7 @@ const Input = styled.input`
     
     :focus {
         outline: none;
-        box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 0px 15px -4px rgba(40,247,56,1);      
         ::placeholder {
             opacity: 0;
         }

@@ -49,6 +49,63 @@ app.get('/recall-avatar',
   })
 );
 
+app.post('/login', upload.none(),
+  catchAll(async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    dbo.collection("users").findOne({ username }, (err, user) => {
+      if (err) {
+        console.log('Error login', err);
+        return res.send(JSON.stringify({ success: false }));
+      };
+      if (user === null) {
+        console.log("Invalid username");
+        return res.send(JSON.stringify({ success: false, desc: "Invalid username" }));
+      };
+      if (user.password != sha1(password)) {
+        console.log("Invalid password");
+        return res.send(JSON.stringify({ success: false, desc: "Invalid password" }));
+      };
+      if (user.password === sha1(password)) {
+        console.log("Login Success");
+        const sessionId = uuidv1();
+        sessions[sessionId] = user.infos;
+        res.cookie('sid', sessionId);
+        return res.send(JSON.stringify({ success: true, avatar: user.infos }));
+      };
+    })
+  })
+);
+
+app.post('/signup', upload.none(),
+  catchAll(async (req, res) => {
+    console.log('sign-up hit!')
+    const username = req.body.username;
+    const password = sha1(req.body.password);
+    const user = JSON.parse(req.body.avatar)
+    const id = new ObjectID();
+    const newUser = new User(username, password, user, id);
+    dbo.collection("users").findOne({ username }, (err, user) => {
+      if (err) {
+        console.log('Error login', err);
+        return res.send(JSON.stringify({ success: false }));
+      };
+      if (user) {
+        console.log("Username taken!");
+        return res.send(JSON.stringify({ success: false, desc: "Username taken!" }));
+      };
+      if (user === null) {
+        console.log("Signup success");
+        dbo.collection("users").insertOne(newUser);
+        const sessionId = uuidv1();
+        sessions[sessionId] = newUser;
+        res.cookie('sid', sessionId);
+        return res.send(JSON.stringify({ success: true, avatar: newUser.infos }));
+      };
+    })
+  })
+);
+
 app.post('/pop-avatar',
   catchAll((req, res) => {
     const uniqueMonkeyName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, monkeys.names] });
@@ -58,7 +115,7 @@ app.post('/pop-avatar',
       original: uniqueMonkeyName,
       path: avatarsPaths[Math.floor(Math.random() * avatarsPaths.length)]
     };
-    res.send(JSON.stringify({ success: true, uniqueMonkey }))
+    res.send(JSON.stringify({ success: true, avatar: uniqueMonkey }))
   })
 );
 

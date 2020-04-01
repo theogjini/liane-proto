@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { FormContainer, Input, InputContainer, Button } from './style';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
 
     const dispatch = useDispatch();
+
+    const history = useHistory();
 
     const [username, setUsername] = useState("");
 
@@ -14,14 +17,17 @@ export default function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        // const data = new FormData();
-        // data.append("start", start);
-        // data.append("end", end);
-        // let req = await fetch('/find', { method: 'POST', body: data });
-        // let parsed = await req.json();
-        // if (parsed.success)
-        //     console.log('results: ', results)
         console.log('Login: loginHandle')
+        const data = new FormData();
+        data.append("username", username);
+        data.append("password", password);
+        let req = await fetch('/login', { method: 'POST', body: data });
+        let parsed = await req.json();
+        if (parsed.success) {
+            console.log('Login name: ', parsed.avatar)
+            dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar })
+            history.push('/dashboard')
+        };
     };
 
     function handleChangeUsername(event) {

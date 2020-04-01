@@ -30,6 +30,7 @@ const Button = styled.button`
     cursor: pointer;
     margin-top: 25px;
     transition: 0.2s ease-in-out;
+    
     :disabled {
         border: 2px solid #c2c2c2c2;
         color: #c2c2c2c2;
@@ -59,6 +60,7 @@ const DateSelector = styled.input`
     display: block;
     border: none;
     border-bottom: 1px solid #cccccc;
+
     :focus {
         outline: none;
     }
@@ -94,6 +96,7 @@ const InputContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     margin: 10px auto;
+
     ::after {
         position: absolute;
         content: 'Zipcode format: A1A-1A1';
@@ -123,7 +126,7 @@ const Input = styled.input`
     
     :focus {
         outline: none;
-        box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 0px 15px -4px rgba(40,247,56,1);        
         ::placeholder {
             opacity: 0;
         }

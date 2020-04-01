@@ -11,9 +11,9 @@ export default function Home() {
 
     const dispatch = useDispatch();
 
-    const avatar = useSelector(state => state.avatar);
-
     const history = useHistory();
+
+    const [tempAvatar, setTempAvatar] = useState({});
 
     useEffect(() => {
         async function getUserAvatar() {
@@ -21,7 +21,7 @@ export default function Home() {
             const parsed = await req.json();
             if (parsed.success) {
                 console.log('parsedAvatar:', parsed.avatar)
-                dispatch({ type: "GET_AVATAR", avatar: parsed.avatar });
+                setTempAvatar(parsed.avatar);
             };
             return;
         };
@@ -30,23 +30,39 @@ export default function Home() {
 
     async function pop() {
         let request = await fetch('/pop-avatar', { method: "POST" })
-        let parse = await request.json()
-        if (parse.success) {
-            console.log(parse.uniqueMonkey)
-            dispatch({ type: "GET_AVATAR", avatar: parse.uniqueMonkey })
-        }
+        let parsed = await request.json()
+        if (parsed.success) {
+            setTempAvatar(parsed.avatar);
+            console.log(parsed.avatar)
+        };
     };
 
     async function handleSelectAvatar(event) {
         event.preventDefault();
-        console.log('avatar selected:', avatar)
+        console.log('avatar selected:', tempAvatar)
         const data = new FormData()
-        data.append('avatar', JSON.stringify(avatar))
+        data.append('avatar', JSON.stringify(tempAvatar))
         let req = await fetch('/select-avatar', { method: "POST", body: data });
-        let parse = await req.json();
-        if (parse.success) {
-            console.log(parse)
+        let parsed = await req.json();
+        if (parsed.success) {
+            console.log(parsed)
+            dispatch({ type: "GET_AVATAR", avatar: tempAvatar })
             history.push('/dashboard')
+        };
+    };
+
+    function handleLoginDirect(event) {
+        event.preventDefault();
+        if (!tempAvatar) {
+            history.push('/sign-in/login')
+        };
+        if (tempAvatar.registered) {
+            dispatch({ type: "GET_AVATAR", avatar: tempAvatar })
+            history.push('/dashboard')
+        };
+        if (!tempAvatar.registered) {
+            dispatch({ type: "GET_AVATAR", avatar: tempAvatar })
+            history.push('/sign-in/signup')
         };
     };
 
@@ -58,11 +74,11 @@ export default function Home() {
                     <Title>Liane</Title>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {!avatar.name && (<h4 style={{ textAlign: "center" }}>Welcome!! It seems that it's your first time coming! Let's start by choosing an avatar!</h4>)}
-                    {avatar.name && (<div onClick={handleSelectAvatar} style={{ cursor: "pointer" }}>
-                        <h3 style={{ fontStyle: "italic" }}>{avatar.name}</h3>
-                        <Bounce><Span ><img src={avatar.path} height="100px" /></Span></Bounce>
-                        {/* {avatar.name && (<div to='/dashboard'><Love>I love it!!</Love></div>)} */}
+                    {!tempAvatar.name && (<h4 style={{ textAlign: "center" }}>Welcome!! It seems that it's your first time coming! Let's start by choosing an avatar!</h4>)}
+                    {tempAvatar.name && (<div onClick={handleSelectAvatar} style={{ cursor: "pointer" }}>
+                        <h3 style={{ fontStyle: "italic" }}>{tempAvatar.name}</h3>
+                        <Bounce><Span ><img src={tempAvatar.path} height="100px" /></Span></Bounce>
+                        {/* {tempAvatar.name && (<div to='/dashboard'><Love>I love it!!</Love></div>)} */}
                     </div>
                     )}
                 </div>
@@ -70,7 +86,7 @@ export default function Home() {
                     <Button onClick={pop}>Pop it</Button>
                 </div>
                 <LinkContainer>
-                    <Link to="/sign-in">Sign in</Link>
+                    <span onClick={handleLoginDirect} >Sign in</span>
                 </LinkContainer>
             </HomeComponent>
         </div>)

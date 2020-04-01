@@ -5,9 +5,9 @@ import { SignInContainer, PageTitle, Underline, LinkContainer } from './style';
 import Login from './Login.jsx';
 import Signup from './Signup.jsx';
 
-export default function Signin() {
+export default function Signin(props) {
 
-    const [changeSignType, setchangeSignType] = useState(true);
+    const [changeSignType, setchangeSignType] = useState(props.login);
 
     const avatar = useSelector(state => state.avatar);
 

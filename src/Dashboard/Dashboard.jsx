@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Day, Main, Nav, Throw, Me } from './style';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { week } from '../utils.js';
 import capitalize from 'capitalize';
@@ -14,6 +14,8 @@ export default function Dashboard() {
 
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!avatar.name) history.push('/');
   });
@@ -26,6 +28,12 @@ export default function Dashboard() {
   function handleSeeMyProfile(event) {
     event.preventDefault();
     setDay('profile')
+  };
+
+  function handleLogout(event) {
+    event.preventDefault();
+    dispatch({ type: 'LOGOUT' });
+    history.push('/');
   };
 
   return (
@@ -43,12 +51,14 @@ export default function Dashboard() {
       </Nav>
       <div>
         {day === 'profile' ? (
-          <div style={{ textAlign: 'center' }}>
-            Hello {avatar.name}
+          <div style={{ textAlign: "center", marginTop: "25px" }}>
+            Hello <span style={{ fontSize: "20px", fontWeight: "600" }}>{avatar.name}</span>
             <div>
               <img src={avatar.path} height="150px" />
             </div>
-            {!avatar.registered && <div>If you want to save your avatar<Link to="/sign-in">Sign Up</Link></div>}
+            {!avatar.registered ?
+              <div>If you want to save your avatar<Link to="/sign-in/signup" style={{ fontSize: "20px", fontWeight: "600" }}> Sign Up!</Link></div> :
+              <div style={{ fontSize: "20px", fontWeight: "600" }} onClick={handleLogout}>Logout</div>}
           </div>
         ) :
           (<h1 style={{ display: 'flex' }}>{capitalize(day)}</h1>)}

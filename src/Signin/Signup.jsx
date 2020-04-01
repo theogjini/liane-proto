@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { FormContainer, Input, InputContainer, Button } from './style';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Signup() {
 
     const dispatch = useDispatch();
+
+    const avatar = useSelector(state => state.avatar);
+
+    const history = useHistory();
+
+    const [messageError, setMessageError] = useState("")
 
     const [username, setUsername] = useState("");
 
@@ -16,14 +23,24 @@ export default function Signup() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        const data = new FormData();
-        data.append("start", start);
-        data.append("end", end);
-        let req = await fetch('/find', { method: 'POST', body: data });
-        let parsed = await req.json();
-        if (parsed.success)
-            console.log('results: ', results)
         console.log('Signup: SignupHandle')
+        if (!avatar.name) return alert('start by choosing an avatar!');
+        const data = new FormData();
+        data.append("username", username);
+        data.append("password", password);
+        data.append("avatar", JSON.stringify(avatar))
+        let req = await fetch('/signup', { method: 'POST', body: data });
+        let parsed = await req.json();
+        if (parsed.success) {
+            dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar });
+            console.log('Signup success', parsed.avatar);
+            history.push('/dashboard');
+        };
+        if (!parsed.success) {
+            console.log('Signup error', parsed.desc);
+            setMessageError(parsed.desc);
+            alert(parsed.desc);
+        };
     };
 
     function handleChangeUsername(event) {
@@ -43,7 +60,7 @@ export default function Signup() {
 
     return (<FormContainer >
         <form onSubmit={handleSubmit} autoComplete='off'>
-            <InputContainer>Username
+            <InputContainer error={messageError}>Username
                 <Input type="text" onChange={handleChangeUsername}
                     value={username} placeholder="Username" autoComplete='off' spellCheck="false"
                 />
@@ -58,5 +75,16 @@ export default function Signup() {
             </InputContainer>
             <div><Button disabled={disableValidation}>Sign up!</Button></div>
         </form>
+        {(avatar.name && !avatar.registered) && (<div style={{ marginTop: "25px" }}>
+            You will register:<h3> {avatar.name}</h3>
+            <div><img src={avatar.path} height="75px" /></div>
+            <div>You want to change your avatar? <Link to="/" style={{ fontSize: "20px", fontWeight: "600" }}> Click here!</Link></div>
+        </div>)}
+        {!avatar.name && (<div style={{ marginTop: "25px" }}>
+            Begin by choosing an<Link to="/" style={{ fontSize: "20px", fontWeight: "600" }}> avatar!</Link>
+        </div>)}
+        {avatar.registered && (<div style={{ marginTop: "25px" }}>
+            Already registered!<Link to="/dashboard" style={{ fontSize: "20px", fontWeight: "600" }}> Dashboard!</Link>
+        </div>)}
     </FormContainer >)
 };

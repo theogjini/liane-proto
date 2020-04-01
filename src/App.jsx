@@ -11,7 +11,8 @@ export default function App() {
         <Route exact={true} path="/" render={() => <Home />} />
         <Route exact={true} path="/dashboard" render={() => <Dashboard />} />
         <Route exact={true} path="/add-liana" render={() => <AddLiana />} />
-        <Route exact={true} path="/sign-in" render={() => <Signin />} />
+        <Route exact={true} path="/sign-in/login" render={() => <Signin login={true} />} />
+        <Route exact={true} path="/sign-in/signup" render={() => <Signin login={false} />} />
         {/* <Route exact={true} path="/chatroom/:chatroomId" render={routerData => <Throw />} /> */}
     </BrowserRouter>)
 }
