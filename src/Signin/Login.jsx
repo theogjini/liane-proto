@@ -28,6 +28,10 @@ export default function Login() {
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar })
             history.push('/dashboard')
         };
+        if (!parsed.success) {
+            console.log('Login Error ', parsed.desc);
+            return alert(parsed.desc);
+        };
     };
 
     function handleChangeUsername(event) {
