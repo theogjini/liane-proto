@@ -71,7 +71,7 @@ app.post('/login', upload.none(),
         const sessionId = uuidv1();
         sessions[sessionId] = user.infos;
         res.cookie('sid', sessionId);
-        return res.send(JSON.stringify({ success: true, avatar: user.infos }));
+        return res.send(JSON.stringify({ success: true, desc: "Welcome back!", avatar: user.infos }));
       };
     })
   })
@@ -100,7 +100,7 @@ app.post('/signup', upload.none(),
         const sessionId = uuidv1();
         sessions[sessionId] = newUser;
         res.cookie('sid', sessionId);
-        return res.send(JSON.stringify({ success: true, avatar: newUser.infos }));
+        return res.send(JSON.stringify({ success: true, desc: 'So thrilled to have you here!!', avatar: newUser.infos }));
       };
     })
   })

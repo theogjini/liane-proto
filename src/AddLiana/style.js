@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const PageTitle = styled.h1`
+    -webkit-tap-highlight-color: transparent;
     cursor: pointer;
     position: relative; 
     display: inline-block;

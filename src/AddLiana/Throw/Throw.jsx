@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel } from './style';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
-import { week, formatInput, checkZipFormat } from '../../utils.js';
+import { week, formatInput, checkZipFormat, notification } from '../../utils.js';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Switch from '@material-ui/core/Switch';
@@ -61,7 +61,7 @@ export default function Throw(props) {
     async function handleSubmit(event) {
         event.preventDefault();
         // if (!avatar.registered) return history.push('/sign-in');
-        if (disableValidation) return alert("Please enter start and arrival");
+        if (disableValidation) return notification("error", "Please enter start and arrival", dispatch);
         const schedule = recurrence ? days : uniqueTravel;
         const data = new FormData();
         data.append("start", start);
@@ -71,7 +71,7 @@ export default function Throw(props) {
         let req = await fetch('/throw', { method: 'POST', body: data })
         let parsed = await req.json()
         if (parsed.success)
-            alert("your travel has been added")
+            notification("success", "Travel added", dispatch);
     };
 
     function changeValue(event, setState) {

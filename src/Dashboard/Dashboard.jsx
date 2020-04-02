@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Day, Main, Nav, Throw, Me } from './style';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import { week } from '../utils.js';
+import { week, notification } from '../utils.js';
 import capitalize from 'capitalize';
 
 export default function Dashboard() {
@@ -34,6 +34,7 @@ export default function Dashboard() {
     event.preventDefault();
     dispatch({ type: 'LOGOUT' });
     history.push('/');
+    return notification('success', 'See you soon!', dispatch);
   };
 
   return (

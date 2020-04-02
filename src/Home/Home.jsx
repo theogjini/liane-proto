@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { HomeComponent, Button, Title, Span, Bounce, LinkContainer } from './style';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './particles.css';
 import Particles from 'react-particles-js';
 import { particlesParams } from './particlesParams';
+import { notification } from '../utils.js';
 
 
 export default function Home() {
@@ -45,9 +46,10 @@ export default function Home() {
         let req = await fetch('/select-avatar', { method: "POST", body: data });
         let parsed = await req.json();
         if (parsed.success) {
-            console.log(parsed)
-            dispatch({ type: "GET_AVATAR", avatar: tempAvatar })
-            history.push('/dashboard')
+            console.log(parsed);
+            dispatch({ type: "GET_AVATAR", avatar: tempAvatar });
+            history.push('/dashboard');
+            return notification('neutral', 'Welcome', dispatch)
         };
     };
 
@@ -59,6 +61,7 @@ export default function Home() {
         if (tempAvatar.registered) {
             dispatch({ type: "GET_AVATAR", avatar: tempAvatar })
             history.push('/dashboard')
+            return notification('success', 'Login succeeded!', dispatch)
         };
         if (!tempAvatar.registered) {
             dispatch({ type: "GET_AVATAR", avatar: tempAvatar })

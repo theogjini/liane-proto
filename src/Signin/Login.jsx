@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormContainer, Input, InputContainer, Button } from './style';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { notification } from '../utils.js';
 
 export default function Login() {
 
@@ -27,10 +28,11 @@ export default function Login() {
             console.log('Login name: ', parsed.avatar)
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar })
             history.push('/dashboard')
+            return notification('success', parsed.desc, dispatch);
         };
         if (!parsed.success) {
             console.log('Login Error ', parsed.desc);
-            return alert(parsed.desc);
+            return notification('error', parsed.desc, dispatch);
         };
     };
 

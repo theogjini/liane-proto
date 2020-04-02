@@ -10,8 +10,7 @@ const week = [
     { cap: 'Sunday', key: 'sunday', short: 'Sun.' }
 ];
 
-
-// canadian zip code formatting
+// Canadian zip code formatting
 const formatInput = (input) => {
     let capit = input.toUpperCase(input);
     let removeSpaces = "";
@@ -35,4 +34,13 @@ const checkZipFormat = (input) => {
     return verification && input.length === valueTable.length;
 };
 
-export { week, formatInput, checkZipFormat };
+// Notification engine
+const notification = (category, message, dispatch) => {
+    dispatch({ type: "NOTIFY", category: category, message: message });
+    const stopNotify = () => {
+        dispatch({ type: "STOP_NOTIFY", message: '' });
+    };
+    setTimeout(stopNotify, 2500);
+};
+
+export { week, formatInput, checkZipFormat, notification };

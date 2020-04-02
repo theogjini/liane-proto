@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FindComponent, Input, InputContainer, Button, ListElem, Results } from './style';
 import { useDispatch } from 'react-redux';
-import { formatInput, checkZipFormat } from '../../utils.js';
+import { formatInput, checkZipFormat, notification } from '../../utils.js';
 
 export default function Find(props) {
 
@@ -19,8 +19,7 @@ export default function Find(props) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        if (disableValidation) return alert("Please enter start and arrival");
-        if (!checkZipFormatting) return alert("Zipcode must be a valid canadian format: A1A-1A1");
+        if (disableValidation) return notification("error", "Please enter start and arrival", dispatch);
         const data = new FormData();
         data.append("start", start);
         data.append("end", end);

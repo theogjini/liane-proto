@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FormContainer, Input, InputContainer, Button } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import { notification } from '../utils.js';
 
 export default function Signup() {
 
@@ -24,7 +25,7 @@ export default function Signup() {
     async function handleSubmit(event) {
         event.preventDefault();
         console.log('Signup: SignupHandle')
-        if (!avatar.name) return alert('start by choosing an avatar!');
+        if (!avatar.name) return notification("neutral", "Start by choosing an avatar!", dispatch);
         const data = new FormData();
         data.append("username", username);
         data.append("password", password);
@@ -33,13 +34,14 @@ export default function Signup() {
         let parsed = await req.json();
         if (parsed.success) {
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar });
+            notification("success", parsed.desc, dispatch);;
             console.log('Signup success', parsed.avatar);
             history.push('/dashboard');
         };
         if (!parsed.success) {
             console.log('Signup error', parsed.desc);
             setMessageError(parsed.desc);
-            alert(parsed.desc);
+            notification("error", parsed.desc, dispatch);;
         };
     };
 
