@@ -49,7 +49,7 @@ export default function Home() {
             console.log(parsed);
             dispatch({ type: "GET_AVATAR", avatar: tempAvatar });
             history.push('/dashboard');
-            return notification('neutral', 'Welcome', dispatch)
+            return notification('neutral', 'Welcome!', dispatch)
         };
     };
 
@@ -61,7 +61,7 @@ export default function Home() {
         if (tempAvatar.registered) {
             dispatch({ type: "GET_AVATAR", avatar: tempAvatar })
             history.push('/dashboard')
-            return notification('success', 'Login succeeded!', dispatch)
+            return notification('success', 'Welcome back!', dispatch)
         };
         if (!tempAvatar.registered) {
             dispatch({ type: "GET_AVATAR", avatar: tempAvatar })

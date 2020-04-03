@@ -4,15 +4,17 @@ body {
     overflow: hidden;
     max-width: 1180px;
     margin: auto;
+    /* color: white;
+    background-color: rgb(46, 55, 61); */
 }
 
 a {
     text-decoration: none;
 }
 
-colorPrimary: {
-    color: green;
-}
+/* .MuiSwitch-colorSecondary.Mui-checked {
+    color: #28f738;
+} */
 
 a:visited {
     color: inherit;

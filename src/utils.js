@@ -35,12 +35,14 @@ const checkZipFormat = (input) => {
 };
 
 // Notification engine
+let timer;
 const notification = (category, message, dispatch) => {
+    clearTimeout(timer);
     dispatch({ type: "NOTIFY", category: category, message: message });
     const stopNotify = () => {
         dispatch({ type: "STOP_NOTIFY", message: '' });
     };
-    setTimeout(stopNotify, 2500);
+    timer = setTimeout(stopNotify, 2500);
 };
 
 export { week, formatInput, checkZipFormat, notification };

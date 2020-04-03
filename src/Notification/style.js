@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 const typeColors = {
-    error: '#ff0000a3',
-    success: '#8bc34aa3',
-    neutral: '#03a9f4a3'
+    error: '#ff0000cc',
+    success: '#8bc34acc',
+    neutral: '#03a9f4cc'
 };
 
 const NotificationContainer = styled.div`
@@ -17,6 +17,8 @@ const NotificationContainer = styled.div`
 
 const Message = styled.div`
     -webkit-tap-highlight-color: transparent;
+    background-color: ${ props => typeColors[props.category]}; 
+    backdrop-filter: blur(0.8);
     position: absolute;
     overflow: auto;
     z-index: 10000;
@@ -28,13 +30,12 @@ const Message = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${ props => typeColors[props.category]}; 
     transition: 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     color: white;
     font-family: 'Baloo', sans-serif;
-    font-size: ${props => props.active ? '18px' : '0'};
+    font-size: ${props => props.active ? '18px' : '15px'};
     font-weight: 600;
 `
 

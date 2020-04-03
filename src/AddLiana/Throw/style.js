@@ -21,7 +21,7 @@ const DayTable = styled.div`
 `
 
 const Button = styled.button`
-    background-color: white;
+    background-color: transparent;
     font-size: 1.5rem;
     border-radius: 5px;
     font-weight: 600;
@@ -49,17 +49,19 @@ const Day = styled.div`
     height: 30px;
     border-radius: 5px;
     margin: 5px;
-    background-color: ${props => props.active ? dayColor[props.currentDay] : 'white'};
+    background-color: ${props => props.active ? dayColor[props.currentDay] : 'transparent'};
     color: ${props => !props.active ? dayColor[props.currentDay] : 'white'};
     font-weight: bold;
     font-size: ${props => props.active ? '18px' : '14px'};
-    transition: 0.2s ease-in-out;
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 `
 
 const DateSelector = styled.input`
     display: block;
     border: none;
     border-bottom: 1px solid #cccccc;
+    font-family: 'Baloo', sans-serif;
+    font-size: 18px;
 
     :focus {
         outline: none;

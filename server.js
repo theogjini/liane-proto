@@ -60,11 +60,11 @@ app.post('/login', upload.none(),
       };
       if (user === null) {
         console.log("Invalid username");
-        return res.send(JSON.stringify({ success: false, desc: "Invalid username" }));
+        return res.send(JSON.stringify({ success: false, desc: "Invalid username!" }));
       };
       if (user.password != sha1(password)) {
         console.log("Invalid password");
-        return res.send(JSON.stringify({ success: false, desc: "Invalid password" }));
+        return res.send(JSON.stringify({ success: false, desc: "Invalid password!" }));
       };
       if (user.password === sha1(password)) {
         console.log("Login Success");
@@ -100,7 +100,7 @@ app.post('/signup', upload.none(),
         const sessionId = uuidv1();
         sessions[sessionId] = newUser;
         res.cookie('sid', sessionId);
-        return res.send(JSON.stringify({ success: true, desc: 'So thrilled to have you here!!', avatar: newUser.infos }));
+        return res.send(JSON.stringify({ success: true, desc: 'Thrilled to have you here!', avatar: newUser.infos }));
       };
     })
   })

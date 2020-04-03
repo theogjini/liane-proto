@@ -11,9 +11,9 @@ const reducer = (state, action) => {
         };
         case "NOTIFY": {
             {
-                state.UI.notification.active = true;
                 state.UI.notification.category = action.category;
                 state.UI.notification.message = action.message;
+                state.UI.notification.active = true;
             };
             break;
         };

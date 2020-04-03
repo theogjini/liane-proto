@@ -47,7 +47,7 @@ const FormContainer = styled.div`
 `
 
 const Button = styled.button`
-    background-color: white;
+    background-color: transparent;
     font-size: 1.5rem;
     border-radius: 5px;
     font-weight: 600;

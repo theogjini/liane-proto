@@ -60,7 +60,10 @@ export default function Throw(props) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        // if (!avatar.registered) return history.push('/sign-in');
+        if (!avatar.registered) {
+            notification("error", "You must register before throwing a liana", dispatch);
+            return history.push('/sign-in')
+        };
         if (disableValidation) return notification("error", "Please enter start and arrival", dispatch);
         const schedule = recurrence ? days : uniqueTravel;
         const data = new FormData();

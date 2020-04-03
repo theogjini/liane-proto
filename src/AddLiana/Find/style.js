@@ -15,7 +15,7 @@ const FindComponent = styled.div`
     text-align: center;
 `
 const Button = styled.button`
-    background-color: white;
+    background-color: transparent;
     font-size: 1.5rem;
     border-radius: 5px;
     font-weight: 600;
@@ -45,6 +45,19 @@ const InputContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     margin: 10px auto;
+
+    ::after {
+        position: absolute;
+        content: 'Zipcode format: A1A-1A1';
+        color: red;
+        opacity: ${props => props.validZip ? '1' : '0'};
+        right: 80px;
+        top: 0px;
+        font-family: 'Baloo', sans-serif;
+        font-size: 10px;
+        -webkit-transition: 0.2s ease-in-out;
+        transition: 0.2s ease-in-out;
+    }
 `
 
 const Input = styled.input`

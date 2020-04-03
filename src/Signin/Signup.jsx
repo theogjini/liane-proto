@@ -41,7 +41,7 @@ export default function Signup() {
         if (!parsed.success) {
             console.log('Signup error', parsed.desc);
             setMessageError(parsed.desc);
-            notification("error", parsed.desc, dispatch);;
+            notification("error", parsed.desc, dispatch);
         };
     };
 
