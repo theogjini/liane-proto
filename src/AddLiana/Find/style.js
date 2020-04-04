@@ -86,7 +86,11 @@ const ListElem = styled.li`
     display: grid;
     scroll-snap-align: start;
     grid-template-areas: "a b b b b b b b"
-                         "a c c c c c c c";    
+                         "a c c c c c c c";
+    cursor: pointer;
+    :hover {
+        background-color: lightgray;
+    }
 `
 
 const Results = styled.div`

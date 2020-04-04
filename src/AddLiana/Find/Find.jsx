@@ -28,11 +28,28 @@ export default function Find(props) {
         if (parsed.success)
             console.log('results: ', results)
         setResults(parsed.results);
-    }
+    };
+
     function changeValue(event, setState) {
         let formattedInput = formatInput(event.target.value);
         setState(formattedInput);
-    }
+    };
+
+    async function handleSendRequest(event, travelId) {
+        event.preventDefault();
+        const data = new FormData();
+        data.append('travel_id', travelId);
+        const req = await fetch('/select-travel', { method: 'POST', body: data });
+        const parsed = await req.json();
+        if (parsed.success) {
+            notification("success", parsed.desc, dispatch)
+        };
+
+        if (!parsed.success) {
+            notification("error", parsed.desc, dispatch)
+        };
+    };
+
     return (<FindComponent active={props.active}>
         <form onSubmit={handleSubmit}>
             <InputContainer validZip={!checkZipFormat(start) && start.length === 7}>From
@@ -48,11 +65,11 @@ export default function Find(props) {
         <Results>
             <ul style={{ paddingInlineStart: '0', scrollSnapType: 'x mandatory' }}>
                 {results.map(travel => <ListElem key={travel._id}>
-                    <div>
-                        {travel.start} <img src="assets/icons/round-trip.svg" /> {travel.end}
+                    <div onClick={event => handleSendRequest(event, travel._id)}>
+                        <span>{travel._id.slice(-5)}</span> {travel.start} <img src="assets/icons/round-trip.svg" height="25px" /> {travel.end}
                     </div>
                 </ListElem>)}
             </ul>
         </Results>
     </FindComponent >)
-}
+};

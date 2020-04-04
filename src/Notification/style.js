@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 const typeColors = {
-    error: '#ff0000cc',
-    success: '#8bc34acc',
-    neutral: '#03a9f4cc'
+    error: '#ff0000',
+    success: '#8bc34a',
+    neutral: '#03a9f4'
 };
 
 const NotificationContainer = styled.div`

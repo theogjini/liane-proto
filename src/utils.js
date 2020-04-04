@@ -10,6 +10,19 @@ const week = [
     { cap: 'Sunday', key: 'sunday', short: 'Sun.' }
 ];
 
+class DayTravel {
+    constructor(goTime, returnTime, goDate) {
+        this.goTime = goTime;
+        this.returnTime = returnTime;
+        this.goDate = goDate;
+        this.seatsAvailable = 0;
+        this.attendees = [];
+    };
+    isSelected() {
+        return this.goTime || this.returnTime
+    };
+};
+
 // Canadian zip code formatting
 const formatInput = (input) => {
     let capit = input.toUpperCase(input);
@@ -45,4 +58,4 @@ const notification = (category, message, dispatch) => {
     timer = setTimeout(stopNotify, 2500);
 };
 
-export { week, formatInput, checkZipFormat, notification };
+export { week, formatInput, checkZipFormat, notification, DayTravel };

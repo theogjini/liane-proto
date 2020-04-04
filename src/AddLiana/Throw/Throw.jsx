@@ -2,23 +2,10 @@ import React, { useState } from 'react';
 import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel } from './style';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
-import { week, formatInput, checkZipFormat, notification } from '../../utils.js';
-import { useSelector } from 'react-redux';
+import { week, formatInput, checkZipFormat, notification, DayTravel } from '../../utils.js';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Switch from '@material-ui/core/Switch';
-
-class DayTravel {
-    constructor(goTime, returnTime, goDate) {
-        this.goTime = goTime;
-        this.returnTime = returnTime;
-        this.goDate = goDate;
-        this.seatsAvailable = 0;
-        this.attendees = [];
-    };
-    isSelected() {
-        return this.goTime || this.returnTime
-    };
-};
 
 export default function Throw(props) {
 
@@ -31,6 +18,8 @@ export default function Throw(props) {
     const avatar = useSelector(state => state.avatar);
 
     const history = useHistory();
+
+    const dispatch = useDispatch();
 
     const defaultDaysState = () => {
         let date = new Date().getDay();
@@ -73,8 +62,13 @@ export default function Throw(props) {
         console.log('sent data', data)
         let req = await fetch('/throw', { method: 'POST', body: data })
         let parsed = await req.json()
-        if (parsed.success)
+        if (parsed.success) {
             notification("success", "Travel added", dispatch);
+            history.push("/dashboard");
+        };
+        if (!parsed.success) {
+            notification("success", "Something went wrong...", dispatch);
+        };
     };
 
     function changeValue(event, setState) {

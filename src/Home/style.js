@@ -32,7 +32,15 @@ const Title = styled.div`
     font-weight: 700;
 `;
 
+const AvatarContainer = styled.div`
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 const Bounce = styled.div`
+    -webkit-tap-highlight-color: transparent;
     animation: chimp 1s ease-in-out infinite ;
     @keyframes chimp {
     0% {transform: translateY(0);}
@@ -42,6 +50,7 @@ const Bounce = styled.div`
 `;
 
 const Span = styled.div`
+    -webkit-tap-highlight-color: transparent;
     text-align: center;
     width: 100px;
     margin: auto;
@@ -72,4 +81,4 @@ const LinkContainer = styled.div`
 `;
 
 
-export { Button, HomeComponent, Title, Span, Bounce, LinkContainer };
+export { Button, HomeComponent, Title, Span, Bounce, LinkContainer, AvatarContainer };

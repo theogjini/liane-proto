@@ -6,15 +6,15 @@ class User {
             original: user.original,
             path: user.path,
             registered: id,
-            travels: {
-                monday: [],
-                tuesday: [],
-                wednesday: [],
-                thursday: [],
-                friday: [],
-                saturday: [],
-                sunday: [],
-            },
+        };
+        this.travels = {
+            0: [],
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
         };
         this.username = username;
         this.password = password;

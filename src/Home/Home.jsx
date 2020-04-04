@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HomeComponent, Button, Title, Span, Bounce, LinkContainer } from './style';
+import { HomeComponent, Button, Title, Span, Bounce, LinkContainer, AvatarContainer } from './style';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './particles.css';
@@ -56,7 +56,7 @@ export default function Home() {
     function handleLoginDirect(event) {
         event.preventDefault();
         if (!tempAvatar) {
-            history.push('/sign-in/login')
+            history.push('/sign-in/login');
         };
         if (tempAvatar.registered) {
             dispatch({ type: "GET_AVATAR", avatar: tempAvatar })
@@ -76,7 +76,7 @@ export default function Home() {
                 <div>
                     <Title>Liane</Title>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <AvatarContainer >
                     {!tempAvatar.name && (<h4 style={{ textAlign: "center" }}>Welcome!! It seems that it's your first time coming! Let's start by choosing an avatar!</h4>)}
                     {tempAvatar.name && (<div onClick={handleSelectAvatar} style={{ cursor: "pointer" }}>
                         <h3 style={{ fontStyle: "italic" }}>{tempAvatar.name}</h3>
@@ -84,7 +84,7 @@ export default function Home() {
                         {/* {tempAvatar.name && (<div to='/dashboard'><Love>I love it!!</Love></div>)} */}
                     </div>
                     )}
-                </div>
+                </AvatarContainer>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Button onClick={pop}>Pop it</Button>
                 </div>
