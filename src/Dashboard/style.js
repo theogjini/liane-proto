@@ -64,11 +64,25 @@ const Day = styled.div`
     color: white;
     display: flex;
     justify-content: center;
-    top: ${props => props.active ? '50%' : '18%'};;
-    height: 50%;
+    top: ${props => props.active ? '35%' : '0'};
     font-size: ${props => props.active ? '25px' : '18px'};
     font-weight: ${props => props.active ? 600 : 500};
     transition: 0.1s ease-out;
 `
 
-export { Main, Nav, Day, Throw, Me };
+const DashContent = styled.div``
+
+const Profile = styled.div`
+    text-align: center;
+    margin-top: 25px;
+`
+
+const BoldSpan = styled.span`
+    font-size: 20px;
+    font-weight: 600;
+`
+
+const Lianas = styled.div`
+`
+
+export { Main, Nav, Day, Throw, Me, DashContent, Profile, BoldSpan, Lianas };

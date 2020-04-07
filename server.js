@@ -98,8 +98,9 @@ app.post('/signup', upload.none(),
         console.log("Signup success");
         dbo.collection("users").insertOne(newUser);
         const sessionId = uuidv1();
-        sessions[sessionId] = newUser;
+        sessions[sessionId] = newUser.infos;
         res.cookie('sid', sessionId);
+        console.log('sessions after signup:', sessions);
         return res.send(JSON.stringify({ success: true, desc: 'Thrilled to have you here!', avatar: newUser.infos }));
       };
     })
@@ -129,13 +130,36 @@ app.post('/select-avatar', upload.none(),
   })
 );
 
+app.get('/get-travels',
+  catchAll(async (req, res) => {
+    const userId = sessions[req.cookies.sid].registered;
+    console.log('Get travels called', userId)
+    dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
+      if (err) {
+        console.log("finding user error:", err);
+      };
+      if (user === null) {
+        console.log("User ID not found:", userId);
+        return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
+      };
+      if (user) {
+        console.log("User found:", user.travels);
+        const mapObjectIds = user.travels.map(travelid => ObjectID(travelid));
+        const travels = await dbo.collection("travels").find({ _id: { $in: mapObjectIds } }).toArray();
+        console.log('User travels: ', travels);
+        return res.send(JSON.stringify({ success: true, desc: "travels well loaded", travels }));
+      }
+    });
+  })
+);
+
 app.post('/throw', upload.none(),
   catchAll(async (req, res) => {
     const user = sessions[req.cookies.sid];
     const start = req.body.start;
     const end = req.body.end;
     const schedule = JSON.parse(req.body.schedule);
-    schedule.forEach((dayTravel, idx) => {
+    schedule.forEach(async (dayTravel, idx) => {
       if (dayTravel != null) {
         const newId = new ObjectID();
         const newChatRoomId = new ObjectID();
@@ -147,7 +171,7 @@ app.post('/throw', upload.none(),
           start,
           end,
           day,
-          driver: user,
+          driver: user.registered,
           seatsAvailable: dayTravel.seatsAvailable,
           attendees: [],
           requests: [],
@@ -156,8 +180,9 @@ app.post('/throw', upload.none(),
           goDate: dayTravel.goDate ? dayTravel.goDate : null
         };
         console.log('travelToAdd: ', travelToAdd);
-        dbo.collection("travels").insertOne(travelToAdd);
-        dbo.collection("chatrooms").insertOne({ _id: newChatRoomId });
+        await dbo.collection("travels").insertOne(travelToAdd);
+        await dbo.collection("chatrooms").insertOne({ _id: newChatRoomId });
+        await dbo.collection("users").updateOne({ _id: ObjectID(user.registered) }, { $push: { travels: newId } })
       }
     })
     res.send(JSON.stringify({ success: true }))
@@ -166,7 +191,6 @@ app.post('/throw', upload.none(),
 
 app.post('/find', upload.none(),
   catchAll(async (req, res) => {
-    const userSearch = { start: req.body.start, end: req.body.end };
     const travels = await dbo.collection('travels').find().toArray();
     const results = await travels.filter(travel => travel.start === req.body.start && travel.end === req.body.end)
     console.log('travels found:', results);
@@ -189,55 +213,28 @@ app.post('/select-travel', upload.none(),
       };
       if (travel) {
         console.log('Travel Found', travel);
-        travel.requests.push(userId);
-        const user = await dbo.collection("users").findOne({ _id: ObjectID(userId) });
-        const travelsCopy = await user.travels;
-        console.log('is request already sent? BEFORE:', travelId)
-        console.log('is request already sent? BEFORE:', travelsCopy[travel.day])
-        const isRequestAlreadySent = travelsCopy[travel.day].some(travel => ObjectID(travel._id).toString() === ObjectID(travelId).toString());
-        console.log('is request already sent?:', isRequestAlreadySent)
+        const isRequestAlreadySent = travel.requests.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
         if (isRequestAlreadySent) {
           return res.send(JSON.stringify({ success: false, desc: 'Request already sent!' }))
         };
-        if (!isRequestAlreadySent) {
-          const updateTravel = await travelsCopy[travel.day].push({ ...travel, authorised: false });
-          await dbo.collection("users").updateOne({ _id: ObjectID(userId) }, { $set: { travels: travelsCopy } });
-          return res.send(JSON.stringify({ success: true, desc: 'Request sent to the driver!' }))
-        };
+        await dbo.collection("users").updateOne({ _id: ObjectID(userId) }, { $push: { travels: ObjectID(travelId) } });
+        await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $push: { requests: ObjectID(userId) } });
+        res.send(JSON.stringify({ success: true, desc: 'Request sent to the driver!' }))
       };
     })
-
   })
 );
 
-// app.post('/accept-traveller', upload.none(),
-//   catchAll(async (req, res) => {
-//     console.log('select hit')
-//     const travellerId = req.body.traveller_;
-//     const userId = sessions[req.cookies.sid].registered;
-//     dbo.collection("travels").findOne({ _id: ObjectID(travelId) }, async (err, travel) => {
-//       if (err) {
-//         console.log('error', err);
-//       };
-//       if (travel === null) {
-//         console.log('Id Error', travelId);
-//         return res.send(JSON.stringify({ success: false, desc: 'travel _id not recognized in db' }));
-//       };
-//       if (travel) {
-//         console.log('Travel Found', travel);
-//         travel.requests.push(userId);
-//         const user = await dbo.collection("users").findOne({ _id: ObjectID(userId) });
-//         const travelsCopy = await user.travels;
-//         console.log('Travel copy', user);
-//         await travelsCopy[travel.day].push({ ...travel, authorised: false });
-//         console.log('travel updated', travelsCopy);
-//         await dbo.collection("users").updateOne({ _id: ObjectID(userId) }, { $set: { travels: travelsCopy } });
-//         res.send(JSON.stringify({ success: true, desc: 'Request sent to the driver!' }))
-//       };
-//     })
-
-//   })
-// );
+app.post('/accept-traveller', upload.none(),
+  catchAll(async (req, res) => {
+    console.log('accept-traveller hit')
+    const travelId = req.body.travel_id;
+    const travellerId = req.body.traveller;
+    await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $pull: { requests: ObjectID(travellerId) } });
+    await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $push: { attendees: ObjectID(travellerId) } });
+    res.send(JSON.stringify({ success: true, desc: 'Monkey accepted on your Liana!' }));
+  })
+);
 
 // Server
 app.all('/*', (req, res, next) => { // needed for react router

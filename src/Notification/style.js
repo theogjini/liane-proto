@@ -20,7 +20,7 @@ const Message = styled.div`
     background-color: ${ props => typeColors[props.category]}; 
     backdrop-filter: blur(0.8);
     position: absolute;
-    overflow: auto;
+    overflow: hidden;
     z-index: 10000;
     top: 0;
     padding-right: 5px;

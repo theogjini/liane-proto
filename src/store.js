@@ -6,6 +6,10 @@ const reducer = (state, action) => {
             { state.avatar = action.avatar };
             break
         };
+        case "GET_TRAVELS": {
+            { state.travels = action.travels };
+            break
+        };
         case "LOGOUT": {
             { state.avatar = {} };
         };
@@ -34,6 +38,7 @@ const reducer = (state, action) => {
 const store = createStore(
     reducer, {
     avatar: {},
+    travels: [],
     UI: {
         profilePopup: false,
         notification: {

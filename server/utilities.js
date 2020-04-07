@@ -7,15 +7,7 @@ class User {
             path: user.path,
             registered: id,
         };
-        this.travels = {
-            0: [],
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-        };
+        this.travels = [];
         this.username = username;
         this.password = password;
     };
