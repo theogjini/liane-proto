@@ -39,7 +39,7 @@ export default function Chatroom(props) {
                 <MessageForm onSubmit={handleSendMessage}>
                     <InputContainer>
                         <Input color={travel.day} type="text" onChange={event => setMessage(event.target.value)} value={message} placeholder={placeholder} />
-                        <Button type="submit" color={travel.day} >
+                        <Button type="submit" color={travel.day} disabled={!message}>
                             {/* <Object type="image/svg" data="assets/icons/send.svg" /> */}
                             <SendSvg />
                         </Button>

@@ -44,7 +44,6 @@ const Messages = styled.div`
 const Button = styled.button`
     border: none;
     background-color: transparent;
-    transition: 0.2s ease-in-out;
     margin-left: 5px;
 
     :focus {
@@ -55,9 +54,21 @@ const Button = styled.button`
         height: 20px;
         width: 20px;
         path {
+            transition: fill 0.2s ease-in-out;
             fill: ${props => colors[props.color]};        
         }
-    } 
+    }
+
+    :disabled {
+        svg {
+            height: 20px;
+            width: 20px;
+            path {
+                transition: fill 0.2s ease-in-out;
+                fill: #cccccc;        
+            }
+        }   
+    }
 `
 
 const InputContainer = styled.div`
@@ -81,17 +92,16 @@ const Input = styled.input`
     padding: 10px;
     border: 2px solid #cccccc;
     border-radius: 5px;
-    transition: 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     ::placeholder {
         font-weight: 600;
-        transition: 0.2s ease-out;
         color: lightgray;
     }
     
     :focus {
-        outline: none;
-        border: 2px solid ${props => colors[props.color]};        
+        outline: 0;
+        border-color: ${props => colors[props.color]};        
         ::placeholder {
             opacity: 1;
         }
