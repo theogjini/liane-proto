@@ -146,7 +146,6 @@ app.get('/get-travels',
         console.log("User found:", user.travels);
         const mapObjectIds = user.travels.map(travelid => ObjectID(travelid));
         const travels = await dbo.collection("travels").find({ _id: { $in: mapObjectIds } }).toArray();
-        console.log('User travels: ', travels);
         return res.send(JSON.stringify({ success: true, desc: "travels well loaded", travels }));
       }
     });

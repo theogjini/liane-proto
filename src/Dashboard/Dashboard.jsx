@@ -36,7 +36,7 @@ export default function Dashboard() {
       const parsed = await req.json();
       if (parsed.success) {
         console.log('parsed travels:', parsed.travels)
-        dispatch({ type: 'GET_TRAVELS', action: parsed.travels });
+        dispatch({ type: 'GET_TRAVELS', travels: parsed.travels });
         setTravels(parsed.travels);
       };
     };
