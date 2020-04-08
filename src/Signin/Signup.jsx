@@ -22,6 +22,10 @@ export default function Signup() {
 
     const disableValidation = username === "" || password === "" || password !== passwordRepeat || passwordRepeat === "";
 
+    const placeholderUsername = username ? "" : "Username";
+    const placeholderPassword = password ? "" : "Password";
+    const placeholderPasswordRepeat = passwordRepeat ? "" : "Repeat password";
+
     async function handleSubmit(event) {
         event.preventDefault();
         console.log('Signup: SignupHandle')
@@ -64,16 +68,16 @@ export default function Signup() {
         <form onSubmit={handleSubmit} autoComplete='off'>
             <InputContainer error={messageError}>Username
                 <Input type="text" onChange={handleChangeUsername}
-                    value={username} placeholder="Username" autoComplete='off' spellCheck="false"
+                    value={username} placeholder={placeholderUsername} autoComplete='off' spellCheck="false"
                 />
             </InputContainer>
             <InputContainer>Password
                 <Input type="password" onChange={handleChangePassword}
-                    value={password} placeholder="Password" autoComplete='new-password' spellCheck="false" />
+                    value={password} placeholder={placeholderPassword} autoComplete='new-password' spellCheck="false" />
             </InputContainer>
             <InputContainer>Repeat
                 <Input type="password" onChange={handleRepeatPassword}
-                    value={passwordRepeat} placeholder="Repeat Password" autoComplete='new-password' spellCheck="false" />
+                    value={passwordRepeat} placeholder={placeholderPasswordRepeat} autoComplete='new-password' spellCheck="false" />
             </InputContainer>
             <div><Button disabled={disableValidation}>Sign up!</Button></div>
         </form>

@@ -76,7 +76,7 @@ const Input = styled.input`
         outline: none;
         box-shadow: 0px 0px 15px -4px rgba(40,247,56,1);        
         ::placeholder {
-            opacity: 0;
+            opacity: 1;
         }
     }
 `

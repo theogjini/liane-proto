@@ -14,7 +14,7 @@ export default function Dashboard() {
 
   const [travels, setTravels] = useState([]);
 
-  const travelsToDisplay = travels.filter(trvl => trvl.day === idx)
+  const travelsToDisplay = travels.filter(trvl => trvl.day === idx);
 
   const avatar = useSelector(state => state.avatar);
   console.log(avatar);

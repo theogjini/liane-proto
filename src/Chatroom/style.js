@@ -11,16 +11,16 @@ const colors = {
 };
 
 const ChatroomContainer = styled.div`
+    height: 95vh;
 `
 
 const Wrapper = styled.div`
     position: relative;
-    height: 95vh;
+    height: 100%;
 `
 const Me = styled.div`
     cursor: pointer;
     z-index: 100;
-    position: absolute;
     right: 50px;
     bottom: 30px;
     font-size: 30px;
@@ -36,24 +36,52 @@ const Me = styled.div`
 const Messages = styled.div`
     border: ${ props => '5px solid ' + colors[props.color]};
     background-color: ${ props => colors[props.color] + '14'};
-    margin: 10px 20px;
-    height: 75%;
+    margin: 10px 20px 40px 20px;
+    height: 75vh;
     border-radius: 5px;
+`
+
+const Button = styled.button`
+    border: none;
+    background-color: transparent;
+    transition: 0.2s ease-in-out;
+    margin-left: 5px;
+
+    :focus {
+        outline: none;
+    }
+    
+    svg {
+        height: 20px;
+        width: 20px;
+        path {
+            fill: ${props => colors[props.color]};        
+        }
+    } 
+`
+
+const InputContainer = styled.div`
+    display: flex;
+    align-items: center;
 `
 
 const MessageForm = styled.form`
     position: absolute;
     display: flex;
-    justify-content: left;
+    bottom: 0;
+    align-items: center;
+    justify-content: space-between;
     margin-left: 20px;
+    margin-bottom: 30px;
+    width: 90%;
+    background-color: white;
 `
 
 const Input = styled.input`
     padding: 10px;
-    border: 1px solid #cccccc;
+    border: 2px solid #cccccc;
     border-radius: 5px;
     transition: 0.2s ease-in-out;
-    margin-bottom: 10px;
 
     ::placeholder {
         font-weight: 600;
@@ -63,11 +91,11 @@ const Input = styled.input`
     
     :focus {
         outline: none;
-        box-shadow: 0px 0px 15px -4px ${props => colors[props.color]};        
+        border: 2px solid ${props => colors[props.color]};        
         ::placeholder {
-            opacity: 0;
+            opacity: 1;
         }
     }
 `
 
-export { ChatroomContainer, Messages, MessageForm, Input, Wrapper, Me };
+export { ChatroomContainer, Messages, MessageForm, Input, Wrapper, Me, Button, InputContainer };

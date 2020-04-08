@@ -16,6 +16,9 @@ export default function Login() {
 
     const disableValidation = username === "" || password === "";
 
+    const placeholderUsername = username ? "" : "Username";
+    const placeholderPassword = password ? "" : "Password";
+
     async function handleSubmit(event) {
         event.preventDefault();
         console.log('Login: loginHandle')
@@ -50,11 +53,11 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
             <InputContainer>Username
                 <Input type="text" onChange={handleChangeUsername}
-                    value={username} placeholder="Username" spellCheck="false"
+                    value={username} placeholder={placeholderUsername} spellCheck="false"
                 />
             </InputContainer>
             <InputContainer>Password<Input type="password" onChange={handleChangePassword}
-                value={password} placeholder="Password" spellCheck="false" /></InputContainer>
+                value={password} placeholder={placeholderPassword} spellCheck="false" /></InputContainer>
             <div><Button disabled={disableValidation}>Login!</Button></div>
         </form>
     </FormContainer >)

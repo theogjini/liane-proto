@@ -17,6 +17,9 @@ export default function Find(props) {
 
     const checkZipFormatting = checkZipFormat(end) && checkZipFormat(start);
 
+    const placeholderStart = start ? "" : "Postal code";
+    const placeholderEnd = end ? "" : "Postal code";
+
     async function handleSubmit(event) {
         event.preventDefault();
         if (disableValidation) return notification("error", "Please enter start and arrival", dispatch);
@@ -54,11 +57,11 @@ export default function Find(props) {
         <form onSubmit={handleSubmit}>
             <InputContainer validZip={!checkZipFormat(start) && start.length === 7}>From
                 <Input type="text" onChange={event => changeValue(event, setStart)}
-                    value={start} placeholder="Postal code" spellCheck="false" />
+                    value={start} placeholder={placeholderStart} spellCheck="false" />
             </InputContainer>
             <InputContainer validZip={!checkZipFormat(end) && end.length === 7}>To
                 <Input type="text" onChange={event => changeValue(event, setEnd)}
-                    value={end} placeholder="Postal code" spellCheck="false" />
+                    value={end} placeholder={placeholderEnd} spellCheck="false" />
             </InputContainer>
             <div><Button disabled={!checkZipFormatting}>Find a liana</Button></div>
         </form>

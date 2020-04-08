@@ -47,6 +47,9 @@ export default function Throw(props) {
 
     const checkZipFormatting = checkZipFormat(end) && checkZipFormat(start);
 
+    const placeholderStart = start ? "" : "Postal code";
+    const placeholderEnd = end ? "" : "Postal code";
+
     async function handleSubmit(event) {
         event.preventDefault();
         if (!avatar.registered) {
@@ -159,11 +162,11 @@ export default function Throw(props) {
         <form onSubmit={handleSubmit}>
             <InputContainer validZip={!checkZipFormat(start) && start.length === 7} > From
                 <Input type="text" onChange={event => changeValue(event, setStart)}
-                    value={start} placeholder="Postal code" spellCheck="false" />
+                    value={start} placeholder={placeholderStart} spellCheck="false" />
             </InputContainer>
             <InputContainer validZip={!checkZipFormat(end) && end.length === 7}>To
                 <Input type="text" onChange={event => changeValue(event, setEnd)}
-                    value={end} placeholder="Postal code" spellCheck="false" />
+                    value={end} placeholder={placeholderEnd} spellCheck="false" />
             </InputContainer>
             <label style={{ display: 'flex', maxWidth: '290px', margin: 'auto', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Switch onClick={handleRecurrenceChange} checked={recurrence} />
