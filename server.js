@@ -15,7 +15,7 @@ const upload = multer({ dest: __dirname + '/uploads/itemImages' });
 const capitalize = require('capitalize'); const config = require("./server/config.json");
 const { uniqueNamesGenerator, adjectives, colors } = require("unique-names-generator");
 const { monkeys, avatarsPaths } = require("./server/monkeys.js");
-const { User, catchAll } = require("./server/utilities.js");
+const { User, catchAll, Message } = require("./server/utilities.js");
 
 // Database
 const MongoDB = require('mongodb');
@@ -232,6 +232,36 @@ app.post('/accept-traveller', upload.none(),
     await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $pull: { requests: ObjectID(travellerId) } });
     await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $push: { attendees: ObjectID(travellerId) } });
     res.send(JSON.stringify({ success: true, desc: 'Monkey accepted on your Liana!' }));
+  })
+);
+
+app.post('/get-messages', upload.none(),
+  catchAll(async (req, res) => {
+    const chatroomId = req.body.chatroomId;
+    console.log('get-messages called');
+    await dbo.collection("chatrooms").findOne({ _id: ObjectID(chatroomId) }, (err, chatroom) => {
+      if (err) {
+        console.log('error finding chatroom:', err);
+        res.send(JSON.stringify({ success: false, desc: 'Chatroom not found' }))
+      };
+      if (chatroom) {
+        console.log('chatroom found', chatroom.messages);
+        res.send(JSON.stringify({ success: true, desc: 'Chatroom found!', messages: chatroom.messages }))
+      }
+    })
+  })
+);
+
+app.post('/send-message', upload.none(),
+  catchAll(async (req, res) => {
+    console.log('send-message called');
+    const chatroomId = req.body.chatroomId;
+    const user = sessions[req.cookies.sid];
+    const content = req.body.content;
+    const timestamp = req.body.timestamp;
+    const messageToAdd = new Message(user, content, timestamp);
+    await dbo.collection("chatrooms").updateOne({ _id: ObjectID(chatroomId) }, { $push: { messages: messageToAdd } });
+    res.send(JSON.stringify({ success: true }));
   })
 );
 

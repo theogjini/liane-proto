@@ -3,7 +3,6 @@ import { Day, Main, Nav, Throw, Me, DashContent, Profile, BoldSpan, Lianas } fro
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { week, notification } from '../utils.js';
-import capitalize from 'capitalize';
 import LianaLink from './LianaLink/LianaLink.jsx';
 
 export default function Dashboard() {
@@ -29,9 +28,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!avatar.name) history.push('/');
-    console.log('useEffect Dashboard is rendering now');
     async function getUsertravels() {
-      console.log('parsedAvatar: function called')
       const req = await fetch('/get-travels');
       const parsed = await req.json();
       if (parsed.success) {

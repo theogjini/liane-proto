@@ -13,6 +13,14 @@ class User {
     };
 };
 
+class Message {
+    constructor(user, content, timestamp) {
+        this.user = user;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+}
+
 function catchAll(fn) {
     return async (req, res, next) => {
         try {
@@ -24,4 +32,4 @@ function catchAll(fn) {
     };
 };
 
-module.exports = { User, catchAll };
+module.exports = { User, catchAll, Message };
