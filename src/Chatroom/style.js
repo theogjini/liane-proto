@@ -52,7 +52,7 @@ const MessagesDisplay = styled.div`
     background-position: center center;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 100%;
+    height: calc(100% - 52px);
 `
 
 const MsgWrapper = styled.div`
@@ -63,6 +63,8 @@ const MsgWrapper = styled.div`
 
 const Msg = styled.div`
     padding: 5px 10px;
+    overflow-x: hidden;
+    text-overflow: clip;
     border-radius: ${ props => props.mine ? '12px 0px 12px 12px' : '0px 12px 12px 12px'};
     background-color: white;
     margin: ${ props => props.sameUser ? '5px 10px' : '-3px 10px 5px 10px'};
@@ -121,7 +123,6 @@ const InputContainer = styled.div`
 
 const MessageForm = styled.form`
     position: relative;
-    bottom: 50px;
     display: flex;
     border-top: 2px solid #e2e2e2;
     align-items: center;
@@ -155,7 +156,6 @@ const Input = styled.textarea`
 `
 
 const RefDiv = styled.div`
-    height:50px;
 `
 
 const TravelInfos = styled.div`

@@ -15,8 +15,8 @@ export default function MessagesContainer(props) {
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'end' })
-    }
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
+    };
 
     useEffect(scrollToBottom, [messages]);
 
