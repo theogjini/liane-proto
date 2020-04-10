@@ -163,7 +163,7 @@ app.post('/throw', upload.none(),
         const newId = new ObjectID();
         const newChatRoomId = new ObjectID();
         console.log('newId', newId);
-        const day = dayTravel.goDate ? new Date("2020-04-03").getDay() : idx;
+        const day = dayTravel.goDate ? new Date(dayTravel.goDate).getDay() : idx;
         const travelToAdd = {
           _id: newId,
           _chatroomId: newChatRoomId,

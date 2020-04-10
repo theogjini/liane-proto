@@ -13,9 +13,11 @@ export default function Dashboard() {
 
   const [travels, setTravels] = useState([]);
 
-  const travelsToDisplay = travels.filter(trvl => trvl.day === idx);
+  const travelsOfCurrentDay = travels.filter(trvl => trvl.day === idx);
+  const uniqueTravelsToDisplay = travelsOfCurrentDay.filter(trvl => trvl.goDate);
+  const recurrentTravelsToDisplay = travelsOfCurrentDay.filter(trvl => !trvl.goDate);
 
-  const noTravels = travelsToDisplay.length === 0;
+  const noTravels = travelsOfCurrentDay.length === 0;
 
   const avatar = useSelector(state => state.avatar);
   console.log(avatar);
@@ -26,7 +28,7 @@ export default function Dashboard() {
 
   console.log('currentDay', day);
   console.log('current idx', idx);
-  console.log('current travels', travelsToDisplay);
+  console.log('current travels', travelsOfCurrentDay);
 
   useEffect(() => {
     if (!avatar.name) history.push('/');
@@ -88,7 +90,8 @@ export default function Dashboard() {
         ) :
           (<Lianas >
             {noTravels && (<NoTravels>No lianas...</NoTravels>)}
-            {travelsToDisplay.map(trvl => <Liana key={trvl._id} travel={trvl} />)}
+            {recurrentTravelsToDisplay.map(trvl => <Liana key={trvl._id} travel={trvl} />)}
+            {uniqueTravelsToDisplay.map(trvl => <Liana key={trvl._id} travel={trvl} />)}
           </Lianas>)}
       </DashContent>
     </Main >)

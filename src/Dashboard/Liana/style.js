@@ -47,4 +47,12 @@ const ChatroomLink = styled.div`
     }
 `
 
-export { BoldSpan, TravelDetails, Seats, MonkeyHead, LianaContainer, ChatroomLink };
+const TimeDiv = styled.div`
+    display: flex;
+    align-items: center;
+    img {
+        height: 25px;
+    }
+`
+
+export { BoldSpan, TravelDetails, Seats, MonkeyHead, LianaContainer, ChatroomLink, TimeDiv };

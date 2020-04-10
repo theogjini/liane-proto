@@ -1,5 +1,3 @@
-import capitalize from 'capitalize';
-
 const week = [
     { cap: 'Monday', key: 'monday', short: 'Mon.' },
     { cap: 'Tuesday', key: 'tuesday', short: 'Tue.' },

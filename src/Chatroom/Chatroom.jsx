@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { ChatroomContainer, Messages, MessageForm, Input, Wrapper, Me, Button, InputContainer, TravelInfos, BoldSpan, Launch } from './style';
 import SendSvg from './SendSvg.jsx';
 import { week } from '../utils.js';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 
 import MessagesContainer from './MessagesContainer.jsx'
@@ -88,7 +88,7 @@ export default function Chatroom(props) {
                         <img src="/assets/icons/rocket.svg" />
                     </Launch>}
                     {travel.goDate ?
-                        (<div><BoldSpan>{format(new Date(travel.goDate), 'iiii, d MMMM yyyy')}</BoldSpan></div>) :
+                        (<div><BoldSpan>{format(new Date(parseISO(travel.goDate)), 'iiii, d MMMM yyyy')}</BoldSpan></div>) :
                         (<div><BoldSpan>Every {week[travel.day].cap}</BoldSpan></div>)}
                     <div>Start from <BoldSpan>{travel.start}</BoldSpan> at <BoldSpan>{travel.goTime}</BoldSpan></div>
                     {travel.returnTime && (<div>Return at <BoldSpan>{travel.returnTime}</BoldSpan> from <BoldSpan>{travel.end}</BoldSpan></div>)}

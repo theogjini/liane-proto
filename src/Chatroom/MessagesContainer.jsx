@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Msg, MsgWrapper, RefDiv, MessagesDisplay, MsgWriter } from './style';
 import { useDispatch } from 'react-redux';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { notification } from '../utils.js';
 
 export default function MessagesContainer(props) {
@@ -15,7 +15,7 @@ export default function MessagesContainer(props) {
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
+        messagesEndRef.current.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'end' })
     };
 
     useEffect(() => scrollToBottom, [messages]);
@@ -23,7 +23,7 @@ export default function MessagesContainer(props) {
     function seeMessageDetails(event, idx) {
         event.preventDefault();
         const currentMessage = messages[idx];
-        const date = format(new Date(currentMessage.timestamp * 1), 'HH:mm iiii, d MMMM yyyy');
+        const date = format(new Date(currentMessage.timestamp * 1), 'iiii, d MMMM yyyy - HH:mm');
         notification('yellow', date, dispatch)
         messages[idx];
     };
