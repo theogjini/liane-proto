@@ -26,6 +26,7 @@ const Message = styled.div`
     padding-right: 5px;
     padding-left: 5px;
     min-width: 200px;
+    max-width: 280px;
     height: ${props => props.active ? '50px' : '0'};
     display: flex;
     justify-content: center;
@@ -35,7 +36,7 @@ const Message = styled.div`
     border-bottom-right-radius: 5px;
     color: white;
     font-family: 'Baloo', sans-serif;
-    font-size: ${props => props.active ? '18px' : '15px'};
+    font-size: 18px;
     font-weight: 600;
 `
 

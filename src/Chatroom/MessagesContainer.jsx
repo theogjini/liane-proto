@@ -1,11 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { Msg, MsgWrapper, RefDiv, MessagesDisplay, MsgWriter } from './style';
+import { useDispatch } from 'react-redux';
+import { format } from 'date-fns';
+import { notification } from '../utils.js';
 
 export default function MessagesContainer(props) {
 
+    const dispatch = useDispatch();
+
     const messages = props.messages;
 
-    const userId = props.userId
+    const userId = props.userId;
 
     const messagesEndRef = useRef(null);
 
@@ -17,6 +22,10 @@ export default function MessagesContainer(props) {
 
     function seeMessageDetails(event, idx) {
         event.preventDefault();
+        const currentMessage = messages[idx];
+        const date = format(new Date(currentMessage.timestamp * 1), 'dd/MM/yyyy, HH:mm');
+        const notif = 'Sent: ' + date;
+        notification('neutral', notif, dispatch)
         messages[idx];
     };
 

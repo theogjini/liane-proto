@@ -51,6 +51,7 @@ const MessagesDisplay = styled.div`
     background-size: contain;
     background-position: center center;
     overflow-y: scroll;
+    overflow-x: hidden;
     height: 100%;
 `
 
