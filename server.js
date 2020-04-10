@@ -180,7 +180,7 @@ app.post('/throw', upload.none(),
         };
         console.log('travelToAdd: ', travelToAdd);
         await dbo.collection("travels").insertOne(travelToAdd);
-        await dbo.collection("chatrooms").insertOne({ _id: newChatRoomId });
+        await dbo.collection("chatrooms").insertOne({ _id: newChatRoomId, messages: [] });
         await dbo.collection("users").updateOne({ _id: ObjectID(user.registered) }, { $push: { travels: newId } })
       }
     })
@@ -245,7 +245,7 @@ app.post('/get-messages', upload.none(),
         res.send(JSON.stringify({ success: false, desc: 'Chatroom not found' }))
       };
       if (chatroom) {
-        console.log('chatroom found', chatroom.messages);
+        console.log('chatroom found', chatroom);
         res.send(JSON.stringify({ success: true, desc: 'Chatroom found!', messages: chatroom.messages }))
       }
     })

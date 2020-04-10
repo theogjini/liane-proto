@@ -85,4 +85,12 @@ const BoldSpan = styled.span`
 const Lianas = styled.div`
 `
 
-export { Main, Nav, Day, Throw, Me, DashContent, Profile, BoldSpan, Lianas };
+const NoTravels = styled.div`
+    margin: 25px 20px;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 600;
+    color: #e2e2e2e2;
+`
+
+export { Main, Nav, Day, Throw, Me, DashContent, Profile, BoldSpan, Lianas, NoTravels };

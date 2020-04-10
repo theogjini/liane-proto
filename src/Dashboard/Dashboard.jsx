@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Day, Main, Nav, Throw, Me, DashContent, Profile, BoldSpan, Lianas } from './style';
+import { Day, Main, Nav, Throw, Me, DashContent, Profile, BoldSpan, Lianas, NoTravels } from './style';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { week, notification } from '../utils.js';
-import LianaLink from './LianaLink/LianaLink.jsx';
+import Liana from './Liana/Liana.jsx';
 
 export default function Dashboard() {
 
@@ -14,6 +14,8 @@ export default function Dashboard() {
   const [travels, setTravels] = useState([]);
 
   const travelsToDisplay = travels.filter(trvl => trvl.day === idx);
+
+  const noTravels = travelsToDisplay.length === 0;
 
   const avatar = useSelector(state => state.avatar);
   console.log(avatar);
@@ -85,7 +87,8 @@ export default function Dashboard() {
           </Profile>
         ) :
           (<Lianas >
-            {travelsToDisplay.map(trvl => <LianaLink key={trvl._id} travel={trvl} />)}
+            {noTravels && (<NoTravels>No lianas...</NoTravels>)}
+            {travelsToDisplay.map(trvl => <Liana key={trvl._id} travel={trvl} />)}
           </Lianas>)}
       </DashContent>
     </Main >)
