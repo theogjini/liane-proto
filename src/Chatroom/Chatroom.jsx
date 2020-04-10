@@ -34,13 +34,13 @@ export default function Chatroom(props) {
             const req = await fetch('/get-messages', { method: 'POST', body: data });
             const parsed = await req.json();
             if (parsed.success) {
-                if (parsed.messages.length === chatMessages.length) return
-                setChatMessages(parsed.messages)
+                if (parsed.messages.length === chatMessages.length) return;
+                setChatMessages(parsed.messages);
             };
         }
         const interval = setInterval(getMessages, 300);
         return () => clearInterval(interval);
-    }, [{}]);
+    }, [chatMessages]);
 
     async function handleSendMessage(event) {
         event.preventDefault();
