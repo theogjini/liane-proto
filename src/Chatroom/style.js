@@ -48,8 +48,8 @@ const Messages = styled.div`
 const MessagesDisplay = styled.div`
     position: relative;
     background-image: url('/assets/chatBackground.png');
-    background-size: contain;
-    background-position: center center;
+    background-size: 100%;
+    background-position: top;
     overflow-y: scroll;
     overflow-x: hidden;
     height: calc(100% - 52px);
