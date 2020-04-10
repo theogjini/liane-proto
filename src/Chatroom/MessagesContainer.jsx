@@ -23,9 +23,8 @@ export default function MessagesContainer(props) {
     function seeMessageDetails(event, idx) {
         event.preventDefault();
         const currentMessage = messages[idx];
-        const date = format(new Date(currentMessage.timestamp * 1), 'dd/MM/yyyy, HH:mm');
-        const notif = 'Sent: ' + date;
-        notification('neutral', notif, dispatch)
+        const date = format(new Date(currentMessage.timestamp * 1), 'HH:mm iiii, d MMMM yyyy');
+        notification('yellow', date, dispatch)
         messages[idx];
     };
 

@@ -88,8 +88,8 @@ export default function Chatroom(props) {
                         <img src="/assets/icons/rocket.svg" />
                     </Launch>}
                     {travel.goDate ?
-                        (<div><BoldSpan>{format(new Date(travel.goDate), 'iiii, MMMM yyyy')}</BoldSpan></div>) :
-                        (<div><BoldSpan>Every {week[travel.day].key}</BoldSpan></div>)}
+                        (<div><BoldSpan>{format(new Date(travel.goDate), 'iiii, d MMMM yyyy')}</BoldSpan></div>) :
+                        (<div><BoldSpan>Every {week[travel.day].cap}</BoldSpan></div>)}
                     <div>Start from <BoldSpan>{travel.start}</BoldSpan> at <BoldSpan>{travel.goTime}</BoldSpan></div>
                     {travel.returnTime && (<div>Return at <BoldSpan>{travel.returnTime}</BoldSpan> from <BoldSpan>{travel.end}</BoldSpan></div>)}
                 </TravelInfos>

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 const typeColors = {
     error: '#ff0000',
     success: '#8bc34a',
-    neutral: '#03a9f4'
+    neutral: '#03a9f4',
+    yellow: '#e0c400',
 };
 
 const NotificationContainer = styled.div`
