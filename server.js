@@ -132,6 +132,9 @@ app.post('/select-avatar', upload.none(),
 
 app.get('/get-travels',
   catchAll(async (req, res) => {
+    if (!sessions[req.cookies.sid].registered) {
+      return res.send(JSON.stringify({ success: false, desc: "Avatar not registered" }))
+    };
     const userId = sessions[req.cookies.sid].registered;
     console.log('Get travels called', userId)
     dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
@@ -147,6 +150,31 @@ app.get('/get-travels',
         const mapObjectIds = user.travels.map(travelid => ObjectID(travelid));
         const travels = await dbo.collection("travels").find({ _id: { $in: mapObjectIds } }).toArray();
         return res.send(JSON.stringify({ success: true, desc: "travels well loaded", travels }));
+      }
+    });
+  })
+);
+
+app.get('/get-chatrooms',
+  catchAll(async (req, res) => {
+    if (!sessions[req.cookies.sid].registered) {
+      return res.send(JSON.stringify({ success: false, desc: "Avatar not registered" }))
+    };
+    const userId = sessions[req.cookies.sid].registered;
+    console.log('Get chatrooms called', userId)
+    dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
+      if (err) {
+        console.log("finding user error:", err);
+      };
+      if (user === null) {
+        console.log("User ID not found:", userId);
+        return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
+      };
+      if (user) {
+        console.log("User found:", user.travels);
+        const mapTravelIds = user.travels.map(currTravelId => ObjectID(currTravelId));
+        const chatrooms = await dbo.collection("chatrooms").find({ _travelId: { $in: mapTravelIds } }).toArray();
+        return res.send(JSON.stringify({ success: true, desc: "travels well loaded", chatrooms }));
       }
     });
   })
@@ -180,7 +208,7 @@ app.post('/throw', upload.none(),
         };
         console.log('travelToAdd: ', travelToAdd);
         await dbo.collection("travels").insertOne(travelToAdd);
-        await dbo.collection("chatrooms").insertOne({ _id: newChatRoomId, messages: [] });
+        await dbo.collection("chatrooms").insertOne({ _id: newChatRoomId, _travelId: newId, messages: [] });
         await dbo.collection("users").updateOne({ _id: ObjectID(user.registered) }, { $push: { travels: newId } })
       }
     })

@@ -20,19 +20,14 @@ export default function Dashboard() {
   const noTravels = travelsOfCurrentDay.length === 0;
 
   const avatar = useSelector(state => state.avatar);
-  console.log(avatar);
 
   const history = useHistory();
 
   const dispatch = useDispatch();
 
-  console.log('currentDay', day);
-  console.log('current idx', idx);
-  console.log('current travels', travelsOfCurrentDay);
-
   useEffect(() => {
     if (!avatar.name) history.push('/');
-    async function getUsertravels() {
+    async function getUserTravels() {
       const req = await fetch('/get-travels');
       const parsed = await req.json();
       if (parsed.success) {
@@ -40,8 +35,28 @@ export default function Dashboard() {
         dispatch({ type: 'GET_TRAVELS', travels: parsed.travels });
         setTravels(parsed.travels);
       };
+      if (!parsed.success) {
+        console.log('parsed travels:', parsed.desc)
+      };
     };
-    getUsertravels();
+    async function getUserChatrooms() {
+      const req = await fetch('/get-chatrooms');
+      const parsed = await req.json();
+      if (parsed.success) {
+        let currentChatrooms = parsed.chatrooms;
+        let chatroomsObj = currentChatrooms.reduce((acc, chatroom) => {
+          acc[chatroom._id] = chatroom.messages
+          return acc;
+        }, {});
+        console.log('parsed chatrooms:', chatroomsObj)
+        dispatch({ type: 'GET_CHATROOMS', chatrooms: chatroomsObj });
+      };
+      if (!parsed.success) {
+        console.log('parsed chatrooms:', parsed.desc)
+      };
+    };
+    getUserTravels();
+    getUserChatrooms();
   }, []);
 
   function handleDayClick(event, day, idx) {

@@ -84,7 +84,6 @@ export default function Throw(props) {
         let selectedDays = days.slice();
         let dayToAdd = new DayTravel;
         selectedDays[day] = !days[day] ? dayToAdd : null;
-        console.log('selected Days:', selectedDays);
         setDays(selectedDays);
     };
 
@@ -96,7 +95,6 @@ export default function Throw(props) {
         event.preventDefault();
         let newDaysArray = uniqueTravel.slice();
         newDaysArray[0].goTime = event.currentTarget.value;
-        console.log('GoTimeSelected:', newDaysArray)
         setUniqueTravel(newDaysArray);
     };
 
@@ -104,7 +102,6 @@ export default function Throw(props) {
         event.preventDefault();
         let newDaysArray = uniqueTravel.slice();
         newDaysArray[0].goDate = event.target.value;
-        console.log('GoTimeSelected:', newDaysArray)
         setUniqueTravel(newDaysArray);
     };
 
@@ -113,49 +110,43 @@ export default function Throw(props) {
         let newDaysArray = uniqueTravel.slice();
         if (newDaysArray[0].seatsAvailable === 4) return
         newDaysArray[0].seatsAvailable += 1;
-        console.log('RetunrSeatsSelected:', newDaysArray[0])
         setDays(newDaysArray)
     };
 
     function handleUniqueRemoveSeat(event, day) {
         event.preventDefault();
         let newDaysArray = uniqueTravel.slice();
-        if (newDaysArray[0].seatsAvailable === 0) return
+        if (newDaysArray[0].seatsAvailable === 0) return;
         newDaysArray[0].seatsAvailable -= 1;
-        console.log('RetunrSeatsSelected:', newDaysArray[0])
-        setDays(newDaysArray)
+        setDays(newDaysArray);
     };
 
     function handleGoTimeChange(event, day) {
         let newDaysArray = days.slice();
         newDaysArray[day].goTime = event.currentTarget.value;
-        console.log('GoTimeSelected:', newDaysArray)
         setDays(newDaysArray);
     };
 
     function handleReturnTimeChange(event, day) {
         let newDaysArray = days.slice();
         newDaysArray[day].returnTime = event.currentTarget.value;
-        console.log('RetunrTimeSelected:', newDaysArray)
         setDays(newDaysArray);
     };
 
     function handleAddSeat(event, day) {
         event.preventDefault();
         let newDaysArray = days.slice();
-        if (newDaysArray[day].seatsAvailable === 4) return
+        if (newDaysArray[day].seatsAvailable === 4) return;
         newDaysArray[day].seatsAvailable += 1;
-        console.log('RetunrSeatsSelected:', newDaysArray[day])
-        setDays(newDaysArray)
+        setDays(newDaysArray);
     };
 
     function handleRemoveSeat(event, day) {
         event.preventDefault();
         let newDaysArray = days.slice();
-        if (newDaysArray[day].seatsAvailable === 0) return
+        if (newDaysArray[day].seatsAvailable === 0) return;
         newDaysArray[day].seatsAvailable -= 1;
-        console.log('RetunrSeatsSelected:', newDaysArray[day])
-        setDays(newDaysArray)
+        setDays(newDaysArray);
     };
 
     return (<ThrowComponent active={props.active}>

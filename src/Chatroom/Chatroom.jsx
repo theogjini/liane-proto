@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ChatroomContainer, Messages, MessageForm, Input, Wrapper, Me, Button, InputContainer, TravelInfos, BoldSpan, Launch } from './style';
 import SendSvg from './SendSvg.jsx';
 import { week } from '../utils.js';
@@ -11,31 +11,36 @@ import MessagesContainer from './MessagesContainer.jsx'
 
 export default function Chatroom(props) {
 
-    const travel = useSelector(state => state.travels.find(trvl => trvl._chatroomId === props.id));
+    const roomId = props.id;
+
+    const travel = useSelector(state => state.travels.find(trvl => trvl._chatroomId === roomId));
 
     const avatar = useSelector(state => state.avatar);
 
-    const driver = travel.driver === avatar.registered;
+    const dispatch = useDispatch();
+
+    const chatMessages = useSelector(state => state.chatrooms[roomId]);
+
+    let driver;
+
+    if (travel) driver = travel.driver === avatar.registered;
 
     const history = useHistory();
 
     const [content, setContent] = useState('');
 
-    const [chatMessages, setChatMessages] = useState([]);
-
     const placeholder = content ? "" : "Enter message";
 
     useEffect(() => {
-        console.log('useEffectCalled');
         if (!travel) history.push('/');
         async function getMessages() {
             const data = new FormData();
-            data.append('chatroomId', props.id);
+            data.append('chatroomId', roomId);
             const req = await fetch('/get-messages', { method: 'POST', body: data });
             const parsed = await req.json();
             if (parsed.success) {
                 if (parsed.messages.length === chatMessages.length) return;
-                setChatMessages(parsed.messages);
+                dispatch({ type: 'UPDATING_CHATROOM', messages: parsed.messages, _id: roomId });
             };
         }
         const interval = setInterval(getMessages, 300);
@@ -47,7 +52,7 @@ export default function Chatroom(props) {
         if (content === '') return;
         const timestamp = Date.now();
         const data = new FormData();
-        data.append('chatroomId', props.id);
+        data.append('chatroomId', roomId);
         data.append('content', content);
         data.append('timestamp', timestamp);
         const req = await fetch('/send-message', { method: 'POST', body: data });
@@ -75,7 +80,7 @@ export default function Chatroom(props) {
                     <MessagesContainer userId={avatar.registered} messages={chatMessages} day={travel.day} />
                     <MessageForm onSubmit={handleSendMessage}>
                         <InputContainer>
-                            <Input autoFocus rows="1" color={travel.day} type="text" onKeyDown={enterIsPressed} onChange={event => setContent(event.target.value)} value={content} placeholder={placeholder} />
+                            <Input rows="1" color={travel.day} type="text" onKeyDown={enterIsPressed} onChange={event => setContent(event.target.value)} value={content} placeholder={placeholder} />
                             <Button type="submit" color={travel.day} disabled={!content}>
                                 <SendSvg />
                             </Button>

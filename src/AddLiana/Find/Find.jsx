@@ -29,8 +29,7 @@ export default function Find(props) {
         let req = await fetch('/find', { method: 'POST', body: data });
         let parsed = await req.json();
         if (parsed.success)
-            console.log('results: ', results)
-        setResults(parsed.results);
+            setResults(parsed.results);
     };
 
     function changeValue(event, setState) {

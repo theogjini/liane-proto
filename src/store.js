@@ -3,15 +3,33 @@ import { createStore } from 'redux';
 const reducer = (state, action) => {
     switch (action.type) {
         case "GET_AVATAR": {
-            { state.avatar = action.avatar };
+            {
+                state.avatar = action.avatar;
+            };
             break
         };
         case "GET_TRAVELS": {
-            { state.travels = action.travels };
+            {
+                state.travels = action.travels;
+            };
+            break
+        };
+        case "GET_CHATROOMS": {
+            {
+                state.chatrooms = action.chatrooms;
+            };
+            break
+        };
+        case "UPDATING_CHATROOM": {
+            {
+                state.chatrooms[action._id] = action.messages;
+            };
             break
         };
         case "LOGOUT": {
-            { state.avatar = {} };
+            {
+                state.avatar = {}
+            };
         };
         case "NOTIFY": {
             {
@@ -28,7 +46,9 @@ const reducer = (state, action) => {
             break;
         };
         case "DISPLAY_POPUP": {
-            { state.UI.profilePopup = action.displayPopup };
+            {
+                state.UI.profilePopup = action.displayPopup;
+            };
             break;
         };
     }
@@ -39,6 +59,7 @@ const store = createStore(
     reducer, {
     avatar: {},
     travels: [],
+    chatrooms: [],
     UI: {
         profilePopup: false,
         notification: {
