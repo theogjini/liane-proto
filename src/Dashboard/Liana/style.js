@@ -7,6 +7,16 @@ const BoldSpan = styled.span`
 
 const TravelDetails = styled.div`
     margin-right: 30px;
+    position: relative;
+    ::before {
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 5px;
+        background-color: ${props => props.driver ? '#28f738' : '#ac6dff'};
+        border-radius: 5px;
+        left: -10px;
+    }
 `
 
 const LianaContainer = styled.div`
@@ -41,6 +51,7 @@ const MonkeyHead = styled.div`
 `
 
 const ChatroomLink = styled.div`
+    filter: ${props => !props.requestAccepted ? 'none' : 'blur(3px) grayscale(0.5)'};
     a {
         display: flex;
         align-items: center;
