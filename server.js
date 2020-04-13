@@ -180,6 +180,19 @@ app.get('/get-chatrooms',
   })
 );
 
+app.post('/get-users-from-requests', upload.none(),
+  catchAll(async (req, res) => {
+    const userId = sessions[req.cookies.sid].registered;
+    console.log('get-users-from-requests called', userId);
+    const idsSent = JSON.parse(req.body.requestsId)
+    const idsToFind = idsSent.map(id => ObjectID(id));
+    const arrayOfUsers = await dbo.collection("users").find({ _id: { $in: idsToFind } }).toArray();
+    const infosToSend = await arrayOfUsers.map(user => user.infos);
+    console.log('arrayOfUsers', infosToSend);
+    res.send(JSON.stringify({ success: true, desc: "Infos well sent", usersRequests: infosToSend }))
+  })
+);
+
 app.post('/throw', upload.none(),
   catchAll(async (req, res) => {
     const user = sessions[req.cookies.sid];

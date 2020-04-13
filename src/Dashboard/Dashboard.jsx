@@ -16,6 +16,7 @@ export default function Dashboard() {
   const travelsOfCurrentDay = travels.filter(trvl => trvl.day === idx);
   const uniqueTravelsToDisplay = travelsOfCurrentDay.filter(trvl => trvl.goDate);
   const recurrentTravelsToDisplay = travelsOfCurrentDay.filter(trvl => !trvl.goDate);
+  console.log('travelsOfCurrentDay', travelsOfCurrentDay);
 
   const noTravels = travelsOfCurrentDay.length === 0;
 
