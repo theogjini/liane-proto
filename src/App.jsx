@@ -6,6 +6,7 @@ import Dashboard from './Dashboard/Dashboard.jsx';
 import Signin from './Signin/Signin.jsx';
 import Notification from './Notification/Notification.jsx';
 import Chatroom from './Chatroom/Chatroom.jsx';
+import { week } from './utils.js';
 
 export default function App() {
     return (<BrowserRouter>
@@ -16,5 +17,9 @@ export default function App() {
         <Route exact={true} path="/sign-in/login" render={() => <Signin login={true} />} />
         <Route exact={true} path="/sign-in/signup" render={() => <Signin login={false} />} />
         <Route exact={true} path="/chatroom/:chatroomId" render={routerData => <Chatroom id={routerData.match.params.chatroomId} />} />
+        {week.map(day => {
+            <Route exact={true} path={"/dashboard/" + day} render={() => <Dashboard day={day} />} />
+        }
+        )}
     </BrowserRouter>)
 };

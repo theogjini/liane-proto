@@ -52,7 +52,7 @@ const MonkeyHead = styled.div`
 
 const ChatroomLink = styled.div`
     filter: ${props => !props.requestAccepted ? 'none' : 'blur(3px) grayscale(0.5)'};
-    a {
+    section {
         display: flex;
         align-items: center;
     }
