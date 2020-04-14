@@ -39,7 +39,7 @@ const Button = styled.button`
 `
 
 const Day = styled.div`
-    border: ${props => props.active ? '2px solid black' : '2px solid #cccccc'};
+    border: 2px solid ${props => props.active ? dayColor[props.currentDay] : 'white'};
     padding: 3px;
     width: 55px;
     cursor: pointer;
@@ -49,8 +49,8 @@ const Day = styled.div`
     height: 30px;
     border-radius: 5px;
     margin: 5px;
-    background-color: ${props => props.active ? dayColor[props.currentDay] : 'transparent'};
-    color: ${props => !props.active ? dayColor[props.currentDay] : 'white'};
+    background-color: ${props => props.active ? dayColor[props.currentDay] : dayColor[props.currentDay] + '15'};
+    color: ${props => props.active ? 'white' : '#c2c2c2'};
     font-weight: bold;
     font-size: ${props => props.active ? '18px' : '14px'};
     transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -59,9 +59,10 @@ const Day = styled.div`
 const DateSelector = styled.input`
     display: block;
     border: none;
+    background-color: white;
     border-bottom: 1px solid #cccccc;
     font-family: 'Baloo', sans-serif;
-    font-size: 18px;
+    font-size: 15px;
 
     :focus {
         outline: none;

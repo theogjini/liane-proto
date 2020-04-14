@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { PopupBackground, PopupContainer, RequestsContainer, Request, Buttons, Accept, Reject, Next, Previous } from './style.js'
+import { useDispatch } from 'react-redux';
+import { PopupBackground, PopupContainer, RequestsContainer, BoldSpan, Request, Buttons, Accept, Reject, Next, Previous } from './style.js';
+import { notification, getUserTravels } from '../../utils.js';
 
 export default function Popup(props) {
 
-    const requests = ["5e933378f7f9612bb42df575", "5e9325afbb3c71275c25e849", "5e94bf8d7a028e3e3d3f266b", "5e94bfd9021c38442b70f47f"];
+    const requests = props.requests;
 
     const [usersRequests, setUsersRequests] = useState([]);
+
+    const dispatch = useDispatch();
 
     function handleClose(event) {
         event.preventDefault();
@@ -27,27 +31,71 @@ export default function Popup(props) {
             };
         };
         getUserFromRequests();
-    }, [])
+    }, [requests])
+
+    const requestContainer = useRef(null)
+
+    function handleScrollPrevious(event) {
+        event.preventDefault();
+        requestContainer.current.scrollLeft -= 300;
+    };
+
+    function handleScrollNext(event) {
+        event.preventDefault();
+        requestContainer.current.scrollLeft += 300;
+    };
+
+    async function handleAcceptRequest(event, travellerId) {
+        event.preventDefault();
+        const data = new FormData();
+        data.append('travellerId', travellerId);
+        data.append('travelId', props.travelId);
+        const req = await fetch('/accept-request', { method: 'POST', body: data });
+        const parsed = await req.json();
+        if (parsed.success) {
+            notification('success', parsed.desc, dispatch);
+            getUserTravels(dispatch);
+        };
+        if (!parsed.success) {
+            notification('error', parsed.desc, dispatch);
+        };
+    };
+
+    async function handleRejectRequest(event, travellerId) {
+        event.preventDefault();
+        const data = new FormData();
+        data.append('travellerId', travellerId);
+        data.append('travelId', props.travelId);
+        const req = await fetch('/reject-request', { method: 'POST', body: data });
+        const parsed = await req.json();
+        if (parsed.success) {
+            notification('success', parsed.desc, dispatch);
+            getUserTravels(dispatch);
+        };
+        if (!parsed.success) {
+            notification('error', parsed.desc, dispatch);
+        };
+    };
 
     return (
         <PopupContainer>
-            <RequestsContainer>
+            <RequestsContainer ref={requestContainer}>
+                {usersRequests.length === 0 && (<section>No more requests...</section>)}
                 {usersRequests.map((user, idx) => {
+                    const previous = requests[idx - 1] != undefined;
+                    const next = requests[idx + 1] != undefined;
                     return (
                         <Request key={user.registered}>
-                            {console.log('idx', idx)}
-                            {console.log('idx moins un', requests[idx - 1])}
-                            {console.log('idx plus un', requests[idx + 1])}
-                            {requests[idx - 1] && (<Previous />)}
-                            {requests[idx + 1] && (<Next />)}
+                            {previous && (<Previous onClick={handleScrollPrevious} />)}
+                            {next && (<Next onClick={handleScrollNext} />)}
                             <div>
                                 <h2>{user.name}</h2>
                             </div>
                             <img src={user.path} height="75px" />
                             <h3>Rating</h3>
                             <Buttons>
-                                <Accept>Accept</Accept>
-                                <Reject>Reject</Reject>
+                                <Accept onClick={event => handleAcceptRequest(event, user.registered)}>Accept</Accept>
+                                <Reject onClick={event => handleRejectRequest(event, user.registered)}>Reject</Reject>
                             </Buttons>
                         </Request>)
                 })}

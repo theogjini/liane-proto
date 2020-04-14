@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { FindComponent, Input, InputContainer, Button, ListElem, Results } from './style';
+import { FindComponent, Input, InputContainer, Button, Filters, Filter, FilterContainer } from './style';
 import { useDispatch } from 'react-redux';
-import { formatInput, checkZipFormat, notification } from '../../utils.js';
+import { formatInput, checkZipFormat, notification, week } from '../../utils.js';
+import Results from './Results.jsx';
 
 export default function Find(props) {
 
@@ -13,6 +14,10 @@ export default function Find(props) {
 
     const [results, setResults] = useState([]);
 
+    const [resultsToDisplay, setResultsToDisplay] = useState(results);
+
+    const [search, setSearch] = useState(false);
+
     const disableValidation = end === "" || start === "";
 
     const checkZipFormatting = checkZipFormat(end) && checkZipFormat(start);
@@ -20,16 +25,21 @@ export default function Find(props) {
     const placeholderStart = start ? "" : "Postal code";
     const placeholderEnd = end ? "" : "Postal code";
 
+    const [filters, setFilters] = useState([false, false, false, false, false, false, false]);
+
     async function handleSubmit(event) {
         event.preventDefault();
+        setSearch(true);
         if (disableValidation) return notification("error", "Please enter start and arrival", dispatch);
         const data = new FormData();
         data.append("start", start);
         data.append("end", end);
         let req = await fetch('/find', { method: 'POST', body: data });
         let parsed = await req.json();
-        if (parsed.success)
+        if (parsed.success) {
             setResults(parsed.results);
+            setResultsToDisplay(parsed.results)
+        };
     };
 
     function changeValue(event, setState) {
@@ -37,19 +47,26 @@ export default function Find(props) {
         setState(formattedInput);
     };
 
-    async function handleSendRequest(event, travelId) {
+    function handleResetFind(event) {
         event.preventDefault();
-        const data = new FormData();
-        data.append('travel_id', travelId);
-        const req = await fetch('/select-travel', { method: 'POST', body: data });
-        const parsed = await req.json();
-        if (parsed.success) {
-            notification("success", parsed.desc, dispatch)
-        };
+        setSearch(false);
+        setStart('');
+        setEnd('');
+        setResults([]);
+        setFilters([false, false, false, false, false, false, false]);
+    };
 
-        if (!parsed.success) {
-            notification("error", parsed.desc, dispatch)
+    function handleFilterResults(event, day) {
+        event.preventDefault();
+        const filtersArr = [false, false, false, false, false, false, false];
+        if (filters[day] === true) {
+            setResultsToDisplay(results);
+            return setFilters(filtersArr);
         };
+        const filteredResults = results.filter(travel => travel.day === day);
+        filtersArr[day] = true;
+        setResultsToDisplay(filteredResults);
+        setFilters(filtersArr);
     };
 
     return (<FindComponent active={props.active}>
@@ -62,16 +79,24 @@ export default function Find(props) {
                 <Input type="text" onChange={event => changeValue(event, setEnd)}
                     value={end} placeholder={placeholderEnd} spellCheck="false" />
             </InputContainer>
-            <div><Button disabled={!checkZipFormatting}>Find a liana</Button></div>
+            <div>
+                <Button
+                    disabled={search ? false : !checkZipFormatting}
+                    onClick={search ? handleResetFind : handleSubmit}>
+                    {search ? 'X' : 'Find a liana'}
+                </Button>
+            </div>
+            {search && (<FilterContainer>
+                <Filters>
+                    {week.map((currDay, day) => {
+                        return (
+                            <Filter key={currDay.cap} active={filters[day]} day={day} onClick={event => handleFilterResults(event, day)}>
+                                {currDay.short}
+                            </Filter>)
+                    })}
+                </Filters>
+            </FilterContainer>)}
         </form>
-        <Results>
-            <ul style={{ paddingInlineStart: '0', scrollSnapType: 'x mandatory' }}>
-                {results.map(travel => <ListElem key={travel._id}>
-                    <div onClick={event => handleSendRequest(event, travel._id)}>
-                        <span>{travel._id.slice(-5)}</span> {travel.start} <img src="assets/icons/round-trip.svg" height="25px" /> {travel.end}
-                    </div>
-                </ListElem>)}
-            </ul>
-        </Results>
+        {search && (<Results results={resultsToDisplay} dispatch={dispatch} />)}
     </FindComponent >)
 };

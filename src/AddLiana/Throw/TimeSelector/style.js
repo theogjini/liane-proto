@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const typeColor = {
-    Go: 'linear-gradient(to right, #fcfff5, #cccccc)',
-    Return: 'linear-gradient(to left, #fcfff5, #cccccc)',
+    Go: 'linear-gradient(to right, #f7f7f7, #dadada)',
+    Return: 'linear-gradient(to left, #f7f7f7, #dadada)',
 }
 
 const TimeSelectorContainer = styled.div`

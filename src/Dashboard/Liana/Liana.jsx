@@ -17,6 +17,7 @@ export default function Liana(props) {
     const [popup, setPopup] = useState(false);
 
     const {
+        _id,
         goDate,
         _chatroomId,
         attendees,
@@ -24,18 +25,17 @@ export default function Liana(props) {
         start,
         returnTime,
         goTime,
-        // requests,
+        requests,
         driver,
     } = props.travel;
-
-    const requests = ["5e933378f7f9612bb42df575", "5e9325afbb3c71275c25e849", "5e94bf8d7a028e3e3d3f266b", "5e94bfd9021c38442b70f47f"];
 
     const isUserDriver = driver === userId;
     console.log('isUserDriver', isUserDriver);
 
     let requestAccepted = true;
 
-    if (!isUserDriver) requestAccepted = attendees.includes(id => id === userId);
+    if (!isUserDriver) requestAccepted = attendees.includes(userId);
+    console.log('areyouacceptedinthis', requestAccepted);
 
     function handleGoToChatroom(event) {
         event.preventDefault();
@@ -52,7 +52,7 @@ export default function Liana(props) {
 
     return (
         <LianaContainer>
-            {popup && (<Popup requests={requests} handleSeeRequests={handleSeeRequests} />)}
+            {popup && (<Popup requests={requests} handleSeeRequests={handleSeeRequests} travelId={_id} />)}
             <TravelDetails driver={isUserDriver}>
                 {goDate && (<div><BoldSpan>{format(new Date(parseISO(goDate)), 'iiii, dd MMMM yyyy')}</BoldSpan></div>)}
                 <div>From <BoldSpan>{start}</BoldSpan> To <BoldSpan>{end}</BoldSpan></div>
@@ -71,8 +71,7 @@ export default function Liana(props) {
                     )}
                 </div>
             </TravelDetails>
-            <ChatroomLink requestAccepted={!requestAccepted}>
-                {!requestAccepted && (<div></div>)}
+            <ChatroomLink active={requestAccepted}>
                 <section onClick={handleGoToChatroom}>
                     <Seats>
                         {attendees && (

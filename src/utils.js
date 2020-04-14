@@ -56,4 +56,34 @@ const notification = (category, message, dispatch) => {
     timer = setTimeout(stopNotify, 2500);
 };
 
-export { week, formatInput, checkZipFormat, notification, DayTravel };
+// Get user travels
+async function getUserTravels(dispatch) {
+    const req = await fetch('/get-travels');
+    const parsed = await req.json();
+    if (parsed.success) {
+        console.log('parsed travels:', parsed.travels)
+        dispatch({ type: 'GET_TRAVELS', travels: parsed.travels });
+    };
+    if (!parsed.success) {
+        console.log('parsed travels:', parsed.desc)
+    };
+};
+
+async function getUserChatrooms(dispatch) {
+    const req = await fetch('/get-chatrooms');
+    const parsed = await req.json();
+    if (parsed.success) {
+        let currentChatrooms = parsed.chatrooms;
+        let chatroomsObj = currentChatrooms.reduce((acc, chatroom) => {
+            acc[chatroom._id] = chatroom.messages
+            return acc;
+        }, {});
+        console.log('parsed chatrooms:', chatroomsObj)
+        dispatch({ type: 'GET_CHATROOMS', chatrooms: chatroomsObj });
+    };
+    if (!parsed.success) {
+        console.log('parsed chatrooms:', parsed.desc)
+    };
+};
+
+export { week, formatInput, checkZipFormat, notification, DayTravel, getUserChatrooms, getUserTravels };

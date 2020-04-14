@@ -51,7 +51,7 @@ const MonkeyHead = styled.div`
 `
 
 const ChatroomLink = styled.div`
-    filter: ${props => !props.requestAccepted ? 'none' : 'blur(3px) grayscale(0.5)'};
+    filter: ${props => props.active ? 'none' : 'blur(3px) grayscale(0.5)'};
     section {
         display: flex;
         align-items: center;
@@ -90,7 +90,6 @@ const PopupContainer = styled.div`
 `
 
 const RequestsContainer = styled.div`
-    position: relative;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1000;
     height: 300px;
@@ -101,10 +100,19 @@ const RequestsContainer = styled.div`
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scroll-snap-points-x: repeat(100%);
+    section {
+        display: inline-block;
+        margin: auto;
+        color: darkgrey;
+        font-size: 20px;
+        font-weight: 700;
+    }
 `
 
 const Request = styled.div`
+    position: relative;
     text-align: center;
+    scroll-snap-stop: always;
     min-width: 100%;
     scroll-snap-align: center;
     scroll-margin: 50%;
@@ -118,13 +126,19 @@ const Buttons = styled.div`
 `
 
 const Accept = styled.h2`
-    padding: 5px;
+    padding: 7px;
+    width: 90px;
+    margin-right: 5px;
+    border-radius: 5px;
     color: white;
     background-color: #8bc34a;
 `
 
 const Reject = styled.h2`
-    padding: 5px;
+    padding: 7px;
+    width: 90px;
+    margin-left: 5px;
+    border-radius: 5px;
     color: white;
     background-color: #ff0000;
 `
@@ -138,7 +152,7 @@ const Next = styled.div`
     top: 45%;
     background-image: url('/assets/icons/right-chevron.svg');
     background-repeat: no-repeat;
-    animation: bounce 1s ease-in-out infinite;
+    animation: bounce 2s ease-in-out infinite;
     @keyframes bounce {
         0% {transform: scale(1)};
         50% {transform: scale(1.3)};
@@ -154,7 +168,7 @@ const Previous = styled.div`
     top: 45%;
     background-image: url('/assets/icons/left-chevron.svg');
     background-repeat: no-repeat;
-    animation: bounce 1s ease-out infinite;
+    animation: bounce 2s ease-in-out infinite;
     @keyframes bounce {
         0% {transform: scale(1)};
         50% {transform: scale(1.3)};

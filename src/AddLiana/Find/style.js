@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 const colors = {
-    monday: '#58da58',
-    tuesday: '#674bf5',
-    wednesday: '#e20404',
-    thursday: '#3db1c5',
-    friday: '#FF9800',
-    saturday: '#1757a5',
-    sunday: '#d4b230',
+    0: '#58da58',
+    1: '#674bf5',
+    2: '#e20404',
+    3: '#3db1c5',
+    4: '#FF9800',
+    5: '#1757a5',
+    6: '#d4b230',
 };
 
 
@@ -81,26 +81,82 @@ const Input = styled.input`
     }
 `
 
-const ListElem = styled.li`
-    list-style-type: none;
-    display: grid;
-    scroll-snap-align: start;
-    grid-template-areas: "a b b b b b b b"
-                         "a c c c c c c c";
-    cursor: pointer;
-    :hover {
-        background-color: lightgray;
+const FilterContainer = styled.div`
+    position: relative;
+`
+
+const Filters = styled.div`
+    position: absolute;
+    left: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 25px;
+`
+
+const Filter = styled.div`
+    background-color: ${props => props.active ? colors[props.day] : "#c2c2c2c2"};
+    font-weight: 600;
+    color: white;
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    transition: 0.2s ease-in-out;
+`
+
+const ResultsContainer = styled.div`
+    text-align: center;
+    margin: 20px;
+    overflow: auto;
+    max-height: 350px;
+`
+
+const BoldSpan = styled.span`
+    font-size: 15px;
+    font-weight: 600;
+    color: ${props => colors[props.day]};
+`
+
+const TravelDetails = styled.div`
+    display: inline-block;
+    margin-bottom: 15px;
+    position: relative;
+    ::before {
+        position: absolute;
+        content: '';
+        height: 100%;
+        width: 5px;
+        background-color: ${props => colors[props.day]};
+        border-radius: 5px;
+        left: -10px;
     }
 `
 
-const Results = styled.div`
-    max-height: 350px;
-    overflow: auto;
-    -webkit-scroll-behavior: smooth;
-    -moz-scroll-behavior: smooth;
-    -ms-scroll-behavior: smooth;
-    scroll-behavior: smooth;
-    margin-top: 25px;
+const TimeDiv = styled.div`
+    display: flex;
+    align-items: center;
+    img {
+        height: 25px;
+    }
 `
 
-export { FindComponent, Input, InputContainer, DateSelector, Button, ListElem, Results };
+export {
+    FindComponent,
+    Input,
+    InputContainer,
+    DateSelector,
+    Button,
+    ResultsContainer,
+    TravelDetails,
+    BoldSpan,
+    TimeDiv,
+    Filters,
+    Filter,
+    FilterContainer
+};

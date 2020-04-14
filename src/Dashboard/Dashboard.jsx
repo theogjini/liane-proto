@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Day, Main, Nav, Throw, Me, DashContent, Profile, BoldSpan, Lianas, NoTravels } from './style';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import { week, notification } from '../utils.js';
+import { week, notification, getUserChatrooms, getUserTravels } from '../utils.js';
 import Liana from './Liana/Liana.jsx';
 
 export default function Dashboard() {
@@ -11,7 +11,7 @@ export default function Dashboard() {
 
   const [idx, setIdx] = useState(-1);
 
-  const [travels, setTravels] = useState([]);
+  const travels = useSelector(state => state.travels);
 
   const travelsOfCurrentDay = travels.filter(trvl => trvl.day === idx);
   const uniqueTravelsToDisplay = travelsOfCurrentDay.filter(trvl => trvl.goDate);
@@ -28,36 +28,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!avatar.name) history.push('/');
-    async function getUserTravels() {
-      const req = await fetch('/get-travels');
-      const parsed = await req.json();
-      if (parsed.success) {
-        console.log('parsed travels:', parsed.travels)
-        dispatch({ type: 'GET_TRAVELS', travels: parsed.travels });
-        setTravels(parsed.travels);
-      };
-      if (!parsed.success) {
-        console.log('parsed travels:', parsed.desc)
-      };
-    };
-    async function getUserChatrooms() {
-      const req = await fetch('/get-chatrooms');
-      const parsed = await req.json();
-      if (parsed.success) {
-        let currentChatrooms = parsed.chatrooms;
-        let chatroomsObj = currentChatrooms.reduce((acc, chatroom) => {
-          acc[chatroom._id] = chatroom.messages
-          return acc;
-        }, {});
-        console.log('parsed chatrooms:', chatroomsObj)
-        dispatch({ type: 'GET_CHATROOMS', chatrooms: chatroomsObj });
-      };
-      if (!parsed.success) {
-        console.log('parsed chatrooms:', parsed.desc)
-      };
-    };
-    getUserTravels();
-    getUserChatrooms();
+    getUserTravels(dispatch);
+    getUserChatrooms(dispatch);
   }, []);
 
   function handleDayClick(event, day, idx) {
