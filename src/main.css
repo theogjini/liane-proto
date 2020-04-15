@@ -25,3 +25,37 @@ a:visited {
         background-color: red;
     } */
 }
+
+.particles {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    background: linear-gradient(#4ac181, #449052);
+    height: 100%; 
+    width: 100%;
+}
+
+span.MuiSwitch-switchBase.Mui-checked {
+    color: #8bc34a;
+}
+
+span.MuiSwitch-switchBase.Mui-checked:hover {
+    background-color: #8bc34a11;
+}
+
+.PrivateSwitchBase-input-44.MuiSwitch-input {
+    color: #8bc34a;
+    background-color: #8bc34a;
+}
+
+.PrivateSwitchBase-input-16 {
+    opacity: 1;
+}
+
+span.MuiSwitch-root {
+    color: black;
+}
+
+.MuiIconButton-root:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}

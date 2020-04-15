@@ -55,7 +55,7 @@ const Day = styled.div`
     border-radius: 5px;
     margin: 5px;
     background-color: ${props => props.active ? dayColor[props.currentDay] : dayColor[props.currentDay] + '15'};
-    color: ${props => props.active ? 'white' : '#c2c2c2'};
+    color: ${props => props.active ? 'white' : '#c2c2c250'};
     font-weight: bold;
     font-size: ${props => props.active ? '18px' : '14px'};
     transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2);

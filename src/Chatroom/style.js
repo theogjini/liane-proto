@@ -213,7 +213,7 @@ const PopupBackground = styled.div`
     background-color: #444;
     opacity: 0.3;
     height: 300vh;
-    width: 100vh;
+    width: 100vw;
 `
 
 const PopupContainer = styled.div`

@@ -13,7 +13,6 @@ const NotificationContainer = styled.div`
     display: flex;
     justify-content: center;
     -webkit-tap-highlight-color: transparent;
-
 `
 
 const Message = styled.div`
@@ -27,7 +26,7 @@ const Message = styled.div`
     padding-right: 5px;
     padding-left: 5px;
     min-width: 200px;
-    max-width: 280px;
+    max-width: 285px;
     height: ${props => props.active ? '50px' : '0'};
     display: flex;
     justify-content: center;

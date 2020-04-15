@@ -26,3 +26,4 @@ yarn.lock
 .idea/
 
 config.json
+config.js

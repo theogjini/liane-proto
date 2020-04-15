@@ -4,8 +4,6 @@ import Throw from './Throw/Throw.jsx';
 import { Link, useHistory } from 'react-router-dom';
 import { PageTitle, Underline, LinkContainer, AddLianaContainer } from './style';
 import { useSelector } from 'react-redux';
-import './style.css'
-
 
 
 export default function AddLiana() {

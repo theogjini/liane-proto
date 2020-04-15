@@ -123,6 +123,7 @@ const Input = styled.input`
 const Filters = styled.div`
     position: relative;
     max-width: 150px;
+    margin-top: 20px;
 `
 
 const Filter = styled.div`

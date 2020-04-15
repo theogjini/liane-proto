@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { HomeComponent, Button, Title, Span, Bounce, LinkContainer, AvatarContainer } from './style';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import './particles.css';
 import Particles from 'react-particles-js';
 import { particlesParams } from '../../particlesParams';
 import { notification } from '../utils.js';

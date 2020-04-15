@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
+    -webkit-tap-highlight-color: transparent;
     width: 50%;
     bottom: 50%;
     margin: auto;
@@ -10,7 +11,16 @@ const Button = styled.button`
     background-color: transparent;
     border:  2px solid white;
     color: white;
+    transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
+    :focus {
+        outline: none;
+    }
+
+    :active {
+        background-color: white;
+        color: green;
+    }
 `;
 
 const HomeComponent = styled.div`
