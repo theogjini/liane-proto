@@ -32,6 +32,23 @@ const Button = styled.button`
     }
 `
 
+const ButtonRequest = styled.button`
+    background-color: transparent;
+    font-size: 1.125rem;
+    border-radius: 5px;
+    font-weight: 600;
+    border: 2px solid #f50057;
+    color: #f50057;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    :disabled {
+        border: 2px solid #c2c2c2c2;
+        color: #c2c2c2c2;
+        cursor: default;
+    }
+`
+
 const DateSelector = styled.input`
     border: none;
     font-family: 'Baloo';
@@ -122,6 +139,14 @@ const BoldSpan = styled.span`
     font-weight: 600;
     color: ${props => colors[props.day]};
 `
+const BoldSpanDate = styled.div`
+    font-size: 15px;
+    text-align: start;
+    font-weight: 600;
+    color: ${props => colors[props.day]};
+    padding-top: 10px;
+    padding-bottom: 10px;
+`
 
 const TravelDetails = styled.div`
     display: inline-block;
@@ -138,6 +163,11 @@ const TravelDetails = styled.div`
     }
 `
 
+const LowContainer = styled.div`
+    display: flex;
+    align-items: center;
+`
+
 const TimeDiv = styled.div`
     display: flex;
     align-items: center;
@@ -145,6 +175,14 @@ const TimeDiv = styled.div`
         height: 25px;
     }
 `
+const SeatsDiv = styled.div`
+    width: 85px;
+    text-align: initial;
+    margin-left: 40px;
+    color: #c2c2c2;
+    font-style: italic;
+`
+
 
 export {
     FindComponent,
@@ -158,5 +196,9 @@ export {
     TimeDiv,
     Filters,
     Filter,
-    FilterContainer
+    FilterContainer,
+    ButtonRequest,
+    LowContainer,
+    SeatsDiv,
+    BoldSpanDate
 };

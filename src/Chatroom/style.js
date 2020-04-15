@@ -195,11 +195,52 @@ const Launch = styled.button`
     }
 `
 
+const PopupBackground = styled.div`
+    position: fixed;
+    z-index: 1000;
+    top: -100vh;
+    left: 0;
+    background-color: #444;
+    opacity: 0.3;
+    height: 300vh;
+    width: 100vh;
+`
+
+const PopupContainer = styled.div`
+    position: absolute;
+    z-index: 2000;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    height: 95vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+const PopupContent = styled.div`
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 10000;
+    height: 300px;
+    width: 250px;
+    background-color: white;
+    h3 {
+        text-align: center;
+    }
+    section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`
+
+
 export {
     ChatroomContainer,
     Messages, MessageForm, Input,
     Wrapper, Me, Button, InputContainer,
     Msg, MsgWrapper, MessagesDisplay,
     RefDiv, MsgWriter, TravelInfos,
-    BoldSpan, Launch
+    BoldSpan, Launch, PopupBackground, PopupContainer, PopupContent
 };

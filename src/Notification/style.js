@@ -32,7 +32,7 @@ const Message = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: 0.35s height cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     color: white;

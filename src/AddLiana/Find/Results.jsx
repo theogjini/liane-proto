@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ResultsContainer, TravelDetails, BoldSpan, TimeDiv, Button } from './style';
+import {
+    ResultsContainer, TravelDetails, BoldSpan, TimeDiv, ButtonRequest, LowContainer, SeatsDiv, BoldSpanDate
+} from './style';
 import { notification, week } from '../../utils.js';
 import { format, parseISO } from 'date-fns';
 
@@ -29,19 +31,23 @@ export default function Results(props) {
         <ResultsContainer>
             {noResults === 0 && (<BoldSpan>No liana founds</BoldSpan>)}
             {props.results && resultsFiltered.map(travel => {
+                const availability = travel.seatsAvailable - travel.attendees.length;
                 return (
                     <TravelDetails key={travel._id} day={travel.day}>
-                        {travel.goDate && (<div><BoldSpan day={travel.day}>{format(new Date(parseISO(travel.goDate)), 'iiii, dd MMMM yyyy')}</BoldSpan></div>)}
-                        {!travel.goDate && (<div><BoldSpan day={travel.day}>Every {week[travel.day].cap}</BoldSpan></div>)}
+                        {travel.goDate && (<BoldSpanDate day={travel.day}>{format(new Date(parseISO(travel.goDate)), 'iiii, dd MMMM yyyy')}</BoldSpanDate>)}
+                        {!travel.goDate && (<BoldSpanDate day={travel.day}>Every {week[travel.day].cap}</BoldSpanDate>)}
                         <div>From <BoldSpan>{travel.start}</BoldSpan> To <BoldSpan>{travel.end}</BoldSpan></div>
-                        <div>
-                            <TimeDiv><img src="/assets/icons/go-arrow.svg" /><BoldSpan>{travel.goTime}</BoldSpan></TimeDiv>
-                            {travel.returnTime && (<TimeDiv><img src="/assets/icons/back-arrow.svg" /><BoldSpan>{travel.returnTime}</BoldSpan></TimeDiv>)}
-                        </div>
-                        <Button onClick={event => handleSendRequest(event, travel._id)}>Send a Request!</Button>
+                        <LowContainer>
+                            <div>
+                                <TimeDiv><img src="/assets/icons/go-arrow.svg" /><BoldSpan>{travel.goTime}</BoldSpan></TimeDiv>
+                                {travel.returnTime && (<TimeDiv><img src="/assets/icons/back-arrow.svg" /><BoldSpan>{travel.returnTime}</BoldSpan></TimeDiv>)}
+                            </div>
+                            <SeatsDiv day={travel.day}>Seats available: {availability}</SeatsDiv>
+                        </LowContainer>
+                        <ButtonRequest disabled={availability === 0} onClick={event => handleSendRequest(event, travel._id)}>Send a Request!</ButtonRequest>
                     </TravelDetails>
                 )
             })}
-        </ResultsContainer>
+        </ResultsContainer >
     )
 };

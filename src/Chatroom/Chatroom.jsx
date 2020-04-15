@@ -5,6 +5,7 @@ import { ChatroomContainer, Messages, MessageForm, Input, Wrapper, Me, Button, I
 import SendSvg from './SendSvg.jsx';
 import { week } from '../utils.js';
 import { format, parseISO } from 'date-fns';
+import Popup from './Popup.jsx';
 
 
 import MessagesContainer from './MessagesContainer.jsx'
@@ -28,6 +29,8 @@ export default function Chatroom(props) {
     const history = useHistory();
 
     const [content, setContent] = useState('');
+
+    const [popup, setPopup] = useState();
 
     const placeholder = content ? "" : "Enter message";
 
@@ -73,8 +76,14 @@ export default function Chatroom(props) {
         };
     }
 
+    function handleLaunchTravel(event) {
+        event.preventDefault();
+        setPopup(!popup)
+    }
+
     return (
         <ChatroomContainer>
+            {popup && (<Popup url={'/road/' + travel.start + '/' + travel.end} handleClose={handleLaunchTravel} />)}
             {travel && (<Wrapper>
                 <Messages color={travel.day}>
                     <MessagesContainer userId={avatar.registered} messages={chatMessages} day={travel.day} />
@@ -90,7 +99,7 @@ export default function Chatroom(props) {
                 </Messages>
                 <TravelInfos>
                     {driver && <Launch>
-                        <img src="/assets/icons/rocket.svg" />
+                        <img onClick={handleLaunchTravel} src="/assets/icons/rocket.svg" />
                     </Launch>}
                     {travel.goDate ?
                         (<div><BoldSpan>{format(new Date(parseISO(travel.goDate)), 'iiii, d MMMM yyyy')}</BoldSpan></div>) :

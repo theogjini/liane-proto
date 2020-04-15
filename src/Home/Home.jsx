@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './particles.css';
 import Particles from 'react-particles-js';
-import { particlesParams } from './particlesParams';
+import { particlesParams } from '../../particlesParams';
 import { notification } from '../utils.js';
 
 

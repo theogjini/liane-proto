@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { PopupBackground, PopupContainer, RequestsContainer, BoldSpan, Request, Buttons, Accept, Reject, Next, Previous } from './style.js';
+import { PopupBackground, PopupContainer, RequestsContainer, Request, Buttons, Accept, Reject, Next, Previous } from './style.js';
 import { notification, getUserTravels } from '../../utils.js';
 
 export default function Popup(props) {
@@ -69,7 +69,7 @@ export default function Popup(props) {
         const req = await fetch('/reject-request', { method: 'POST', body: data });
         const parsed = await req.json();
         if (parsed.success) {
-            notification('success', parsed.desc, dispatch);
+            notification('yellow', parsed.desc, dispatch);
             getUserTravels(dispatch);
         };
         if (!parsed.success) {
