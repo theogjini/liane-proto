@@ -160,7 +160,7 @@ export default function Throw(props) {
                     value={end} placeholder={placeholderEnd} spellCheck="false" />
             </InputContainer>
             <label style={{ display: 'flex', maxWidth: '290px', margin: 'auto', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Switch onClick={handleRecurrenceChange} checked={recurrence} />
+                <Switch color="default" onClick={handleRecurrenceChange} checked={recurrence} />
                 <h3>{recurrence ? 'Recurrent travel' : 'Unique travel'}</h3>
             </label>
             {recurrence ?

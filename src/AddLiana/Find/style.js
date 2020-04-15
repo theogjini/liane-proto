@@ -10,42 +10,64 @@ const colors = {
     6: '#d4b230',
 };
 
-
 const FindComponent = styled.div`
     text-align: center;
 `
 const Button = styled.button`
-    background-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+    background-color: ${props => !props.search ? '#8bc34a' : '#ff0000'};
     font-size: 1.5rem;
     border-radius: 5px;
     font-weight: 600;
-    border: 2px solid #f50057;
-    color: #f50057;
+    color: white;
+    height: 40px;
+    width: ${props => !props.search ? '120px' : '30px'};
+    padding: 7px;
     cursor: pointer;
-    margin-top: 25px;
-    transition: 0.2s ease-in-out;
+    margin-top: 15px;
+    border: none;
+    transition: 0.3s ease-out;
+    position: relative;
+
+    :focus {
+        outline: none;
+    }
     
     :disabled {
-        border: 2px solid #c2c2c2c2;
-        color: #c2c2c2c2;
+        background-color: #c2c2c2c2;
         cursor: default;
     }
 `
 
 const ButtonRequest = styled.button`
-    background-color: transparent;
-    font-size: 1.125rem;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #8bc34a;
+    font-size: 1rem;
     border-radius: 5px;
     font-weight: 600;
-    border: 2px solid #f50057;
-    color: #f50057;
+    color: white;
     cursor: pointer;
+    margin-top: 5px;
     transition: 0.2s ease-in-out;
 
+    :focus {
+        outline: none;
+    }
+
     :disabled {
-        border: 2px solid #c2c2c2c2;
-        color: #c2c2c2c2;
+        background-color: #c2c2c2c2;
         cursor: default;
+    }
+
+    :active {
+        animation: bulb 0.2s ease-out;
+        @keyframes bulb {
+            0% {transform: rotate(0deg)}
+            25% {transform: rotate(10deg)}
+            50% {transform: rotate(-10deg)}
+            75% {transform: rotate(0deg)}
+        }
     }
 `
 
@@ -98,25 +120,16 @@ const Input = styled.input`
     }
 `
 
-const FilterContainer = styled.div`
-    position: relative;
-`
-
 const Filters = styled.div`
-    position: absolute;
-    left: 8%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 25px;
+    position: relative;
+    max-width: 150px;
 `
 
 const Filter = styled.div`
     background-color: ${props => props.active ? colors[props.day] : "#c2c2c2c2"};
     font-weight: 600;
     color: white;
-    min-width: 60px;
+    width: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -129,9 +142,13 @@ const Filter = styled.div`
 
 const ResultsContainer = styled.div`
     text-align: center;
-    margin: 20px;
-    overflow: auto;
+    margin: 20px 0 10px 25px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    overflow-x: hidden;
     max-height: 350px;
+    min-width: 250px;
 `
 
 const BoldSpan = styled.span`
@@ -144,14 +161,14 @@ const BoldSpanDate = styled.div`
     text-align: start;
     font-weight: 600;
     color: ${props => colors[props.day]};
-    padding-top: 10px;
     padding-bottom: 10px;
 `
 
 const TravelDetails = styled.div`
-    display: inline-block;
-    margin-bottom: 15px;
     position: relative;
+    margin-bottom: 15px;
+    left: 10px;
+    height: 120px;
     ::before {
         position: absolute;
         content: '';
@@ -196,7 +213,6 @@ export {
     TimeDiv,
     Filters,
     Filter,
-    FilterContainer,
     ButtonRequest,
     LowContainer,
     SeatsDiv,

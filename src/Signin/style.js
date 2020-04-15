@@ -47,22 +47,28 @@ const FormContainer = styled.div`
 `
 
 const Button = styled.button`
-    background-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #8bc34a;
     font-size: 1.5rem;
     border-radius: 5px;
     font-weight: 600;
-    border: 2px solid #f50057;
-    color: #f50057;
+    color: white;
+    padding: 7px;
     cursor: pointer;
-    margin-top: 25px;
-    transition: 0.2s ease-in-out;
-    
+    margin-top: 15px;
+    border: none;
+    transition: 0.3s ease-in-out;
+
+    :focus {
+        outline: none;
+    }
+
     :disabled {
-        border: 2px solid #c2c2c2c2;
-        color: #c2c2c2c2;
+        background-color: #c2c2c2c2;
         cursor: default;
     }
 `
+
 
 const InputContainer = styled.div`
     position: relative;

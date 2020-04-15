@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Day, Main, Nav, Throw, Me, DashContent, Profile, BoldSpan, Lianas, NoTravels } from './style';
+import { Day, Main, Nav, Search, Me, DashContent, Profile, BoldSpan, Lianas, NoTravels } from './style';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { week, notification, getUserChatrooms, getUserTravels } from '../utils.js';
 import Liana from './Liana/Liana.jsx';
 
 export default function Dashboard() {
+
+  const [ws, setWs] = useState(new WebSocket('ws://localhost:4000/init'));
 
   const [day, setDay] = useState('profile');
 
@@ -28,6 +30,23 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!avatar.name) history.push('/');
+    ws.onopen = () => {
+      // on connecting, do nothing but log it to the console
+      console.log('connected to socket');
+    };
+
+    ws.onmessage = event => {
+      // on receiving a message, add it to the list of messages
+      const message = JSON.parse(event.data)
+      console.log('received message', message)
+    };
+
+    ws.onclose = () => {
+      console.log('disconnected')
+      // automatically try to reconnect on connection loss
+      setWs(new WebSocket('ws://localhost:4000/init'))
+    };
+
     getUserTravels(dispatch);
     getUserChatrooms(dispatch);
   }, []);
@@ -53,7 +72,7 @@ export default function Dashboard() {
 
   return (
     <Main>
-      <Throw onClick={e => history.push("/add-liana")}><div>+</div></Throw>
+      <Search onClick={e => history.push("/add-liana")}><div>+</div></Search>
       {day !== 'profile' && (<Me onClick={handleSeeMyProfile}><img src={avatar.path} /></Me>)}
       <Nav position={day}>
         {week.map((currentDay, idx) => {

@@ -6,9 +6,8 @@ import SendSvg from './SendSvg.jsx';
 import { week } from '../utils.js';
 import { format, parseISO } from 'date-fns';
 import Popup from './Popup.jsx';
+import MessagesContainer from './MessagesContainer.jsx';
 
-
-import MessagesContainer from './MessagesContainer.jsx'
 
 export default function Chatroom(props) {
 

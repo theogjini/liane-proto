@@ -132,6 +132,20 @@ const Accept = styled.h2`
     border-radius: 5px;
     color: white;
     background-color: #8bc34a;
+
+    :focus {
+        outline: none;
+    }
+
+    :active {
+        animation: bulb 0.2s ease-out;
+        @keyframes bulb {
+            0% {transform: rotate(0deg)}
+            25% {transform: rotate(10deg)}
+            50% {transform: rotate(-10deg)}
+            75% {transform: rotate(0deg)}
+        }
+    }
 `
 
 const Reject = styled.h2`
@@ -141,6 +155,18 @@ const Reject = styled.h2`
     border-radius: 5px;
     color: white;
     background-color: #ff0000;
+    :focus {
+        outline: none;
+    }
+    :active {
+        animation: bulb 0.2s ease-out;
+        @keyframes bulb {
+            0% {transform: rotate(0deg)}
+            25% {transform: rotate(10deg)}
+            50% {transform: rotate(-10deg)}
+            75% {transform: rotate(0deg)}
+        }
+    }
 `
 
 const Next = styled.div`

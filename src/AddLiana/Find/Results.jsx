@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     ResultsContainer, TravelDetails, BoldSpan, TimeDiv, ButtonRequest, LowContainer, SeatsDiv, BoldSpanDate
 } from './style';
@@ -7,6 +7,8 @@ import { notification, week } from '../../utils.js';
 import { format, parseISO } from 'date-fns';
 
 export default function Results(props) {
+
+    const dispatch = useDispatch();
 
     const userId = useSelector(state => state.avatar.registered);
 
@@ -16,6 +18,7 @@ export default function Results(props) {
 
     async function handleSendRequest(event, travelId) {
         event.preventDefault();
+        if (!userId) return notification("yellow", "Please signup before!", dispatch);
         const data = new FormData();
         data.append('travel_id', travelId);
         const req = await fetch('/select-travel', { method: 'POST', body: data });
@@ -44,7 +47,7 @@ export default function Results(props) {
                             </div>
                             <SeatsDiv day={travel.day}>Seats available: {availability}</SeatsDiv>
                         </LowContainer>
-                        <ButtonRequest disabled={availability === 0} onClick={event => handleSendRequest(event, travel._id)}>Send a Request!</ButtonRequest>
+                        <ButtonRequest disabled={availability === 0} onClick={event => handleSendRequest(event, travel._id)}>Hang!</ButtonRequest>
                     </TravelDetails>
                 )
             })}

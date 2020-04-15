@@ -1,0 +1,24 @@
+span.MuiSwitch-switchBase.Mui-checked {
+    color: #8bc34a;
+}
+
+span.MuiSwitch-switchBase.Mui-checked:hover {
+    background-color: #8bc34a11;
+}
+
+.PrivateSwitchBase-input-44.MuiSwitch-input {
+    color: #8bc34a;
+    background-color: #8bc34a;
+}
+
+.PrivateSwitchBase-input-16 {
+    opacity: 1;
+}
+
+span.MuiSwitch-root {
+    color: black;
+}
+
+.MuiIconButton-root:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}

@@ -67,7 +67,7 @@ const Msg = styled.div`
     text-overflow: clip;
     border-radius: ${ props => props.mine ? '12px 0px 12px 12px' : '0px 12px 12px 12px'};
     background-color: white;
-    margin: ${ props => props.sameUser ? '5px 10px' : '-3px 10px 5px 10px'};
+    margin: ${ props => props.sameUser ? '20px 10px 5px 10px' : '-4px 10px 5px 10px'};
     width: fit-content;
     max-width: 50%;
     border: 2px solid ${ props => props.mine ? colors[props.color] : '#cccccc'};
@@ -192,6 +192,16 @@ const Launch = styled.button`
                 fill: #cccccc;        
             }
         }   
+    }
+
+    :active {
+        animation: bulb 0.2s ease-out;
+        @keyframes bulb {
+            0% {transform: rotate(0deg)}
+            25% {transform: rotate(10deg)}
+            50% {transform: rotate(-10deg)}
+            75% {transform: rotate(0deg)}
+        }
     }
 `
 

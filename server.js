@@ -1,6 +1,7 @@
-// Node
+// Node Express WS
 const express = require('express');
 const app = express();
+const expressWs = require('express-ws')(app);
 const multer = require('multer');
 
 // Automatic reload
@@ -242,6 +243,10 @@ app.post('/select-travel', upload.none(),
       if (travel) {
         console.log('Travel Found', travel);
         const isRequestAlreadySent = travel.requests.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
+        const isUserAlreadyIn = travel.attendees.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
+        if (isUserAlreadyIn) {
+          return res.send(JSON.stringify({ success: false, desc: 'You are already in ;)' }))
+        }
         if (isRequestAlreadySent) {
           return res.send(JSON.stringify({ success: false, desc: 'Request already sent!' }))
         };
@@ -317,6 +322,14 @@ app.post('/send-message', upload.none(),
     res.send(JSON.stringify({ success: true }));
   })
 );
+
+app.ws('/init', function (ws, req) {
+  ws.on('message', (msg) => {
+    console.log(msg);
+    ws.send(JSON.stringify({ success: msg }))
+  });
+  console.log('socket', req.testing);
+});
 
 // Server
 app.all('/*', (req, res, next) => { // needed for react router

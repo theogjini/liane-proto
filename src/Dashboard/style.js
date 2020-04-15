@@ -23,7 +23,7 @@ const Nav = styled.div`
     align-items: center;
     transition: 0.6s ease-in-out;
 `
-const Throw = styled.div`
+const Search = styled.div`
     cursor: pointer;
     position: absolute;
     right: 50px;
@@ -32,7 +32,7 @@ const Throw = styled.div`
     height: 50px;
     font-size: 30px;
     font-weight: 600;
-    color: green;
+    color: #249429;
     background-image: url('/assets/icons/liane.svg');
     background-size: 50px;
     display: flex;
@@ -57,6 +57,7 @@ const Me = styled.div`
         height: 50px;
     }
 `
+
 const Day = styled.div`
     -webkit-tap-highlight-color: transparent;
     position: relative;
@@ -93,4 +94,4 @@ const NoTravels = styled.div`
     color: #e2e2e2e2;
 `
 
-export { Main, Nav, Day, Throw, Me, DashContent, Profile, BoldSpan, Lianas, NoTravels };
+export { Main, Nav, Day, Search, Me, DashContent, Profile, BoldSpan, Lianas, NoTravels };
