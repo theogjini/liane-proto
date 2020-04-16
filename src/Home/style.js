@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const Button = styled.button`
     -webkit-tap-highlight-color: transparent;
     width: 50%;
+    position: relative;
+    top: 0px;
     bottom: 50%;
     margin: auto;
     font-weight: 700;
@@ -13,13 +15,15 @@ const Button = styled.button`
     color: white;
     transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
+
     :focus {
         outline: none;
     }
 
     :active {
-        background-color: white;
+        background-color: #ffffff;
         color: green;
+        top: 10px;
     }
 `;
 

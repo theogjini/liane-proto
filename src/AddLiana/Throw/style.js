@@ -44,7 +44,8 @@ const Button = styled.button`
 `
 
 const Day = styled.div`
-    border: 2px solid ${props => props.active ? dayColor[props.currentDay] : 'white'};
+    -webkit-tap-highlight-color: transparent;
+    border: 2px solid white;
     padding: 3px;
     width: 55px;
     cursor: pointer;
