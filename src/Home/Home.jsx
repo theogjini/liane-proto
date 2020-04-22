@@ -76,7 +76,7 @@ export default function Home() {
                     <Title>Liane</Title>
                 </div>
                 <AvatarContainer >
-                    {!tempAvatar.name && (<h4 style={{ textAlign: "center" }}>Welcome!! It seems that it's your first time coming! Let's start by choosing an avatar!</h4>)}
+                    {!tempAvatar.name && (<h4 style={{ textAlign: "center" }}>First time coming? POP IT!</h4>)}
                     {tempAvatar.name && (<div onClick={handleSelectAvatar} style={{ cursor: "pointer" }}>
                         <h3 style={{ fontStyle: "italic" }}>{tempAvatar.name}</h3>
                         <Bounce><Span ><img src={tempAvatar.path} height="100px" /></Span></Bounce>

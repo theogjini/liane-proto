@@ -7,8 +7,6 @@ import Liana from './Liana/Liana.jsx';
 
 export default function Dashboard() {
 
-  const [ws, setWs] = useState(new WebSocket('ws://localhost:4000/init'));
-
   const [day, setDay] = useState('profile');
 
   const [idx, setIdx] = useState(-1);
@@ -30,23 +28,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!avatar.name) history.push('/');
-    ws.onopen = () => {
-      // on connecting, do nothing but log it to the console
-      console.log('connected to socket');
+    if (avatar.registered) {
+      dispatch({ type: "ACTIVATE_SOCKET" })
     };
-
-    ws.onmessage = event => {
-      // on receiving a message, add it to the list of messages
-      const message = JSON.parse(event.data)
-      console.log('received message', message)
-    };
-
-    ws.onclose = () => {
-      console.log('disconnected')
-      // automatically try to reconnect on connection loss
-      setWs(new WebSocket('ws://localhost:4000/init'))
-    };
-
     getUserTravels(dispatch);
     getUserChatrooms(dispatch);
   }, []);
@@ -63,11 +47,14 @@ export default function Dashboard() {
     setDay('profile');
   };
 
-  function handleLogout(event) {
-    event.preventDefault();
-    dispatch({ type: 'LOGOUT' });
-    history.push('/');
-    return notification('success', 'See you soon!', dispatch);
+  async function handleLogout(event) {
+    const req = await fetch('/logout');
+    const parsed = await req.json();
+    if (parsed.success) {
+      dispatch({ type: 'LOGOUT' });
+      history.push('/');
+      return notification('success', 'See you soon!', dispatch);
+    };
   };
 
   return (

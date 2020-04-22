@@ -1,4 +1,5 @@
-import React, { } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Home from './Home/Home.jsx';
 import AddLiana from './AddLiana/AddLiana.jsx';
@@ -10,6 +11,40 @@ import Chatroom from './Chatroom/Chatroom.jsx';
 import { week } from './utils.js';
 
 export default function App() {
+
+    const [ws, setWs] = useState(new WebSocket('ws://192.168.2.69:4000/init'));
+
+    const webSocket = useSelector(state => state.isSocketSessionActive);
+
+    useEffect(() => {
+        if (webSocket) {
+            console.log("I TO ACTIVATE THE CONNECTION")
+            ws.onopen = () => {
+                // on connecting, do nothing but log it to the console
+                console.log('connected to socket');
+                ws.send('message', { method: 'GET', body: "hello server!!!" });
+            };
+
+            ws.onmessage = event => {
+                // on receiving a message, add it to the list of messages
+                const message = JSON.parse(event.data)
+                notification("yellow", "Hit me baby one more time", dispatch)
+                console.log('received message', message)
+            };
+
+            ws.onclose = () => {
+                console.log('disconnected')
+                // automatically try to reconnect on connection loss
+                setWs(new WebSocket('ws://localhost:4000/init'))
+            };
+        };
+
+        if (!webSocket) {
+            console.log("I DESACTIVATED THE SOCKET CONNECTION")
+        };
+
+    }, [webSocket])
+
     return (<BrowserRouter>
         <Notification />
         <Route exact={true} path="/" render={() => <Home />} />

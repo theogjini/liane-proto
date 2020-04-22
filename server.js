@@ -28,13 +28,14 @@ let dbo = undefined;
 MongoClient.connect(url, { newUrlParser: true }, (err, client) => {
   dbo = client.db("liane")
 });
+
 let sessions = []; // Cookies
+let aWss = expressWs.getWss('/'); // Web Socket
 
 // Build
 app.use('/', express.static('build'));
 app.use('/assets', express.static('assets'));
 app.use(cookieParser());
-
 
 // Endpoints
 app.get('/recall-avatar',
@@ -48,6 +49,36 @@ app.get('/recall-avatar',
       return res.send(JSON.stringify({ success: true, avatar }))
     };
     res.send(JSON.stringify({ success: false }))
+  })
+);
+
+app.post('/signup', upload.none(),
+  catchAll(async (req, res) => {
+    console.log('sign-up hit!')
+    const username = req.body.username;
+    const password = sha1(req.body.password);
+    const user = JSON.parse(req.body.avatar)
+    const id = new ObjectID();
+    const newUser = new User(username, password, user, id);
+    dbo.collection("users").findOne({ username }, (err, user) => {
+      if (err) {
+        console.log('Error login', err);
+        return res.send(JSON.stringify({ success: false }));
+      };
+      if (user) {
+        console.log("Username taken!");
+        return res.send(JSON.stringify({ success: false, desc: 'Username taken!' }));
+      };
+      if (user === null) {
+        console.log("Signup success");
+        dbo.collection("users").insertOne(newUser);
+        const sessionId = uuidv1();
+        sessions[sessionId] = newUser.infos;
+        res.cookie('sid', sessionId);
+        console.log('sessions after signup:', sessions);
+        return res.send(JSON.stringify({ success: true, desc: 'Thrilled to have you here!', avatar: newUser.infos }));
+      };
+    })
   })
 );
 
@@ -79,33 +110,13 @@ app.post('/login', upload.none(),
   })
 );
 
-app.post('/signup', upload.none(),
+app.get('/logout',
   catchAll(async (req, res) => {
-    console.log('sign-up hit!')
-    const username = req.body.username;
-    const password = sha1(req.body.password);
-    const user = JSON.parse(req.body.avatar)
-    const id = new ObjectID();
-    const newUser = new User(username, password, user, id);
-    dbo.collection("users").findOne({ username }, (err, user) => {
-      if (err) {
-        console.log('Error login', err);
-        return res.send(JSON.stringify({ success: false }));
-      };
-      if (user) {
-        console.log("Username taken!");
-        return res.send(JSON.stringify({ success: false, desc: 'Username taken!' }));
-      };
-      if (user === null) {
-        console.log("Signup success");
-        dbo.collection("users").insertOne(newUser);
-        const sessionId = uuidv1();
-        sessions[sessionId] = newUser.infos;
-        res.cookie('sid', sessionId);
-        console.log('sessions after signup:', sessions);
-        return res.send(JSON.stringify({ success: true, desc: 'Thrilled to have you here!', avatar: newUser.infos }));
-      };
-    })
+    const sid = req.cookies.sid;
+    console.log('sessions before deleting', sessions);
+    delete sessions[sid];
+    console.log('sessions after deleting', sessions);
+    res.send(JSON.stringify({ success: true }))
   })
 );
 
@@ -148,7 +159,6 @@ app.get('/get-travels',
         return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
       };
       if (user) {
-        console.log("User found:", user.travels);
         const mapObjectIds = user.travels.map(travelid => ObjectID(travelid));
         const travels = await dbo.collection("travels").find({ _id: { $in: mapObjectIds } }).toArray();
         return res.send(JSON.stringify({ success: true, desc: "travels well loaded", travels }));
@@ -163,17 +173,16 @@ app.get('/get-chatrooms',
       return res.send(JSON.stringify({ success: false, desc: "Avatar not registered" }))
     };
     const userId = sessions[req.cookies.sid].registered;
-    console.log('Get chatrooms called', userId)
+    console.log('Get chatrooms called')
     dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
       if (err) {
         console.log("finding user error:", err);
       };
       if (user === null) {
-        console.log("User ID not found:", userId);
+        console.log("User ID not found:");
         return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
       };
       if (user) {
-        console.log("User found:", user.travels);
         const mapTravelIds = user.travels.map(currTravelId => ObjectID(currTravelId));
         const chatrooms = await dbo.collection("chatrooms").find({ _travelId: { $in: mapTravelIds } }).toArray();
         return res.send(JSON.stringify({ success: true, desc: "travels well loaded", chatrooms }));
@@ -192,7 +201,6 @@ app.post('/throw', upload.none(),
       if (dayTravel != null) {
         const newId = new ObjectID();
         const newChatRoomId = new ObjectID();
-        console.log('newId', newId);
         const day = dayTravel.goDate ? new Date(dayTravel.goDate).getDay() : idx;
         const travelToAdd = {
           _id: newId,
@@ -237,11 +245,11 @@ app.post('/select-travel', upload.none(),
         console.log('error', err);
       };
       if (travel === null) {
-        console.log('Id Error', travelId);
+        console.log('Id Error');
         return res.send(JSON.stringify({ success: false, desc: 'travel _id not recognized in db' }));
       };
       if (travel) {
-        console.log('Travel Found', travel);
+        console.log('Travel Found');
         const isRequestAlreadySent = travel.requests.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
         const isUserAlreadyIn = travel.attendees.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
         if (isUserAlreadyIn) {
@@ -261,7 +269,7 @@ app.post('/select-travel', upload.none(),
 app.post('/get-users-from-requests', upload.none(),
   catchAll(async (req, res) => {
     const userId = sessions[req.cookies.sid].registered;
-    console.log('get-users-from-requests called', userId);
+    console.log('get-users-from-requests called');
     const idsSent = JSON.parse(req.body.requestsId)
     const idsToFind = idsSent.map(id => ObjectID(id));
     const arrayOfUsers = await dbo.collection("users").find({ _id: { $in: idsToFind } }).toArray();
@@ -303,7 +311,7 @@ app.post('/get-messages', upload.none(),
         res.send(JSON.stringify({ success: false, desc: 'Chatroom not found' }))
       };
       if (chatroom) {
-        console.log('chatroom found', chatroom);
+        console.log('chatroom found');
         res.send(JSON.stringify({ success: true, desc: 'Chatroom found!', messages: chatroom.messages }))
       }
     })
@@ -325,10 +333,10 @@ app.post('/send-message', upload.none(),
 
 app.ws('/init', function (ws, req) {
   ws.on('message', (msg) => {
-    console.log(msg);
+    console.log('message from client is', msg);
     ws.send(JSON.stringify({ success: msg }))
   });
-  console.log('socket', req.testing);
+  console.log('This should send something', req.headers);
 });
 
 // Server

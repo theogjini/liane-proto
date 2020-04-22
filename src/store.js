@@ -2,6 +2,12 @@ import { createStore } from 'redux';
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case "ACTIVATE_SOCKET": {
+            {
+                state.isSocketSessionActive = true;
+            };
+            break
+        };
         case "GET_AVATAR": {
             {
                 state.avatar = action.avatar;
@@ -28,7 +34,8 @@ const reducer = (state, action) => {
         };
         case "LOGOUT": {
             {
-                state.avatar = {}
+                state.avatar = {};
+                state.isSocketSessionActive = false;
             };
         };
         case "NOTIFY": {
@@ -57,10 +64,12 @@ const reducer = (state, action) => {
 
 const store = createStore(
     reducer, {
+    isSocketSessionActive: false,
     avatar: {},
     travels: [],
     chatrooms: [],
     UI: {
+        socketNotif: [],
         profilePopup: false,
         notification: {
             active: false,
