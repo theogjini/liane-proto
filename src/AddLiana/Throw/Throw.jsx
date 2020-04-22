@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel } from './style';
+import { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel, Label, FlexDiv } from './style';
 import { format } from 'date-fns';
 import TimeSelector from './TimeSelector/TimeSelector.jsx';
 import { week, formatInput, checkZipFormat, notification, DayTravel } from '../../utils.js';
@@ -159,17 +159,17 @@ export default function Throw(props) {
                 <Input type="text" onChange={event => changeValue(event, setEnd)}
                     value={end} placeholder={placeholderEnd} spellCheck="false" />
             </InputContainer>
-            <label style={{ display: 'flex', maxWidth: '290px', margin: 'auto', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Label >
                 <Switch color="default" onClick={handleRecurrenceChange} checked={recurrence} />
                 <h3>{recurrence ? 'Recurrent travel' : 'Unique travel'}</h3>
-            </label>
+            </Label>
             {recurrence ?
                 (<div>
                     <DayTable>
                         {week.map((day, idx) => {
-                            return (<div key={day.key} style={{ display: 'flex', alignItems: 'center' }}>
+                            return (<FlexDiv key={day.key}>
                                 <Day currentDay={day.key} onClick={event => addDay(event, idx)} active={days[idx]}>{day.short}</Day>
-                                {days[idx] && (<div style={{ display: 'flex', alignItems: 'center' }}>
+                                {days[idx] && (<FlexDiv>
                                     <div >
                                         <TimeSelector go={true} onChangeProp={event => handleGoTimeChange(event, idx)} default={days[idx] ? days[idx].goTime : none} />
                                         <TimeSelector go={false} onChangeProp={event => handleReturnTimeChange(event, idx)} />
@@ -181,8 +181,8 @@ export default function Throw(props) {
                                         <MonkeyHead added={days[idx].seatsAvailable >= 4}><img src='assets/icons/happy-monkey.svg' /></MonkeyHead>
                                     </Seats >
                                     <Plus onClick={event => handleAddSeat(event, idx)}>+</Plus>
-                                </div>)}
-                            </div>)
+                                </FlexDiv>)}
+                            </FlexDiv>)
                         })}
                     </DayTable>
                 </div>) : (

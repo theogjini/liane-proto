@@ -22,6 +22,17 @@ const Underline = styled.div`
     border-radius: 5px;
 `
 
+const SigninToggleContainer = styled.div`
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+`
+
+const ToggleWrapper = styled.div`
+    position: relative;
+    display: inline-block;
+`
+
 const LinkContainer = styled.div`
     cursor: pointer;
     position: absolute;
@@ -113,4 +124,4 @@ const Input = styled.input`
     }
 `
 
-export { SignInContainer, Input, InputContainer, Button, PageTitle, Underline, LinkContainer, FormContainer };
+export { SignInContainer, Input, InputContainer, Button, PageTitle, Underline, LinkContainer, FormContainer, SigninToggleContainer, ToggleWrapper };

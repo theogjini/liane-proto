@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FindComponent, Input, InputContainer, Button, Filters, Filter, FilterContainer } from './style';
-import { useDispatch, useSelector } from 'react-redux';
+import { FindComponent, Input, InputContainer, Button, Filters, Filter, FiltersContainer } from './style';
+import { useDispatch } from 'react-redux';
 import { formatInput, checkZipFormat, notification, week } from '../../utils.js';
 import Results from './Results.jsx';
 
@@ -8,9 +8,9 @@ export default function Find(props) {
 
     const dispatch = useDispatch();
 
-    const [end, setEnd] = useState("J4G-1R7");
+    const [end, setEnd] = useState("");
 
-    const [start, setStart] = useState("H2J-3Z4");
+    const [start, setStart] = useState("");
 
     const [results, setResults] = useState([]);
 
@@ -88,7 +88,7 @@ export default function Find(props) {
                 </Button>
             </div>
         </form>
-        <div style={{ display: "flex", maxWidth: "320px", margin: "auto" }}>
+        <FiltersContainer>
             {search && (
                 <Filters>
                     {week.map((currDay, day) => {
@@ -100,6 +100,6 @@ export default function Find(props) {
                 </Filters>
             )}
             {search && (<Results results={resultsToDisplay} dispatch={dispatch} />)}
-        </div>
+        </FiltersContainer>
     </FindComponent >)
 };

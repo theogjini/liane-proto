@@ -4,11 +4,12 @@ node version >= 10
 
 `npm install`
 
-`vi config.json`
+`vi config.js`
 
-```json
-{
-  "url": "mongourl"
+```js
+export default {
+  url: "mongourl",
+  map_API_KEY: "GOOGLE_API_KEY"
 }
 ```
 

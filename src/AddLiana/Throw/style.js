@@ -20,6 +20,11 @@ const DayTable = styled.div`
     max-width: 340px;
 `
 
+const FlexDiv = styled.div`
+    display: flex;
+    align-items: center;
+`
+
 const Button = styled.button`
     -webkit-tap-highlight-color: transparent;
     background-color: #8bc34a;
@@ -98,6 +103,15 @@ const MonkeyHead = styled.div`
         transition-timing-function:  cubic-bezier(0.175, 0.885, 0.32, 1.275);;
     }
 `
+
+const Label = styled.label`
+    display: flex;
+    max-width: 290px;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
+`
+
 const InputContainer = styled.div`
     position: relative;
     display: flex;
@@ -162,4 +176,18 @@ const UniqueTravel = styled.div`
     margin: auto;
 `
 
-export { ThrowComponent, DayTable, Day, Button, DateSelector, Input, InputContainer, Seats, MonkeyHead, Plus, UniqueTravel };
+export {
+    ThrowComponent,
+    DayTable,
+    Day,
+    Button,
+    DateSelector,
+    Input,
+    InputContainer,
+    Seats,
+    MonkeyHead,
+    Plus,
+    UniqueTravel,
+    Label,
+    FlexDiv
+};

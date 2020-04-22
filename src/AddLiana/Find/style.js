@@ -13,6 +13,7 @@ const colors = {
 const FindComponent = styled.div`
     text-align: center;
 `
+
 const Button = styled.button`
     -webkit-tap-highlight-color: transparent;
     background-color: ${props => !props.search ? '#8bc34a' : '#ff0000'};
@@ -126,6 +127,12 @@ const Filters = styled.div`
     margin-top: 20px;
 `
 
+const FiltersContainer = styled.div`
+    display: flex;
+    margin: auto;
+    max-width: 320px;
+`
+
 const Filter = styled.div`
     background-color: ${props => props.active ? colors[props.day] : "#c2c2c2c2"};
     font-weight: 600;
@@ -157,6 +164,7 @@ const BoldSpan = styled.span`
     font-weight: 600;
     color: ${props => colors[props.day]};
 `
+
 const BoldSpanDate = styled.div`
     font-size: 15px;
     text-align: start;
@@ -193,6 +201,7 @@ const TimeDiv = styled.div`
         height: 25px;
     }
 `
+
 const SeatsDiv = styled.div`
     width: 85px;
     text-align: initial;
@@ -200,7 +209,6 @@ const SeatsDiv = styled.div`
     color: #c2c2c2;
     font-style: italic;
 `
-
 
 export {
     FindComponent,
@@ -217,5 +225,6 @@ export {
     ButtonRequest,
     LowContainer,
     SeatsDiv,
-    BoldSpanDate
+    BoldSpanDate,
+    FiltersContainer
 };

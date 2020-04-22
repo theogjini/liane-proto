@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { SignInContainer, PageTitle, Underline, LinkContainer } from './style';
+import { SignInContainer, PageTitle, Underline, LinkContainer, SigninToggleContainer, ToggleWrapper } from './style';
 import Login from './Login.jsx';
 import Signup from './Signup.jsx';
 
@@ -19,13 +19,13 @@ export default function Signin(props) {
 
     return (
         <SignInContainer >
-            <div style={{ marginBottom: '25px', display: 'flex', justifyContent: 'center' }}>
-                <div style={{ display: 'inline-block', position: 'relative' }}>
+            <SigninToggleContainer>
+                <ToggleWrapper >
                     <PageTitle active={changeSignType} onClick={handleChangeSignType}>Login</PageTitle>
                     <PageTitle active={!changeSignType} onClick={handleChangeSignType}>Sign up</PageTitle>
                     <Underline active={changeSignType} />
-                </div>
-            </div>
+                </ToggleWrapper>
+            </SigninToggleContainer>
             {changeSignType && (<Login />)}
             {!changeSignType && (<Signup />)}
             <LinkContainer>
