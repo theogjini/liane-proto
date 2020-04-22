@@ -23,7 +23,6 @@ export default function Popup(props) {
             const req = await fetch('/get-users-from-requests', { method: 'POST', body: data })
             const parsed = await req.json();
             if (parsed.success) {
-                console.log('usersRequests', parsed.usersRequests)
                 setUsersRequests(parsed.usersRequests)
             }; 1
             if (!parsed.success) {

@@ -7,7 +7,7 @@ node version >= 10
 `vi config.js`
 
 ```js
-export default {
+module.exports = {
   url: "mongourl",
   map_API_KEY: "GOOGLE_API_KEY"
 }

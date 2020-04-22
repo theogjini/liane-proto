@@ -3,7 +3,6 @@ import config from '../../server/config.js';
 import { MapContainer } from './style.js';
 
 const API_KEY = config.map_API_KEY;
-console.log('config', API_KEY);
 
 export default function Road(props) {
     const start = props.start;
@@ -14,9 +13,6 @@ export default function Road(props) {
             const req = await fetch('/')
         };
     }, [])
-
-    console.log('end', end);
-    console.log('start', start);
 
     return (<MapContainer>
         <iframe

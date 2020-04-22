@@ -18,7 +18,7 @@ export default function App() {
 
     useEffect(() => {
         if (webSocket) {
-            console.log("I TO ACTIVATE THE CONNECTION")
+            console.log("I ACTIVATEED THE CONNECTION")
             ws.onopen = () => {
                 // on connecting, do nothing but log it to the console
                 console.log('connected to socket');

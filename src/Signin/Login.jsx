@@ -21,20 +21,17 @@ export default function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        console.log('Login: loginHandle')
         const data = new FormData();
         data.append("username", username);
         data.append("password", password);
         let req = await fetch('/login', { method: 'POST', body: data });
         let parsed = await req.json();
         if (parsed.success) {
-            console.log('Login name: ', parsed.avatar)
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar })
             history.push('/dashboard')
             return notification('success', parsed.desc, dispatch);
         };
         if (!parsed.success) {
-            console.log('Login Error ', parsed.desc);
             return notification('error', parsed.desc, dispatch);
         };
     };

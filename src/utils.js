@@ -30,7 +30,6 @@ const formatInput = (input) => {
         removeSpaces = currentLetter !== " " && currentLetter !== "-" ? (removeSpaces + currentLetter) : (removeSpaces + "");
     };
     let insertDash = removeSpaces.length > 3 ? removeSpaces.slice(0, 3) + "-" + removeSpaces.slice(3, 6) : removeSpaces;
-    console.log('insertDash:', insertDash)
     let finalOutput = insertDash.slice(0, 7)
     return finalOutput
 };

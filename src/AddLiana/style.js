@@ -43,4 +43,15 @@ const AddLianaContainer = styled.div`
     height: 95vh;
 `
 
-export { PageTitle, Underline, LinkContainer, AddLianaContainer };
+const AddLianaToggleContainer = styled.div`
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+`
+
+const ToggleWrapper = styled.div`
+    display: inline-block;
+    position: relative;
+`
+
+export { PageTitle, Underline, LinkContainer, AddLianaContainer, AddLianaToggleContainer, ToggleWrapper };

@@ -33,19 +33,16 @@ export default function Home() {
         let parsed = await request.json()
         if (parsed.success) {
             setTempAvatar(parsed.avatar);
-            console.log(parsed.avatar)
         };
     };
 
     async function handleSelectAvatar(event) {
         event.preventDefault();
-        console.log('avatar selected:', tempAvatar)
         const data = new FormData()
         data.append('avatar', JSON.stringify(tempAvatar))
         let req = await fetch('/select-avatar', { method: "POST", body: data });
         let parsed = await req.json();
         if (parsed.success) {
-            console.log(parsed);
             dispatch({ type: "GET_AVATAR", avatar: tempAvatar });
             history.push('/dashboard');
             return notification('neutral', 'Welcome!', dispatch)

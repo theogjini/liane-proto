@@ -30,12 +30,10 @@ export default function Liana(props) {
     } = props.travel;
 
     const isUserDriver = driver === userId;
-    console.log('isUserDriver', isUserDriver);
 
     let requestAccepted = true;
 
     if (!isUserDriver) requestAccepted = attendees.includes(userId);
-    console.log('areyouacceptedinthis', requestAccepted);
 
     function handleGoToChatroom(event) {
         event.preventDefault();
@@ -62,7 +60,6 @@ export default function Liana(props) {
                     {requests[0] && isUserDriver && (
                         <div>They want to hang! {requests.map((request, idx) => {
                             if (idx < 3) {
-                                console.log('request', request);
                                 return (<img onClick={handleSeeRequests} key={request} src="/assets/icons/monkey.svg" height="23px" />)
                             };
                             return (<BoldSpan key={request} >...</BoldSpan>)

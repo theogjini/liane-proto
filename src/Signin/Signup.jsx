@@ -28,22 +28,19 @@ export default function Signup() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        console.log('Signup: SignupHandle')
         if (!avatar.name) return notification("neutral", "Start by choosing an avatar!", dispatch);
         const data = new FormData();
         data.append("username", username);
         data.append("password", password);
-        data.append("avatar", JSON.stringify(avatar))
+        data.append("avatar", JSON.stringify(avatar));
         let req = await fetch('/signup', { method: 'POST', body: data });
         let parsed = await req.json();
         if (parsed.success) {
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar });
-            notification("success", parsed.desc, dispatch);;
-            console.log('Signup success', parsed.avatar);
+            notification("success", parsed.desc, dispatch);
             history.push('/dashboard');
         };
         if (!parsed.success) {
-            console.log('Signup error', parsed.desc);
             setMessageError(parsed.desc);
             notification("error", parsed.desc, dispatch);
         };
