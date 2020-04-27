@@ -82,7 +82,7 @@ module.exports = {
     historyApiFallback: {
       index: '/index.html'
     },
-    contentBase: path.join(__dirname, "public"),
+    contentBase: path.join(__dirname, "/build"),
     hot: true
   },
   module: {
