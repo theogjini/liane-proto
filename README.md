@@ -1,28 +1,28 @@
 # Preview
 
 ### Select a unique avatar
-<img src="Preview/Liane_Home.png" height="500">
+<img src="doc/images/Liane_Home.png" height="500">
 
 ### Set a travel 
-<img src="Preview/Liane_AddLiana_ZipValidation.png" height="500">
+<img src="doc/images/Liane_AddLiana_ZipValidation.png" height="500">
 
 ### Find travels
-<img src="Preview/Liane_Find_3.png" height="500">
+<img src="doc/images/Liane_Find_3.png" height="500">
 
 ### Organized day to day dashboard
-<img src="Preview/Liane_Dashboard.png" height="500">
+<img src="doc/images/Liane_Dashboard.png" height="500">
 
 ### Chat
-<img src="Preview/Liane_Chat.png" height="500">
+<img src="doc/images/Liane_Chat.png" height="500">
 
 ### Navigate
-<img src="Preview/Liane_Navigate.png" height="500">
+<img src="doc/images/Liane_Navigate.png" height="500">
 
 ### Custom notifications
-<img src="Preview/Liane_Notifs.png" width="280">
+<img src="doc/images/Liane_Notifs.png" width="280">
 
 ### Region zip formatting validation
-<img src="Preview/Liane_ZipValidation.png" width="280">
+<img src="doc/images/Liane_ZipValidation.png" width="280">
 
 
 # Main Librairies 
@@ -31,6 +31,7 @@
 - Express
 - Mongodb
 - Node
+- Particles JS
 
 # Install project
 
