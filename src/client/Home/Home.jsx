@@ -3,7 +3,7 @@ import { HomeComponent, Button, Title, Span, Bounce, LinkContainer, AvatarContai
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Particles from 'react-particles-js';
-import { particlesParams } from '../../assets/particles/particlesParams';
+import { particlesParams } from '../../../assets/particles/particlesParams';
 import { notification } from '../utils.js';
 
 

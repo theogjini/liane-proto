@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import config from '../../server/config.js';
+import config from '../../../server/config.js';
 import { MapContainer } from './style.js';
 
 const API_KEY = config.map_API_KEY;
