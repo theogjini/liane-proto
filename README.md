@@ -19,10 +19,10 @@
 <img src="Preview/Liane_Navigate.png" height="500">
 
 ### Custom notifications
-<img src="Preview/Liane_Notifs.png" width="150">
+<img src="Preview/Liane_Notifs.png" width="280">
 
 ### Region zip formatting validation
-<img src="Preview/Liane_ZipValidation.png" width="150">
+<img src="Preview/Liane_ZipValidation.png" width="280">
 
 
 # Main Librairies 
