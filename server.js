@@ -34,7 +34,7 @@ let aWss = expressWs.getWss('/'); // Web Socket
 
 // Build
 app.use('/', express.static('build'));
-app.use('/assets', express.static('assets'));
+app.use('/assets', express.static('src/client/assets'));
 app.use(cookieParser());
 
 // Endpoints
