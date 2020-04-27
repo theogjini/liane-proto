@@ -119,13 +119,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./public/index.html",
+      template: "./server/public/index.html",
       filename: "./index.html"
     }),
   ],
 
   entry: {
     javascript: "./src/client/index.jsx",
-    html: "./public/index.html"
+    html: "./server/public/index.html"
   }
 };

@@ -12,12 +12,12 @@ reloadMagic(app);
 const sha1 = require('sha1');
 const cookieParser = require('cookie-parser');
 const uuidv1 = require('uuid/v1');
-const upload = multer({ dest: __dirname + '/server/uploads/images' });
+const upload = multer({ dest: __dirname + '/uploads/images' });
 const capitalize = require('capitalize');
-const config = require("./server/config.js");
+const config = require("./config.js");
 const { uniqueNamesGenerator, adjectives, colors } = require("unique-names-generator");
-const { monkeys, avatarsPaths } = require("./server/monkeys.js");
-const { User, catchAll, Message } = require("./server/utilities.js");
+const { monkeys, avatarsPaths } = require("./monkeys.js");
+const { User, catchAll, Message } = require("./utilities.js");
 
 // Database
 const MongoDB = require('mongodb');
