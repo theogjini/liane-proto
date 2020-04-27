@@ -29,7 +29,6 @@ const avatarsPaths = [
     "/assets/monkeys/gorilla2.svg",
     "/assets/monkeys/monk2.svg",
     "/assets/monkeys/monk3.svg",
-    // "/assets/monkeys/terribleMonkey.png",
 ];
 
 module.exports = { monkeys, avatarsPaths };
