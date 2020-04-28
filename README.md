@@ -1,28 +1,28 @@
 # Preview
 
 ### Select a unique avatar
-<img src="doc/images/Liane_Home.png" height="500">
+<img src="docs/images/Liane_Home.png" height="500">
 
 ### Set a travel 
-<img src="doc/images/Liane_AddLiana_ZipValidation.png" height="500">
+<img src="docs/images/Liane_AddLiana_ZipValidation.png" height="500">
 
 ### Find travels
-<img src="doc/images/Liane_Find_3.png" height="500">
+<img src="docs/images/Liane_Find_3.png" height="500">
 
 ### Organized day to day dashboard
-<img src="doc/images/Liane_Dashboard.png" height="500">
+<img src="docs/images/Liane_Dashboard.png" height="500">
 
 ### Chat
-<img src="doc/images/Liane_Chat.png" height="500">
+<img src="docs/images/Liane_Chat.png" height="500">
 
 ### Navigate
-<img src="doc/images/Liane_Navigate.png" height="500">
+<img src="docs/images/Liane_Navigate.png" height="500">
 
 ### Custom notifications
-<img src="doc/images/Liane_Notifs.png" width="280">
+<img src="docs/images/Liane_Notifs.png" width="280">
 
 ### Region zip formatting validation
-<img src="doc/images/Liane_ZipValidation.png" width="280">
+<img src="docs/images/Liane_ZipValidation.png" width="280">
 
 
 # Main Librairies 
