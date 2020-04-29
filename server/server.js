@@ -23,11 +23,7 @@ const { User, catchAll, Message } = require("./utilities.js");
 const MongoDB = require('mongodb');
 const MongoClient = MongoDB.MongoClient;
 const ObjectID = MongoDB.ObjectID;
-const url = config.url;
 let dbo = undefined;
-// MongoClient.connect(url, { newUrlParser: true }, (err, client) => {
-//   dbo = client.db("liane")
-// });
 
 let sessions = []; // Cookies
 let aWss = expressWs.getWss('/'); // Web Socket
@@ -365,7 +361,7 @@ app.all("/*", (req, res, next) => {
 initMongo(
   config.url
 ).then((response) => {
-  //dbo = response;
+  dbo = response;
   const { PORT = 4000, LOCAL_ADDRESS = "0.0.0.0" } = process.env; // for hiroku
   app.listen(4000, LOCAL_ADDRESS, () => {
     console.log("Server running on port " + PORT);

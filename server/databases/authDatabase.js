@@ -11,7 +11,7 @@ const performLogin = async (username, password) => {
         throw new Error("Invalid password");
     };
 
-    // if we pass the above conditional, userpass as to match the sha1
+    // if we pass the above conditional, userpass must match the sha1
     console.log("Login Success");
     const sessionId = uuidv1();
 
