@@ -32,4 +32,4 @@ function catchAll(fn) {
     };
 };
 
-module.exports = { User, catchAll, Message };
+export { User, catchAll, Message };

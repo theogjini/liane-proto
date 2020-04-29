@@ -25,9 +25,9 @@ const MongoClient = MongoDB.MongoClient;
 const ObjectID = MongoDB.ObjectID;
 const url = config.url;
 let dbo = undefined;
-MongoClient.connect(url, { newUrlParser: true }, (err, client) => {
-  dbo = client.db("liane")
-});
+// MongoClient.connect(url, { newUrlParser: true }, (err, client) => {
+//   dbo = client.db("liane")
+// });
 
 let sessions = []; // Cookies
 let aWss = expressWs.getWss('/'); // Web Socket
@@ -36,6 +36,20 @@ let aWss = expressWs.getWss('/'); // Web Socket
 app.use('/', express.static('build'));
 app.use('/assets', express.static('src/client/assets'));
 app.use(cookieParser());
+
+// NEW STUFF
+import path from 'path';
+import bodyParser from 'body-parser';
+import { initMongo } from "./utils/connection";
+import { authController } from './controllers';
+
+
+// Add global body parser, it's easier to use globally than multer
+app.use(bodyParser.json());
+
+// This makes all routes bound to ` authController` available at /auth
+// ex: a route called 'login' in the auth controller, when bound here will resolve at '/auth/login'
+app.use('/auth', authController)
 
 // Endpoints
 app.get('/recall-avatar',
@@ -340,10 +354,20 @@ app.ws('/init', function (ws, req) {
 });
 
 // Server
-app.all('/*', (req, res, next) => { // needed for react router
-  res.sendFile(__dirname + '/build/index.html');
+
+const template = path.resolve(__dirname + "/../build/index.html");
+app.all("/*", (req, res, next) => {
+  // needed for react router
+  res.sendFile(template);
 });
 
-app.listen(4000, '0.0.0.0', () => {
-  console.log("Server running on port 4000")
+// bind mongo before we start application
+initMongo(
+  config.url
+).then((response) => {
+  //dbo = response;
+  const { PORT = 4000, LOCAL_ADDRESS = "0.0.0.0" } = process.env; // for hiroku
+  app.listen(4000, LOCAL_ADDRESS, () => {
+    console.log("Server running on port " + PORT);
+  });
 });
