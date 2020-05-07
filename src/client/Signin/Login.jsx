@@ -27,11 +27,13 @@ export default function Login() {
         let req = await fetch('/auth/login', { method: 'POST', body: data });
         let parsed = await req.json();
         if (parsed.success) {
+            console.log('parsed:', parsed);
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar })
             history.push('/dashboard')
             return notification('success', parsed.desc, dispatch);
         };
         if (!parsed.success) {
+            console.log('error sent back is:', parsed)
             return notification('error', parsed.desc, dispatch);
         };
     };

@@ -26,7 +26,7 @@ function catchAll(fn) {
         try {
             await fn(req, res, next);
         } catch (e) {
-            console.error(e);
+            res.json({ success: false, desc: e.message });
             next(e);
         }
     };

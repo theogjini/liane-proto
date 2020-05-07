@@ -12,11 +12,11 @@ const login = async (req, res) => {
 
     const response = await authService.handleLogin(username, password);
 
-    res.send(json({ success: true, ...response }));
+    res.json(response);
 }
 
 const signup = async (req, res) => {
-    res.send(JSON.stringify({ success: 'working' }));
+    res.json({ success: 'working' });
 };
 
 // instantiate new router
@@ -26,6 +26,7 @@ const authController = new Router();
 authController.post('/login', catchAll(login));
 
 authController.get('/signup', catchAll(signup));
+// authController.get('/session', catchAll(session));
 
 
 export {

@@ -11,14 +11,13 @@ const initMongo = async (url) => {
   if (!connection) {
     console.log("Building new Mongo connection");
     try {
-      console.log("url:", url)
       const mongo = await MongoClient.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
 
-      connection = mongo.db("ProjectDB");
-      console.log("Connection Assigned!", connection);
+      connection = mongo.db("liane");
+      console.log("Connection Assigned!");
 
     } catch (e) {
       console.log(`Unable to connect to mongo: ${e}`)

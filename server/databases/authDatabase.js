@@ -1,4 +1,5 @@
 import { connection } from '../utils/connection.js';
+import uuidv1 from 'uuid/v1';
 
 const getDb = () => {
     return connection.collection("users");
@@ -11,7 +12,7 @@ const performLogin = async (username, password) => {
     console.log('user', user)
 
     if (user === null) {
-        throw new Error("No user found!");
+        throw new Error('Invalid username!');
     };
 
     // if we pass the above conditional, userpass must match the sha1
