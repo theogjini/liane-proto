@@ -45,7 +45,7 @@ app.use(bodyParser.json());
 
 // This makes all routes bound to ` authController` available at /auth
 // ex: a route called 'login' in the auth controller, when bound here will resolve at '/auth/login'
-app.use('/auth', authController)
+app.use('/auth', upload.none(), authController)
 
 // Endpoints
 app.get('/recall-avatar',

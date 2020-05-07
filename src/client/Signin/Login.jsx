@@ -24,7 +24,7 @@ export default function Login() {
         const data = new FormData();
         data.append("username", username);
         data.append("password", password);
-        let req = await fetch('/login', { method: 'POST', body: data });
+        let req = await fetch('/auth/login', { method: 'POST', body: data });
         let parsed = await req.json();
         if (parsed.success) {
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar })

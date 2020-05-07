@@ -1,14 +1,17 @@
 import { connection } from '../utils/connection.js';
 
+const getDb = () => {
+    return connection.collection("users");
+}
+
 const performLogin = async (username, password) => {
-    const user = await connection.collection("users").findOne({ username });
+    const db = getDb();
+    const user = await db.findOne({ username });
+
+    console.log('user', user)
 
     if (user === null) {
-        throw new Error("Invalid username");
-    };
-
-    if (user.password != sha1(password)) {
-        throw new Error("Invalid password");
+        throw new Error("No user found!");
     };
 
     // if we pass the above conditional, userpass must match the sha1
