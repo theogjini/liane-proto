@@ -33,7 +33,7 @@ app.use(cookieParser());
 import path from 'path';
 import bodyParser from 'body-parser';
 import { initMongo } from "./utils/connection";
-import { authController, travelController } from './controllers';
+import { authController, travelController, chatroomController } from './controllers';
 
 
 // Add global body parser, it's easier to use globally than multer
@@ -46,7 +46,7 @@ app.use('/auth', upload.none(), authController)
 
 app.use('/travel', upload.none(), travelController)
 
-// app.use('/chatroom', upload.none(), chatroomController)
+app.use('/chatroom', upload.none(), chatroomController)
 
 
 // Endpoints

@@ -86,7 +86,7 @@ async function getUserTravels(dispatch) {
 };
 
 async function getUserChatrooms(dispatch) {
-    const req = await fetch('/get-chatrooms');
+    const req = await fetch('/chatroom/get-chatrooms');
     const parsed = await req.json();
     if (parsed.success) {
         let currentChatrooms = parsed.chatrooms;

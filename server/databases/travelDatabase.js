@@ -1,5 +1,4 @@
-import { connection, getDb } from '../utils/connection.js';
-
+import { getDb } from '../utils/connection.js';
 
 const performGetTravels = async (travelIds) => {
     const travelsDb = getDb("travels");
