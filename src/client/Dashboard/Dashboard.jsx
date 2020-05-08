@@ -32,7 +32,7 @@ export default function Dashboard() {
       dispatch({ type: "ACTIVATE_SOCKET" })
     };
     getUserTravels(dispatch);
-    getUserChatrooms(dispatch);
+    // getUserChatrooms(dispatch);
   }, []);
 
   function handleDayClick(event, day, idx) {

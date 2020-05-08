@@ -1,11 +1,7 @@
-import { connection } from '../utils/connection.js';
+import { connection, getDb } from '../utils/connection.js';
 import uuidv1 from 'uuid/v1';
 import { User } from '../utilities';
-
-
-const getDb = (db) => {
-    return connection.collection(db);
-};
+import { ObjectID } from 'mongodb'
 
 
 const performLogin = async (username, password) => {
@@ -72,10 +68,22 @@ const performClearSession = async (cookie) => {
 };
 
 
+const getUserFromCookie = async (cookie) => {
+    const sessionsDb = getDb("sessions");
+    const session = await sessionsDb.findOne({ sid: cookie });
+
+    const userDb = getDb("users");
+    const user = await userDb.findOne({ _id: ObjectID(session.userInfos.registered) });
+
+    return user;
+};
+
+
 export {
     performLogin,
     performSignup,
     createNewSession,
     performRestoreSession,
-    performClearSession
+    performClearSession,
+    getUserFromCookie
 };

@@ -28,4 +28,8 @@ const initMongo = async (url) => {
   return;
 };
 
-export { connection, initMongo };
+const getDb = (db) => {
+  return connection.collection(db);
+};
+
+export { connection, initMongo, getDb };

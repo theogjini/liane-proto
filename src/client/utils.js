@@ -74,7 +74,7 @@ const notification = (category, message, dispatch) => {
 
 // Get user travels
 async function getUserTravels(dispatch) {
-    const req = await fetch('/get-travels');
+    const req = await fetch('/travel/get-travels');
     const parsed = await req.json();
     if (parsed.success) {
         console.log('parsed travels:', parsed.travels)

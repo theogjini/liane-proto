@@ -33,7 +33,7 @@ app.use(cookieParser());
 import path from 'path';
 import bodyParser from 'body-parser';
 import { initMongo } from "./utils/connection";
-import { authController } from './controllers';
+import { authController, travelController } from './controllers';
 
 
 // Add global body parser, it's easier to use globally than multer
@@ -41,70 +41,39 @@ app.use(bodyParser.json());
 
 // This makes all routes bound to ` authController` available at /auth
 // ex: a route called 'login' in the auth controller, when bound here will resolve at '/auth/login'
+
 app.use('/auth', upload.none(), authController)
+
+app.use('/travel', upload.none(), travelController)
+
+// app.use('/chatroom', upload.none(), chatroomController)
+
 
 // Endpoints
 
-app.post('/pop-avatar',
-  catchAll((req, res) => {
-    const uniqueMonkeyName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, monkeys.names] });
-    const formattedName = capitalize.words(uniqueMonkeyName.split("_").join(" "));
-    let uniqueMonkey = {
-      name: formattedName,
-      original: uniqueMonkeyName,
-      path: avatarsPaths[Math.floor(Math.random() * avatarsPaths.length)]
-    };
-    res.send(JSON.stringify({ success: true, avatar: uniqueMonkey }))
-  })
-);
-
-app.get('/get-travels',
-  catchAll(async (req, res) => {
-    if (!sessions[req.cookies.sid].registered) {
-      return res.send(JSON.stringify({ success: false, desc: "Avatar not registered" }))
-    };
-    const userId = sessions[req.cookies.sid].registered;
-    console.log('Get travels called', userId)
-    dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
-      if (err) {
-        console.log("finding user error:", err);
-      };
-      if (user === null) {
-        console.log("User ID not found:", userId);
-        return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
-      };
-      if (user) {
-        const mapObjectIds = user.travels.map(travelid => ObjectID(travelid));
-        const travels = await dbo.collection("travels").find({ _id: { $in: mapObjectIds } }).toArray();
-        return res.send(JSON.stringify({ success: true, desc: "travels well loaded", travels }));
-      }
-    });
-  })
-);
-
-app.get('/get-chatrooms',
-  catchAll(async (req, res) => {
-    if (!sessions[req.cookies.sid].registered) {
-      return res.send(JSON.stringify({ success: false, desc: "Avatar not registered" }))
-    };
-    const userId = sessions[req.cookies.sid].registered;
-    console.log('Get chatrooms called')
-    dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
-      if (err) {
-        console.log("finding user error:", err);
-      };
-      if (user === null) {
-        console.log("User ID not found:");
-        return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
-      };
-      if (user) {
-        const mapTravelIds = user.travels.map(currTravelId => ObjectID(currTravelId));
-        const chatrooms = await dbo.collection("chatrooms").find({ _travelId: { $in: mapTravelIds } }).toArray();
-        return res.send(JSON.stringify({ success: true, desc: "travels well loaded", chatrooms }));
-      }
-    });
-  })
-);
+// app.get('/get-chatrooms',
+//   catchAll(async (req, res) => {
+//     if (!sessions[req.cookies.sid].registered) {
+//       return res.send(JSON.stringify({ success: false, desc: "Avatar not registered" }))
+//     };
+//     const userId = sessions[req.cookies.sid].registered;
+//     console.log('Get chatrooms called')
+//     dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
+//       if (err) {
+//         console.log("finding user error:", err);
+//       };
+//       if (user === null) {
+//         console.log("User ID not found:");
+//         return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
+//       };
+//       if (user) {
+//         const mapTravelIds = user.travels.map(currTravelId => ObjectID(currTravelId));
+//         const chatrooms = await dbo.collection("chatrooms").find({ _travelId: { $in: mapTravelIds } }).toArray();
+//         return res.send(JSON.stringify({ success: true, desc: "travels well loaded", chatrooms }));
+//       }
+//     });
+//   })
+// );
 
 app.post('/throw', upload.none(),
   catchAll(async (req, res) => {
