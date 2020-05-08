@@ -48,7 +48,7 @@ export default function Dashboard() {
   };
 
   async function handleLogout(event) {
-    const req = await fetch('/logout');
+    const req = await fetch('/auth/logout');
     const parsed = await req.json();
     if (parsed.success) {
       dispatch({ type: 'LOGOUT' });

@@ -47,35 +47,6 @@ app.use(bodyParser.json());
 app.use('/auth', upload.none(), authController)
 
 // Endpoints
-app.post('/signup', upload.none(),
-  catchAll(async (req, res) => {
-    console.log('sign-up hit!')
-    const username = req.body.username;
-    const password = sha1(req.body.password);
-    const user = JSON.parse(req.body.avatar)
-    const id = new ObjectID();
-    const newUser = new User(username, password, user, id);
-    dbo.collection("users").findOne({ username }, (err, user) => {
-      if (err) {
-        console.log('Error login', err);
-        return res.send(JSON.stringify({ success: false }));
-      };
-      if (user) {
-        console.log("Username taken!");
-        return res.send(JSON.stringify({ success: false, desc: 'Username taken!' }));
-      };
-      if (user === null) {
-        console.log("Signup success");
-        dbo.collection("users").insertOne(newUser);
-        const sessionId = uuidv1();
-        sessions[sessionId] = newUser.infos;
-        res.cookie('sid', sessionId);
-        console.log('sessions after signup:', sessions);
-        return res.send(JSON.stringify({ success: true, desc: 'Thrilled to have you here!', avatar: newUser.infos }));
-      };
-    })
-  })
-);
 
 app.get('/logout',
   catchAll(async (req, res) => {

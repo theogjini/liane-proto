@@ -28,22 +28,6 @@ const performLogin = async (username, password) => {
 
 
 
-const createNewSession = async (sessionId, userInfos) => {
-    const sessionsDb = getDb("sessions")
-    await sessionsDb.insertOne({ sid: sessionId, userInfos });
-};
-
-
-
-const performRestoreSession = async (cookie) => {
-    const sessionsDb = getDb("sessions");
-    const user = await sessionsDb.findOne({ sid: cookie });
-
-    return user;
-};
-
-
-
 const performSignup = async (username, password, user, id) => {
     const users = getDb("users");
     const usernameAlreadyExist = await users.findOne({ username });
@@ -66,9 +50,32 @@ const performSignup = async (username, password, user, id) => {
 
 
 
+const createNewSession = async (sessionId, userInfos) => {
+    const sessionsDb = getDb("sessions")
+    await sessionsDb.insertOne({ sid: sessionId, userInfos });
+};
+
+
+
+const performRestoreSession = async (cookie) => {
+    const sessionsDb = getDb("sessions");
+    const user = await sessionsDb.findOne({ sid: cookie });
+
+    return user;
+};
+
+
+
+const performClearSession = async (cookie) => {
+    const sessionsDb = getDb("sessions");
+    await sessionsDb.deleteOne({ sid: cookie });
+};
+
+
 export {
     performLogin,
+    performSignup,
     createNewSession,
     performRestoreSession,
-    performSignup
+    performClearSession
 };

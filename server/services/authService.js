@@ -26,22 +26,6 @@ const handleLogin = async (username, password) => {
 
 
 
-const restoreSession = async (cookie) => {
-    const user = await authDatabase.performRestoreSession(cookie);
-
-    if (user === null) {
-        throw new Error('Invalid')
-    };
-
-    return {
-        success: true,
-        desc: 'Welcome back!',
-        avatar: user.userInfos
-    }
-};
-
-
-
 const handleSignup = async (username, passwordUnhashed, user, id) => {
     const password = sha1(passwordUnhashed);
     const { userInfos, sessionId } = await authDatabase.performSignup(username, password, user, id);
@@ -59,12 +43,40 @@ const handleSignup = async (username, passwordUnhashed, user, id) => {
         },
         sessionId
     }
-}
+};
+
+
+
+const restoreSession = async (cookie) => {
+    const user = await authDatabase.performRestoreSession(cookie);
+
+    if (user === null && cookie) {
+        throw new ReferenceError('This session cookie no longer available')
+    };
+
+    return {
+        success: true,
+        desc: 'Welcome back!',
+        avatar: user.userInfos
+    }
+};
+
+
+
+const clearSession = async (cookie) => {
+    await authDatabase.performClearSession(cookie);
+
+    return {
+        success: true,
+        desc: 'See you soon'
+    }
+};
 
 
 
 export {
     handleLogin,
+    handleSignup,
     restoreSession,
-    handleSignup
+    clearSession
 }

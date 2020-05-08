@@ -49,6 +49,17 @@ const restoreSession = async (req, res) => {
     res.json(response);
 };
 
+
+
+const clearSession = async (req, res) => {
+    const cookie = req.cookies.sid;
+    console.log('clearSession:', cookie);
+
+    const response = await authService.clearSession(cookie);
+
+    res.json(response);
+}
+
 // instantiate new router
 const authController = new Router();
 
@@ -58,6 +69,8 @@ authController.post('/login', catchAll(login));
 authController.get('/session', catchAll(restoreSession));
 
 authController.post('/signup', catchAll(signup));
+
+authController.get('/logout', catchAll(clearSession));
 
 
 export {
