@@ -1,5 +1,7 @@
 import { connection } from '../utils/connection.js';
 import uuidv1 from 'uuid/v1';
+import { User } from '../utilities';
+
 
 const getDb = (db) => {
     return connection.collection(db);
@@ -9,8 +11,6 @@ const getDb = (db) => {
 const performLogin = async (username, password) => {
     const usersDb = getDb("users");
     const user = await usersDb.findOne({ username });
-
-    console.log('user', user)
 
     if (user === null) {
         throw new Error('Invalid username!');
@@ -27,20 +27,48 @@ const performLogin = async (username, password) => {
 };
 
 
+
 const createNewSession = async (sessionId, userInfos) => {
     const sessionsDb = getDb("sessions")
     await sessionsDb.insertOne({ sid: sessionId, userInfos });
 };
 
+
+
 const performRestoreSession = async (cookie) => {
     const sessionsDb = getDb("sessions");
     const user = await sessionsDb.findOne({ sid: cookie });
-    console.log('user restored:', user)
+
     return user;
 };
+
+
+
+const performSignup = async (username, password, user, id) => {
+    const users = getDb("users");
+    const usernameAlreadyExist = await users.findOne({ username });
+
+    if (usernameAlreadyExist != null) {
+        throw new Error('Username taken!');
+    };
+
+    const newUser = new User(username, password, user, id);
+    console.log('new user is this one: ', newUser);
+    // await users.insertOne(newUser);
+
+    const sessionId = uuidv1();
+
+    return {
+        userInfos: newUser.infos,
+        sessionId
+    };
+};
+
+
 
 export {
     performLogin,
     createNewSession,
-    performRestoreSession
+    performRestoreSession,
+    performSignup
 };

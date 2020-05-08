@@ -47,20 +47,6 @@ app.use(bodyParser.json());
 app.use('/auth', upload.none(), authController)
 
 // Endpoints
-app.get('/recall-avatar',
-  catchAll(async (req, res) => {
-    const sessionId = req.cookies.sid;
-    console.log('avatar back:', sessions);
-    console.log('sessionId:', sessionId);
-    const avatar = sessions[sessionId];
-    if (sessions[sessionId]) {
-      console.log('success', sessions[sessionId])
-      return res.send(JSON.stringify({ success: true, avatar }))
-    };
-    res.send(JSON.stringify({ success: false }))
-  })
-);
-
 app.post('/signup', upload.none(),
   catchAll(async (req, res) => {
     console.log('sign-up hit!')
@@ -114,15 +100,15 @@ app.post('/pop-avatar',
   })
 );
 
-app.post('/select-avatar', upload.none(),
-  catchAll(async (req, res) => {
-    const user = JSON.parse(req.body.avatar);
-    const sessionId = uuidv1();
-    sessions[sessionId] = user;
-    res.cookie('sid', sessionId);
-    res.send(JSON.stringify({ success: true }))
-  })
-);
+// app.post('/select-avatar', upload.none(),
+//   catchAll(async (req, res) => {
+//     const user = JSON.parse(req.body.avatar);
+//     const sessionId = uuidv1();
+//     sessions[sessionId] = user;
+//     res.cookie('sid', sessionId);
+//     res.send(JSON.stringify({ success: true }))
+//   })
+// );
 
 app.get('/get-travels',
   catchAll(async (req, res) => {

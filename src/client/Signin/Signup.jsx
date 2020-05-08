@@ -33,7 +33,7 @@ export default function Signup() {
         data.append("username", username);
         data.append("password", password);
         data.append("avatar", JSON.stringify(avatar));
-        let req = await fetch('/signup', { method: 'POST', body: data });
+        let req = await fetch('/auth/signup', { method: 'POST', body: data });
         let parsed = await req.json();
         if (parsed.success) {
             dispatch({ type: 'GET_AVATAR', avatar: parsed.avatar });
