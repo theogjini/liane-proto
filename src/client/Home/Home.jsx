@@ -36,17 +36,11 @@ export default function Home() {
         };
     };
 
-    async function handleSelectAvatar(event) {
+    function handleSelectAvatar(event) {
         event.preventDefault();
-        const data = new FormData()
-        data.append('avatar', JSON.stringify(tempAvatar))
-        let req = await fetch('/select-avatar', { method: "POST", body: data });
-        let parsed = await req.json();
-        if (parsed.success) {
-            dispatch({ type: "GET_AVATAR", avatar: tempAvatar });
-            history.push('/dashboard');
-            return notification('neutral', 'Welcome!', dispatch)
-        };
+        dispatch({ type: "GET_AVATAR", avatar: tempAvatar });
+        history.push('/dashboard');
+        return notification('neutral', 'Welcome!', dispatch)
     };
 
     function handleLoginDirect(event) {

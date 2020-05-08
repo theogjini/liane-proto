@@ -48,16 +48,6 @@ app.use('/auth', upload.none(), authController)
 
 // Endpoints
 
-app.get('/logout',
-  catchAll(async (req, res) => {
-    const sid = req.cookies.sid;
-    console.log('sessions before deleting', sessions);
-    delete sessions[sid];
-    console.log('sessions after deleting', sessions);
-    res.send(JSON.stringify({ success: true }))
-  })
-);
-
 app.post('/pop-avatar',
   catchAll((req, res) => {
     const uniqueMonkeyName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, monkeys.names] });
