@@ -25,7 +25,6 @@ const MongoClient = MongoDB.MongoClient;
 const ObjectID = MongoDB.ObjectID;
 let dbo = undefined;
 
-let sessions = []; // Cookies
 let aWss = expressWs.getWss('/'); // Web Socket
 
 // Build
@@ -87,34 +86,6 @@ app.post('/signup', upload.none(),
         res.cookie('sid', sessionId);
         console.log('sessions after signup:', sessions);
         return res.send(JSON.stringify({ success: true, desc: 'Thrilled to have you here!', avatar: newUser.infos }));
-      };
-    })
-  })
-);
-
-app.post('/login', upload.none(),
-  catchAll(async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    dbo.collection("users").findOne({ username }, (err, user) => {
-      if (err) {
-        console.log('Error login', err);
-        return res.send(JSON.stringify({ success: false }));
-      };
-      if (user === null) {
-        console.log("Invalid username");
-        return res.send(JSON.stringify({ success: false, desc: "Invalid username!" }));
-      };
-      if (user.password != sha1(password)) {
-        console.log("Invalid password");
-        return res.send(JSON.stringify({ success: false, desc: "Invalid password!" }));
-      };
-      if (user.password === sha1(password)) {
-        console.log("Login Success");
-        const sessionId = uuidv1();
-        sessions[sessionId] = user.infos;
-        res.cookie('sid', sessionId);
-        return res.send(JSON.stringify({ success: true, desc: "Welcome back!", avatar: user.infos }));
       };
     })
   })

@@ -12,11 +12,21 @@ const login = async (req, res) => {
 
     const response = await authService.handleLogin(username, password);
 
-    res.json(response);
+    res.cookie('sid', response.sessionId);
+    res.json(response.client);
 }
 
 const signup = async (req, res) => {
     res.json({ success: 'working' });
+};
+
+const restoreSession = async (req, res) => {
+    const cookie = req.cookies.sid;
+    console.log('restoreSession:', cookie);
+
+    const response = await authService.restoreSession(cookie);
+
+    res.json(response);
 };
 
 // instantiate new router
@@ -25,8 +35,9 @@ const authController = new Router();
 // bind routes to functions
 authController.post('/login', catchAll(login));
 
+authController.get('/session', catchAll(restoreSession));
+
 authController.get('/signup', catchAll(signup));
-// authController.get('/session', catchAll(session));
 
 
 export {

@@ -1,13 +1,14 @@
 import { connection } from '../utils/connection.js';
 import uuidv1 from 'uuid/v1';
 
-const getDb = () => {
-    return connection.collection("users");
-}
+const getDb = (db) => {
+    return connection.collection(db);
+};
+
 
 const performLogin = async (username, password) => {
-    const db = getDb();
-    const user = await db.findOne({ username });
+    const usersDb = getDb("users");
+    const user = await usersDb.findOne({ username });
 
     console.log('user', user)
 
@@ -23,8 +24,23 @@ const performLogin = async (username, password) => {
         user,
         sessionId
     };
-}
+};
+
+
+const createNewSession = async (sessionId, userInfos) => {
+    const sessionsDb = getDb("sessions")
+    await sessionsDb.insertOne({ sid: sessionId, userInfos });
+};
+
+const performRestoreSession = async (cookie) => {
+    const sessionsDb = getDb("sessions");
+    const user = await sessionsDb.findOne({ sid: cookie });
+    console.log('user restored:', user)
+    return user;
+};
 
 export {
-    performLogin
-}
+    performLogin,
+    createNewSession,
+    performRestoreSession
+};

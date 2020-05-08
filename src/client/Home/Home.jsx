@@ -17,7 +17,7 @@ export default function Home() {
 
     useEffect(() => {
         async function getUserAvatar() {
-            const req = await fetch('/recall-avatar');
+            const req = await fetch('/auth/session');
             const parsed = await req.json();
             if (parsed.success) {
                 console.log('parsedAvatar:', parsed.avatar)
