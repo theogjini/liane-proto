@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import { particlesParams } from '../assets/particles/particlesParams';
 import { notification } from '../utils.js';
+import { popUniqueAvatar } from '../utils.js';
 
 
 export default function Home() {
@@ -28,12 +29,10 @@ export default function Home() {
         getUserAvatar();
     }, []);
 
-    async function pop() {
-        let request = await fetch('/pop-avatar', { method: "POST" })
-        let parsed = await request.json()
-        if (parsed.success) {
-            setTempAvatar(parsed.avatar);
-        };
+    function pop(event) {
+        event.preventDefault();
+        const avatar = popUniqueAvatar();
+        setTempAvatar(avatar);
     };
 
     function handleSelectAvatar(event) {

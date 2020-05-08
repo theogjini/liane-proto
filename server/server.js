@@ -13,11 +13,8 @@ const sha1 = require('sha1');
 const cookieParser = require('cookie-parser');
 const uuidv1 = require('uuid/v1');
 const upload = multer({ dest: __dirname + '/uploads/images' });
-const capitalize = require('capitalize');
 const config = require("./config.js");
-const { uniqueNamesGenerator, adjectives, colors } = require("unique-names-generator");
-const { monkeys, avatarsPaths } = require("./monkeys.js");
-const { User, catchAll, Message } = require("./utilities.js");
+const { catchAll, Message } = require("./utilities.js");
 
 // Database
 const MongoDB = require('mongodb');
@@ -60,16 +57,6 @@ app.post('/pop-avatar',
     res.send(JSON.stringify({ success: true, avatar: uniqueMonkey }))
   })
 );
-
-// app.post('/select-avatar', upload.none(),
-//   catchAll(async (req, res) => {
-//     const user = JSON.parse(req.body.avatar);
-//     const sessionId = uuidv1();
-//     sessions[sessionId] = user;
-//     res.cookie('sid', sessionId);
-//     res.send(JSON.stringify({ success: true }))
-//   })
-// );
 
 app.get('/get-travels',
   catchAll(async (req, res) => {

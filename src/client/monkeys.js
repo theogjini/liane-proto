@@ -31,4 +31,4 @@ const avatarsPaths = [
     "/assets/monkeys/monk3.svg",
 ];
 
-module.exports = { monkeys, avatarsPaths };
+export { monkeys, avatarsPaths };

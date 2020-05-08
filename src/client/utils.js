@@ -1,3 +1,7 @@
+import { monkeys, avatarsPaths } from './monkeys.js';
+import capitalize from 'capitalize';
+import { uniqueNamesGenerator, adjectives, colors } from 'unique-names-generator';
+
 const week = [
     { cap: 'Monday', key: 'monday', short: 'Mon.' },
     { cap: 'Tuesday', key: 'tuesday', short: 'Tue.' },
@@ -20,6 +24,19 @@ class DayTravel {
         return this.goTime || this.returnTime
     };
 };
+
+// Create unique avatar
+
+const popUniqueAvatar = () => {
+    const uniqueMonkeyName = uniqueNamesGenerator({ dictionaries: [adjectives, colors, monkeys.names] });
+    const formattedName = capitalize.words(uniqueMonkeyName.split("_").join(" "));
+    let uniqueMonkey = {
+        name: formattedName,
+        original: uniqueMonkeyName,
+        path: avatarsPaths[Math.floor(Math.random() * avatarsPaths.length)]
+    };
+    return uniqueMonkey;
+}
 
 // Canadian zip code formatting
 const formatInput = (input) => {
@@ -85,4 +102,13 @@ async function getUserChatrooms(dispatch) {
     };
 };
 
-export { week, formatInput, checkZipFormat, notification, DayTravel, getUserChatrooms, getUserTravels };
+export {
+    week,
+    formatInput,
+    checkZipFormat,
+    notification,
+    DayTravel,
+    getUserChatrooms,
+    getUserTravels,
+    popUniqueAvatar
+};
