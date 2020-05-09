@@ -20,7 +20,7 @@ export default function Popup(props) {
         async function getUserFromRequests() {
             const data = new FormData();
             data.append('requestsId', JSON.stringify(requests))
-            const req = await fetch('/get-users-from-requests', { method: 'POST', body: data })
+            const req = await fetch('/auth/get-users-from-requests', { method: 'POST', body: data })
             const parsed = await req.json();
             if (parsed.success) {
                 setUsersRequests(parsed.usersRequests)

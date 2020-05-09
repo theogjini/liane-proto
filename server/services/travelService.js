@@ -52,8 +52,6 @@ const handleAddTravel = async (cookie, start, end, schedule) => {
 const handleFindTravel = async (start, end) => {
     const results = await travelDatabase.performMatchingTravels(start, end);
 
-    console.log('travels found', results);
-
     if (results.length === 0) {
         throw Error('No travels found...')
     };
@@ -84,7 +82,7 @@ const handleSelectTravel = async (travelId, cookie) => {
     };
 
     const response = await travelDatabase.performSelectTravel(travelId, userId);
-    await authDatabase.performSelectTravel(travelId, userId);
+    await authDatabase.performUpdateUserTravels(travelId, userId);
 
     return response;
 };

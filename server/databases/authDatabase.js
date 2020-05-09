@@ -80,18 +80,21 @@ const getUserFromCookie = async (cookie) => {
 
 
 
-const performUpdateUserTravels = async (user, newTravelId) => {
+
+const performUpdateUserTravels = async (travelId, userId) => {
     const userDb = getDb("users");
 
-    await userDb.updateOne({ _id: ObjectID(user) }, { $push: { travels: newTravelId } })
+    await userDb.updateOne({ _id: ObjectID(userId) }, { $push: { travels: ObjectID(travelId) } });
 };
 
 
 
-const performSelectTravel = async (travelId, userId) => {
+const performGetUsers = async (idsToFind) => {
     const userDb = getDb("users");
 
-    await userDb.updateOne({ _id: ObjectID(userId) }, { $push: { travels: ObjectID(travelId) } });
+    const users = await userDb.find({ _id: { $in: idsToFind } }).toArray();
+
+    return users;
 };
 
 
@@ -103,5 +106,5 @@ export {
     performClearSession,
     getUserFromCookie,
     performUpdateUserTravels,
-    performSelectTravel
+    performGetUsers
 };

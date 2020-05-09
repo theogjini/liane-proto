@@ -69,7 +69,20 @@ const clearSession = async (cookie) => {
     return {
         success: true,
         desc: 'See you soon'
-    }
+    };
+};
+
+
+
+const handleGetUsers = async (idsToFind) => {
+    const users = await authDatabase.performGetUsers(idsToFind);
+
+    const infosToSend = await users.map(user => user.infos);
+
+    const response = { success: true, desc: "Infos well sent", usersRequests: infosToSend }
+    console.log('arrayOfUsers', infosToSend);
+    return response;
+
 };
 
 
@@ -78,5 +91,6 @@ export {
     handleLogin,
     handleSignup,
     restoreSession,
-    clearSession
+    clearSession,
+    handleGetUsers
 }

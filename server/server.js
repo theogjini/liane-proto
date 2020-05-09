@@ -50,19 +50,6 @@ app.use('/chatroom', upload.none(), chatroomController)
 
 // Endpoints
 
-app.post('/get-users-from-requests', upload.none(),
-  catchAll(async (req, res) => {
-    const userId = sessions[req.cookies.sid].registered;
-    console.log('get-users-from-requests called');
-    const idsSent = JSON.parse(req.body.requestsId)
-    const idsToFind = idsSent.map(id => ObjectID(id));
-    const arrayOfUsers = await dbo.collection("users").find({ _id: { $in: idsToFind } }).toArray();
-    const infosToSend = await arrayOfUsers.map(user => user.infos);
-    console.log('arrayOfUsers', infosToSend);
-    res.send(JSON.stringify({ success: true, desc: "Infos well sent", usersRequests: infosToSend }))
-  })
-);
-
 app.post('/accept-request', upload.none(),
   catchAll(async (req, res) => {
     console.log('accept-traveller hit')

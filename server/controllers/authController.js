@@ -25,8 +25,6 @@ const signup = async (req, res) => {
         throw new TypeError('Missing params!');
     };
 
-    console.log('signup called: ', req.body.avatar);
-
     const username = req.body.username;
     const passwordUnhashed = req.body.password;
     const id = new ObjectID;
@@ -42,7 +40,6 @@ const signup = async (req, res) => {
 
 const restoreSession = async (req, res) => {
     const cookie = req.cookies.sid;
-    console.log('restoreSession:', cookie);
 
     const response = await authService.restoreSession(cookie);
 
@@ -53,12 +50,21 @@ const restoreSession = async (req, res) => {
 
 const clearSession = async (req, res) => {
     const cookie = req.cookies.sid;
-    console.log('clearSession:', cookie);
 
     const response = await authService.clearSession(cookie);
 
     res.json(response);
-}
+};
+
+
+const getUsersFromRequests = async (req, res) => {
+    const idsSent = JSON.parse(req.body.requestsId);
+
+    const idsToFind = idsSent.map(id => ObjectID(id));
+    const response = await authService.handleGetUsers(idsToFind);
+
+    res.json(response);
+};
 
 // instantiate new router
 const authController = new Router();
@@ -71,6 +77,8 @@ authController.get('/session', catchAll(restoreSession));
 authController.post('/signup', catchAll(signup));
 
 authController.get('/logout', catchAll(clearSession));
+
+authController.post('/get-users-from-requests', catchAll(getUsersFromRequests))
 
 
 export {
