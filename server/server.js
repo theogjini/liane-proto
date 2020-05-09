@@ -50,16 +50,16 @@ app.use('/chatroom', upload.none(), chatroomController)
 
 // Endpoints
 
-app.post('/accept-request', upload.none(),
-  catchAll(async (req, res) => {
-    console.log('accept-traveller hit')
-    const travelId = req.body.travelId;
-    const travellerId = req.body.travellerId;
-    await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $pull: { requests: ObjectID(travellerId) } });
-    await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $push: { attendees: ObjectID(travellerId) } });
-    res.send(JSON.stringify({ success: true, desc: 'Monkey accepted on your Liana!' }));
-  })
-);
+// app.post('/accept-request', upload.none(),
+//   catchAll(async (req, res) => {
+//     console.log('accept-traveller hit')
+//     const travelId = req.body.travelId;
+//     const travellerId = req.body.travellerId;
+//     await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $pull: { requests: ObjectID(travellerId) } });
+//     await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $push: { attendees: ObjectID(travellerId) } });
+//     res.send(JSON.stringify({ success: true, desc: 'Monkey accepted on your Liana!' }));
+//   })
+// );
 
 app.post('/reject-request', upload.none(),
   catchAll(async (req, res) => {

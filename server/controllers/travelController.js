@@ -33,11 +33,30 @@ const findTravel = async (req, res) => {
 };
 
 const selectTravel = async (req, res) => {
+    const travelId = req.body.travelId;
+    const cookie = req.cookies.sid;
+
+    const response = await travelService.handleSelectTravel(travelId, cookie);
+
+    res.json(response);
+};
+
+
+const acceptRequest = async (req, res) => {
     console.log('select hit')
     const travelId = req.body.travel_id;
     const cookie = req.cookies.sid;
 
     const response = await travelService.handleSelectTravel(travelId, cookie);
+
+    res.json(response);
+};
+
+
+const rejectRequest = async (req, res) => {
+    console.log('select hit')
+    const travelId = req.body.travel_id;
+    const cookie = req.cookies.sid;
 
     res.json(response);
 };
@@ -52,6 +71,10 @@ travelController.post('/add-travel', catchAll(addTravel));
 travelController.post('/find-travel', catchAll(findTravel));
 
 travelController.post('/select-travel', catchAll(selectTravel));
+
+travelController.post('/accept-request', catchAll(acceptRequest));
+
+travelController.post('/reject-request', catchAll(rejectRequest));
 
 
 export { travelController }

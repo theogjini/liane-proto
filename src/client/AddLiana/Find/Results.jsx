@@ -20,7 +20,7 @@ export default function Results(props) {
         event.preventDefault();
         if (!userId) return notification("yellow", "Please signup before!", dispatch);
         const data = new FormData();
-        data.append('travel_id', travelId);
+        data.append('travelId', travelId);
         const req = await fetch('/travel/select-travel', { method: 'POST', body: data });
         const parsed = await req.json();
         if (parsed.success) {
