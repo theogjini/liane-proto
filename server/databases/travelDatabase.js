@@ -1,5 +1,7 @@
 import { getDb } from '../utils/connection.js';
 
+
+
 const performGetTravels = async (travelIds) => {
     const travelsDb = getDb("travels");
 
@@ -8,6 +10,8 @@ const performGetTravels = async (travelIds) => {
     return travels;
 };
 
+
+
 const performAddTravel = async (travelToAdd) => {
     const travelsDb = getDb("travels");
 
@@ -15,8 +19,21 @@ const performAddTravel = async (travelToAdd) => {
 };
 
 
+const performMatchingTravels = async (start, end) => {
+    const travelsDb = getDb("travels");
+
+    const travels = await travelsDb.find().toArray();
+
+    const results = await travels.filter(travel => {
+        return travel.start === start && travel.end === end
+    });
+
+    return results;
+};
+
 export {
     performGetTravels,
-    performAddTravel
+    performAddTravel,
+    performMatchingTravels
 }
 

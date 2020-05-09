@@ -13,7 +13,6 @@ const getTravels = async (req, res) => {
 };
 
 const addTravel = async (req, res) => {
-    console.log('addtravel called!!!', req.body)
     const cookie = req.cookies.sid;
     const start = req.body.start;
     const end = req.body.end;
@@ -24,11 +23,22 @@ const addTravel = async (req, res) => {
     res.json(response);
 };
 
+const findTravel = async (req, res) => {
+    const start = req.body.start;
+    const end = req.body.end;
+
+    const response = await travelService.handleFindTravel(start, end);
+
+    res.json(response);
+};
+
 
 const travelController = new Router();
 
-travelController.get('/get-travels', catchAll(getTravels))
+travelController.get('/get-travels', catchAll(getTravels));
 
-travelController.post('/add-travel', catchAll(addTravel))
+travelController.post('/add-travel', catchAll(addTravel));
+
+travelController.post('/find-travel', catchAll(findTravel));
 
 export { travelController }

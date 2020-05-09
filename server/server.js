@@ -50,14 +50,14 @@ app.use('/chatroom', upload.none(), chatroomController)
 
 // Endpoints
 
-app.post('/find', upload.none(),
-  catchAll(async (req, res) => {
-    const travels = await dbo.collection('travels').find().toArray();
-    const results = await travels.filter(travel => travel.start === req.body.start && travel.end === req.body.end)
-    console.log('travels found:', results);
-    res.send(JSON.stringify({ success: true, results }));
-  })
-);
+// app.post('/find', upload.none(),
+//   catchAll(async (req, res) => {
+//     const travels = await dbo.collection('travels').find().toArray();
+//     const results = await travels.filter(travel => travel.start === req.body.start && travel.end === req.body.end)
+//     console.log('travels found:', results);
+//     res.send(JSON.stringify({ success: true, results }));
+//   })
+// );
 
 app.post('/select-travel', upload.none(),
   catchAll(async (req, res) => {

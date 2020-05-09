@@ -8,9 +8,9 @@ export default function Find(props) {
 
     const dispatch = useDispatch();
 
-    const [end, setEnd] = useState("");
+    const [start, setStart] = useState("H2J-3Z4");
 
-    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("J4G-1R7");
 
     const [results, setResults] = useState([]);
 
@@ -34,7 +34,7 @@ export default function Find(props) {
         const data = new FormData();
         data.append("start", start);
         data.append("end", end);
-        let req = await fetch('/find', { method: 'POST', body: data });
+        let req = await fetch('/travel/find-travel', { method: 'POST', body: data });
         let parsed = await req.json();
         if (parsed.success) {
             setResults(parsed.results);
