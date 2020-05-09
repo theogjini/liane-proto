@@ -32,6 +32,16 @@ const findTravel = async (req, res) => {
     res.json(response);
 };
 
+const selectTravel = async (req, res) => {
+    console.log('select hit')
+    const travelId = req.body.travel_id;
+    const cookie = req.cookies.sid;
+
+    const response = await travelService.handleSelectTravel(travelId, cookie);
+
+    res.json(response);
+};
+
 
 const travelController = new Router();
 
@@ -40,5 +50,8 @@ travelController.get('/get-travels', catchAll(getTravels));
 travelController.post('/add-travel', catchAll(addTravel));
 
 travelController.post('/find-travel', catchAll(findTravel));
+
+travelController.post('/select-travel', catchAll(selectTravel));
+
 
 export { travelController }

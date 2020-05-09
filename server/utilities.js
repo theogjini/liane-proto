@@ -26,7 +26,7 @@ function catchAll(fn) {
         try {
             await fn(req, res, next);
         } catch (e) {
-            if (e.message !== 'Invalid password!' || e.message !== 'Invalid username!') {
+            if (e.message === 'Invalid password!' || e.message === 'Invalid username!') {
                 res.json({ success: false, desc: e.message });
             };
             console.log('Error occured: ', e);

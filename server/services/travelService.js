@@ -63,8 +63,35 @@ const handleFindTravel = async (start, end) => {
     return response;
 };
 
+
+const handleSelectTravel = async (travelId, cookie) => {
+    const user = await authDatabase.getUserFromCookie(cookie);
+    const userId = user._id;
+
+    const travel = await travelDatabase.getTravelFromId(travelId);
+
+    const isUserAlreadyIn = await travel.attendees.some(id => ObjectID(id).toString() === ObjectID(userId).toString())
+    const isRequestAlreadySent = await travel.requests.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
+
+    if (isUserAlreadyIn) {
+        const response = { success: false, desc: 'You are already in ;)' };
+        return response;
+    };
+
+    if (isRequestAlreadySent) {
+        const response = { success: false, desc: 'Request already sent!' };
+        return response;
+    };
+
+    const response = await travelDatabase.performSelectTravel(travelId, userId);
+    await authDatabase.performSelectTravel(travelId, userId);
+
+    return response;
+};
+
 export {
     handleGetTravels,
     handleAddTravel,
-    handleFindTravel
+    handleFindTravel,
+    handleSelectTravel
 };

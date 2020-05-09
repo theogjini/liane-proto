@@ -1,4 +1,5 @@
 import { getDb } from '../utils/connection.js';
+import { ObjectID } from 'mongodb';
 
 
 
@@ -31,9 +32,29 @@ const performMatchingTravels = async (start, end) => {
     return results;
 };
 
+const getTravelFromId = async (travelId) => {
+    const travelsDb = getDb("travels");
+
+    const travel = await travelsDb.findOne({ _id: ObjectID(travelId) });
+
+    return travel;
+};
+
+
+const performSelectTravel = async (travelId, userId) => {
+    const travelsDb = getDb("travels");
+
+    await travelsDb.updateOne({ _id: ObjectID(travelId) }, { $push: { requests: ObjectID(userId) } });
+
+    return { success: true, desc: 'Request sent!' };
+};
+
+
 export {
     performGetTravels,
     performAddTravel,
-    performMatchingTravels
+    performMatchingTravels,
+    performSelectTravel,
+    getTravelFromId
 }
 

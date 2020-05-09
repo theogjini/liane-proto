@@ -50,46 +50,6 @@ app.use('/chatroom', upload.none(), chatroomController)
 
 // Endpoints
 
-// app.post('/find', upload.none(),
-//   catchAll(async (req, res) => {
-//     const travels = await dbo.collection('travels').find().toArray();
-//     const results = await travels.filter(travel => travel.start === req.body.start && travel.end === req.body.end)
-//     console.log('travels found:', results);
-//     res.send(JSON.stringify({ success: true, results }));
-//   })
-// );
-
-app.post('/select-travel', upload.none(),
-  catchAll(async (req, res) => {
-    console.log('select hit')
-    const travelId = req.body.travel_id;
-    const userId = sessions[req.cookies.sid].registered;
-    dbo.collection("travels").findOne({ _id: ObjectID(travelId) }, async (err, travel) => {
-      if (err) {
-        console.log('error', err);
-      };
-      if (travel === null) {
-        console.log('Id Error');
-        return res.send(JSON.stringify({ success: false, desc: 'travel _id not recognized in db' }));
-      };
-      if (travel) {
-        console.log('Travel Found');
-        const isRequestAlreadySent = travel.requests.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
-        const isUserAlreadyIn = travel.attendees.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
-        if (isUserAlreadyIn) {
-          return res.send(JSON.stringify({ success: false, desc: 'You are already in ;)' }))
-        }
-        if (isRequestAlreadySent) {
-          return res.send(JSON.stringify({ success: false, desc: 'Request already sent!' }))
-        };
-        await dbo.collection("users").updateOne({ _id: ObjectID(userId) }, { $push: { travels: ObjectID(travelId) } });
-        await dbo.collection("travels").updateOne({ _id: ObjectID(travelId) }, { $push: { requests: ObjectID(userId) } });
-        res.send(JSON.stringify({ success: true, desc: 'Request sent to the driver!' }))
-      };
-    })
-  })
-);
-
 app.post('/get-users-from-requests', upload.none(),
   catchAll(async (req, res) => {
     const userId = sessions[req.cookies.sid].registered;

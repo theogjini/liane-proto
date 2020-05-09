@@ -87,6 +87,14 @@ const performUpdateUserTravels = async (user, newTravelId) => {
 };
 
 
+
+const performSelectTravel = async (travelId, userId) => {
+    const userDb = getDb("users");
+
+    await userDb.updateOne({ _id: ObjectID(userId) }, { $push: { travels: ObjectID(travelId) } });
+};
+
+
 export {
     performLogin,
     performSignup,
@@ -94,5 +102,6 @@ export {
     performRestoreSession,
     performClearSession,
     getUserFromCookie,
-    performUpdateUserTravels
+    performUpdateUserTravels,
+    performSelectTravel
 };
