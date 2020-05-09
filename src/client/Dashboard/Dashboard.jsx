@@ -29,10 +29,10 @@ export default function Dashboard() {
   useEffect(() => {
     if (!avatar.name) history.push('/');
     if (avatar.registered) {
-      dispatch({ type: "ACTIVATE_SOCKET" })
+      dispatch({ type: "ACTIVATE_SOCKET" });
+      getUserTravels(dispatch);
+      getUserChatrooms(dispatch);
     };
-    getUserTravels(dispatch);
-    getUserChatrooms(dispatch);
   }, []);
 
   function handleDayClick(event, day, idx) {
