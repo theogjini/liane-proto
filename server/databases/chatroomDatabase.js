@@ -6,13 +6,19 @@ const performGetChatrooms = async (travelIds) => {
 
     const chatrooms = await chatroomsDb.find({ _travelId: { $in: travelIds } }).toArray();
 
-    console.log('chatroomsrecovered', chatrooms);
-
     return chatrooms;
 };
 
 
+const performAddChatroom = async (newChatRoomId, newTravelId) => {
+    const chatroomsDb = getDb("chatrooms");
+
+    await chatroomsDb.insertOne({ _id: newChatRoomId, _travelId: newTravelId, messages: [] });
+};
+
+
 export {
-    performGetChatrooms
-}
+    performGetChatrooms,
+    performAddChatroom
+};
 

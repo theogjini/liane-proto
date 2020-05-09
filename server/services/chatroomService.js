@@ -8,8 +8,6 @@ const handleGetChatrooms = async (cookie) => {
         throw new Error('User not registered!')
     };
 
-    console.log('handlegetChatrooms', user)
-
     const travelIds = await user.travels.map(travelId => ObjectID(travelId));
     const chatrooms = await chatroomDatabase.performGetChatrooms(travelIds)
 

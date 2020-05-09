@@ -8,8 +8,15 @@ const performGetTravels = async (travelIds) => {
     return travels;
 };
 
+const performAddTravel = async (travelToAdd) => {
+    const travelsDb = getDb("travels");
+
+    await travelsDb.insertOne(travelToAdd)
+};
+
 
 export {
-    performGetTravels
+    performGetTravels,
+    performAddTravel
 }
 

@@ -48,67 +48,7 @@ app.use('/travel', upload.none(), travelController)
 
 app.use('/chatroom', upload.none(), chatroomController)
 
-
 // Endpoints
-
-// app.get('/get-chatrooms',
-//   catchAll(async (req, res) => {
-//     if (!sessions[req.cookies.sid].registered) {
-//       return res.send(JSON.stringify({ success: false, desc: "Avatar not registered" }))
-//     };
-//     const userId = sessions[req.cookies.sid].registered;
-//     console.log('Get chatrooms called')
-//     dbo.collection("users").findOne({ _id: ObjectID(userId) }, async (err, user) => {
-//       if (err) {
-//         console.log("finding user error:", err);
-//       };
-//       if (user === null) {
-//         console.log("User ID not found:");
-//         return res.send(JSON.stringify({ success: false, desc: 'User not found :(' }))
-//       };
-//       if (user) {
-//         const mapTravelIds = user.travels.map(currTravelId => ObjectID(currTravelId));
-//         const chatrooms = await dbo.collection("chatrooms").find({ _travelId: { $in: mapTravelIds } }).toArray();
-//         return res.send(JSON.stringify({ success: true, desc: "travels well loaded", chatrooms }));
-//       }
-//     });
-//   })
-// );
-
-app.post('/throw', upload.none(),
-  catchAll(async (req, res) => {
-    const user = sessions[req.cookies.sid];
-    const start = req.body.start;
-    const end = req.body.end;
-    const schedule = JSON.parse(req.body.schedule);
-    schedule.forEach(async (dayTravel, idx) => {
-      if (dayTravel != null) {
-        const newId = new ObjectID();
-        const newChatRoomId = new ObjectID();
-        const day = dayTravel.goDate ? new Date(dayTravel.goDate).getDay() : idx;
-        const travelToAdd = {
-          _id: newId,
-          _chatroomId: newChatRoomId,
-          start,
-          end,
-          day,
-          driver: user.registered,
-          seatsAvailable: dayTravel.seatsAvailable,
-          attendees: [],
-          requests: [],
-          goTime: dayTravel.goTime,
-          returnTime: dayTravel.returnTime,
-          goDate: dayTravel.goDate ? dayTravel.goDate : null
-        };
-        console.log('travelToAdd: ', travelToAdd);
-        await dbo.collection("travels").insertOne(travelToAdd);
-        await dbo.collection("chatrooms").insertOne({ _id: newChatRoomId, _travelId: newId, messages: [] });
-        await dbo.collection("users").updateOne({ _id: ObjectID(user.registered) }, { $push: { travels: newId } })
-      }
-    })
-    res.send(JSON.stringify({ success: true }))
-  })
-);
 
 app.post('/find', upload.none(),
   catchAll(async (req, res) => {

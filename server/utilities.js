@@ -18,8 +18,8 @@ class Message {
         this.user = user;
         this.content = content;
         this.timestamp = timestamp;
-    }
-}
+    };
+};
 
 function catchAll(fn) {
     return async (req, res, next) => {

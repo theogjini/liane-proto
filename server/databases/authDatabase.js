@@ -34,7 +34,6 @@ const performSignup = async (username, password, user, id) => {
 
     const newUser = new User(username, password, user, id);
     console.log('new user is this one: ', newUser);
-    // await users.insertOne(newUser);
 
     const sessionId = uuidv1();
 
@@ -68,6 +67,7 @@ const performClearSession = async (cookie) => {
 };
 
 
+
 const getUserFromCookie = async (cookie) => {
     const sessionsDb = getDb("sessions");
     const session = await sessionsDb.findOne({ sid: cookie });
@@ -79,11 +79,20 @@ const getUserFromCookie = async (cookie) => {
 };
 
 
+
+const performUpdateUserTravels = async (user, newTravelId) => {
+    const userDb = getDb("users");
+
+    await userDb.updateOne({ _id: ObjectID(user) }, { $push: { travels: newTravelId } })
+};
+
+
 export {
     performLogin,
     performSignup,
     createNewSession,
     performRestoreSession,
     performClearSession,
-    getUserFromCookie
+    getUserFromCookie,
+    performUpdateUserTravels
 };

@@ -63,7 +63,7 @@ export default function Throw(props) {
         data.append("end", end);
         data.append("schedule", JSON.stringify(schedule));
         console.log('sent data', data)
-        let req = await fetch('/throw', { method: 'POST', body: data })
+        let req = await fetch('/travel/add-travel', { method: 'POST', body: data })
         let parsed = await req.json()
         if (parsed.success) {
             notification("success", "Travel added", dispatch);
