@@ -12,6 +12,8 @@ const getTravels = async (req, res) => {
     res.json(response);
 };
 
+
+
 const addTravel = async (req, res) => {
     const cookie = req.cookies.sid;
     const start = req.body.start;
@@ -23,6 +25,8 @@ const addTravel = async (req, res) => {
     res.json(response);
 };
 
+
+
 const findTravel = async (req, res) => {
     const start = req.body.start;
     const end = req.body.end;
@@ -31,6 +35,8 @@ const findTravel = async (req, res) => {
 
     res.json(response);
 };
+
+
 
 const selectTravel = async (req, res) => {
     const travelId = req.body.travelId;
@@ -42,24 +48,27 @@ const selectTravel = async (req, res) => {
 };
 
 
-const acceptRequest = async (req, res) => {
-    console.log('select hit')
-    const travelId = req.body.travel_id;
-    const cookie = req.cookies.sid;
 
-    const response = await travelService.handleSelectTravel(travelId, cookie);
+const acceptRequest = async (req, res) => {
+    const travelId = req.body.travelId;
+    const travellerId = req.body.travellerId;
+
+    const response = await travelService.handleAcceptRequest(travelId, travellerId);
 
     res.json(response);
 };
+
 
 
 const rejectRequest = async (req, res) => {
-    console.log('select hit')
-    const travelId = req.body.travel_id;
-    const cookie = req.cookies.sid;
+    const travelId = req.body.travelId;
+    const travellerId = req.body.travellerId;
+
+    const response = await travelService.handleRejectRequest(travelId, travellerId);
 
     res.json(response);
 };
+
 
 
 const travelController = new Router();

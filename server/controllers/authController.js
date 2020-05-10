@@ -3,6 +3,8 @@ import { authService } from '../services';
 import { catchAll } from '../utilities';
 import { ObjectID } from "mongodb";
 
+
+
 const login = async (req, res) => {
     if (!req.body || !req.body.username || !req.body.password) {
         throw new TypeError('Missing params!');
@@ -57,6 +59,7 @@ const clearSession = async (req, res) => {
 };
 
 
+
 const getUsersFromRequests = async (req, res) => {
     const idsSent = JSON.parse(req.body.requestsId);
 
@@ -65,6 +68,8 @@ const getUsersFromRequests = async (req, res) => {
 
     res.json(response);
 };
+
+
 
 // instantiate new router
 const authController = new Router();

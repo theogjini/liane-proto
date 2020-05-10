@@ -2,7 +2,7 @@ import { authDatabase, travelDatabase, chatroomDatabase } from '../databases'
 import { ObjectID } from 'mongodb'
 
 const handleGetTravels = async (cookie) => {
-    const user = await authDatabase.getUserFromCookie(cookie);
+    const user = await authDatabase.performGetUserFromCookie(cookie);
 
     const travelIds = await user.travels.map(travelid => ObjectID(travelid));
     const travels = await travelDatabase.performGetTravels(travelIds)
@@ -14,7 +14,7 @@ const handleGetTravels = async (cookie) => {
 
 
 const handleAddTravel = async (cookie, start, end, schedule) => {
-    const user = await authDatabase.getUserFromCookie(cookie);
+    const user = await authDatabase.performGetUserFromCookie(cookie);
 
     await schedule.forEach(async (dayTravel, idx) => {
         if (dayTravel != null) {
@@ -63,10 +63,10 @@ const handleFindTravel = async (start, end) => {
 
 
 const handleSelectTravel = async (travelId, cookie) => {
-    const user = await authDatabase.getUserFromCookie(cookie);
+    const user = await authDatabase.performGetUserFromCookie(cookie);
     const userId = user._id;
 
-    const travel = await travelDatabase.getTravelFromId(travelId);
+    const travel = await travelDatabase.performGetTravelFromId(travelId);
 
     const isUserAlreadyIn = await travel.attendees.some(id => ObjectID(id).toString() === ObjectID(userId).toString())
     const isRequestAlreadySent = await travel.requests.some(id => ObjectID(id).toString() === ObjectID(userId).toString());
@@ -87,9 +87,35 @@ const handleSelectTravel = async (travelId, cookie) => {
     return response;
 };
 
+
+const handleAcceptRequest = async (travelId, travellerId) => {
+
+    await travelDatabase.performAcceptRequest(travelId, travellerId);
+
+    const response = { success: true, desc: 'Monkey accepted on your Liana!' };
+
+    return response;
+};
+
+
+
+const handleRejectRequest = async (travelId, travellerId) => {
+
+    await travelDatabase.performRejectRequest(travelId, travellerId);
+
+    await authDatabase.performRejectUserRequest(travelId, travellerId);
+
+    const response = { success: true, desc: 'Monkey rejected :(' };
+
+    return response;
+};
+
+
 export {
     handleGetTravels,
     handleAddTravel,
     handleFindTravel,
-    handleSelectTravel
+    handleSelectTravel,
+    handleAcceptRequest,
+    handleRejectRequest
 };

@@ -12,8 +12,6 @@ const performLogin = async (username, password) => {
         throw new Error('Invalid username!');
     };
 
-    // if we pass the above conditional, userpass must match the sha1
-    console.log("Login Success");
     const sessionId = uuidv1();
 
     return {
@@ -25,15 +23,14 @@ const performLogin = async (username, password) => {
 
 
 const performSignup = async (username, password, user, id) => {
-    const users = getDb("users");
-    const usernameAlreadyExist = await users.findOne({ username });
+    const usersDb = getDb("users");
+    const usernameAlreadyExist = await usersDb.findOne({ username });
 
     if (usernameAlreadyExist != null) {
         throw new Error('Username taken!');
     };
 
     const newUser = new User(username, password, user, id);
-    console.log('new user is this one: ', newUser);
 
     const sessionId = uuidv1();
 
@@ -68,12 +65,12 @@ const performClearSession = async (cookie) => {
 
 
 
-const getUserFromCookie = async (cookie) => {
+const performGetUserFromCookie = async (cookie) => {
     const sessionsDb = getDb("sessions");
     const session = await sessionsDb.findOne({ sid: cookie });
 
-    const userDb = getDb("users");
-    const user = await userDb.findOne({ _id: ObjectID(session.userInfos.registered) });
+    const usersDb = getDb("users");
+    const user = await usersDb.findOne({ _id: ObjectID(session.userInfos.registered) });
 
     return user;
 };
@@ -82,20 +79,30 @@ const getUserFromCookie = async (cookie) => {
 
 
 const performUpdateUserTravels = async (travelId, userId) => {
-    const userDb = getDb("users");
+    const usersDb = getDb("users");
 
-    await userDb.updateOne({ _id: ObjectID(userId) }, { $push: { travels: ObjectID(travelId) } });
+    await usersDb.updateOne({ _id: ObjectID(userId) }, { $push: { travels: ObjectID(travelId) } });
 };
 
 
 
 const performGetUsers = async (idsToFind) => {
-    const userDb = getDb("users");
+    const usersDb = getDb("users");
 
-    const users = await userDb.find({ _id: { $in: idsToFind } }).toArray();
+    const users = await usersDb.find({ _id: { $in: idsToFind } }).toArray();
 
     return users;
 };
+
+
+const performRejectUserRequest = async (travelId, travellerId) => {
+    const usersDb = getDb("users");
+
+    await usersDb.updateOne({ _id: ObjectID(travellerId) }, { $pull: { travels: ObjectID(travelId) } });
+
+};
+
+
 
 
 export {
@@ -104,7 +111,8 @@ export {
     createNewSession,
     performRestoreSession,
     performClearSession,
-    getUserFromCookie,
+    performGetUserFromCookie,
     performUpdateUserTravels,
-    performGetUsers
+    performGetUsers,
+    performRejectUserRequest
 };

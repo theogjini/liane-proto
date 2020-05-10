@@ -49,7 +49,7 @@ export default function Popup(props) {
         const data = new FormData();
         data.append('travellerId', travellerId);
         data.append('travelId', props.travelId);
-        const req = await fetch('/accept-request', { method: 'POST', body: data });
+        const req = await fetch('/travel/accept-request', { method: 'POST', body: data });
         const parsed = await req.json();
         if (parsed.success) {
             notification('success', parsed.desc, dispatch);
@@ -65,7 +65,7 @@ export default function Popup(props) {
         const data = new FormData();
         data.append('travellerId', travellerId);
         data.append('travelId', props.travelId);
-        const req = await fetch('/reject-request', { method: 'POST', body: data });
+        const req = await fetch('/travel/reject-request', { method: 'POST', body: data });
         const parsed = await req.json();
         if (parsed.success) {
             notification('yellow', parsed.desc, dispatch);

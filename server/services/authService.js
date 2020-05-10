@@ -79,8 +79,8 @@ const handleGetUsers = async (idsToFind) => {
 
     const infosToSend = await users.map(user => user.infos);
 
-    const response = { success: true, desc: "Infos well sent", usersRequests: infosToSend }
-    console.log('arrayOfUsers', infosToSend);
+    const response = { success: true, desc: "Infos well sent", usersRequests: infosToSend };
+    
     return response;
 
 };

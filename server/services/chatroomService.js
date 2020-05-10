@@ -2,7 +2,7 @@ import { authDatabase, chatroomDatabase } from '../databases'
 import { ObjectID } from 'mongodb'
 
 const handleGetChatrooms = async (cookie) => {
-    const user = await authDatabase.getUserFromCookie(cookie);
+    const user = await authDatabase.performGetUserFromCookie(cookie);
 
     if (!user.infos.registered) {
         throw new Error('User not registered!')

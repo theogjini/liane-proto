@@ -20,6 +20,7 @@ const performAddTravel = async (travelToAdd) => {
 };
 
 
+
 const performMatchingTravels = async (start, end) => {
     const travelsDb = getDb("travels");
 
@@ -32,13 +33,16 @@ const performMatchingTravels = async (start, end) => {
     return results;
 };
 
-const getTravelFromId = async (travelId) => {
+
+
+const performGetTravelFromId = async (travelId) => {
     const travelsDb = getDb("travels");
 
     const travel = await travelsDb.findOne({ _id: ObjectID(travelId) });
 
     return travel;
 };
+
 
 
 const performSelectTravel = async (travelId, userId) => {
@@ -50,11 +54,38 @@ const performSelectTravel = async (travelId, userId) => {
 };
 
 
+
+const performAcceptRequest = async (travelId, travellerId) => {
+    const travelsDb = getDb("travels");
+
+    const travel = await travelsDb.findOne({ _id: ObjectID(travelId) })
+
+    console.log('travel:', travel);
+
+    await travelsDb.updateOne({ _id: ObjectID(travelId) }, { $pull: { requests: ObjectID(travellerId) }, $push: { attendees: ObjectID(travellerId) } });
+
+
+    const travelafter = await travelsDb.findOne({ _id: ObjectID(travelId) })
+
+    console.log('travelafter:', travelafter);
+};
+
+
+
+const performRejectRequest = async (travelId, travellerId) => {
+    const travelsDb = getDb("travels");
+
+    await travelsDb.updateOne({ _id: ObjectID(travelId) }, { $pull: { requests: ObjectID(travellerId) } });
+};
+
+
 export {
     performGetTravels,
     performAddTravel,
     performMatchingTravels,
     performSelectTravel,
-    getTravelFromId
+    performGetTravelFromId,
+    performAcceptRequest,
+    performRejectRequest
 }
 
