@@ -1,4 +1,5 @@
 import { connection, getDb } from '../utils/connection.js';
+import { ObjectID } from 'mongodb';
 
 
 const performGetChatrooms = async (travelIds) => {
@@ -10,6 +11,7 @@ const performGetChatrooms = async (travelIds) => {
 };
 
 
+
 const performAddChatroom = async (newChatRoomId, newTravelId) => {
     const chatroomsDb = getDb("chatrooms");
 
@@ -17,8 +19,32 @@ const performAddChatroom = async (newChatRoomId, newTravelId) => {
 };
 
 
+
+const performGetMessages = async (chatroomId) => {
+    const chatroomsDb = getDb("chatrooms");
+
+    const chatroom = await chatroomsDb.findOne({ _id: ObjectID(chatroomId) });
+
+    const messages = await chatroom.messages;
+
+    return messages;
+};
+
+
+
+const performSendMessage = async (newMessage, chatroomId) => {
+    const chatroomsDb = getDb("chatrooms");
+
+    console.log(newMessage, chatroomId);
+
+    await chatroomsDb.updateOne({ _id: ObjectID(chatroomId) }, { $push: { messages: newMessage } });
+};
+
+
 export {
     performGetChatrooms,
-    performAddChatroom
+    performAddChatroom,
+    performGetMessages,
+    performSendMessage
 };
 

@@ -4,7 +4,6 @@ import { catchAll } from '../utilities';
 import { ObjectID } from "mongodb";
 
 
-
 const login = async (req, res) => {
     if (!req.body || !req.body.username || !req.body.password) {
         throw new TypeError('Missing params!');

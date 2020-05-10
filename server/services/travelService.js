@@ -1,6 +1,7 @@
 import { authDatabase, travelDatabase, chatroomDatabase } from '../databases'
 import { ObjectID } from 'mongodb'
 
+
 const handleGetTravels = async (cookie) => {
     const user = await authDatabase.performGetUserFromCookie(cookie);
 
@@ -11,6 +12,7 @@ const handleGetTravels = async (cookie) => {
 
     return response;
 };
+
 
 
 const handleAddTravel = async (cookie, start, end, schedule) => {
@@ -49,6 +51,7 @@ const handleAddTravel = async (cookie, start, end, schedule) => {
 };
 
 
+
 const handleFindTravel = async (start, end) => {
     const results = await travelDatabase.performMatchingTravels(start, end);
 
@@ -60,6 +63,7 @@ const handleFindTravel = async (start, end) => {
 
     return response;
 };
+
 
 
 const handleSelectTravel = async (travelId, cookie) => {
@@ -88,6 +92,7 @@ const handleSelectTravel = async (travelId, cookie) => {
 };
 
 
+
 const handleAcceptRequest = async (travelId, travellerId) => {
 
     await travelDatabase.performAcceptRequest(travelId, travellerId);
@@ -109,6 +114,7 @@ const handleRejectRequest = async (travelId, travellerId) => {
 
     return response;
 };
+
 
 
 export {

@@ -38,7 +38,7 @@ export default function Chatroom(props) {
         async function getMessages() {
             const data = new FormData();
             data.append('chatroomId', roomId);
-            const req = await fetch('/get-messages', { method: 'POST', body: data });
+            const req = await fetch('/chatroom/get-messages', { method: 'POST', body: data });
             const parsed = await req.json();
             if (parsed.success) {
                 if (parsed.messages.length === chatMessages.length) return;
@@ -57,7 +57,7 @@ export default function Chatroom(props) {
         data.append('chatroomId', roomId);
         data.append('content', content);
         data.append('timestamp', timestamp);
-        const req = await fetch('/send-message', { method: 'POST', body: data });
+        const req = await fetch('/chatroom/send-message', { method: 'POST', body: data });
         const parsed = await req.json();
         if (parsed.success) {
             console.log('messages sent!:');

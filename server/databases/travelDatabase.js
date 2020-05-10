@@ -2,7 +2,6 @@ import { getDb } from '../utils/connection.js';
 import { ObjectID } from 'mongodb';
 
 
-
 const performGetTravels = async (travelIds) => {
     const travelsDb = getDb("travels");
 
@@ -77,6 +76,7 @@ const performRejectRequest = async (travelId, travellerId) => {
 
     await travelsDb.updateOne({ _id: ObjectID(travelId) }, { $pull: { requests: ObjectID(travellerId) } });
 };
+
 
 
 export {

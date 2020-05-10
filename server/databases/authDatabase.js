@@ -95,13 +95,12 @@ const performGetUsers = async (idsToFind) => {
 };
 
 
+
 const performRejectUserRequest = async (travelId, travellerId) => {
     const usersDb = getDb("users");
 
     await usersDb.updateOne({ _id: ObjectID(travellerId) }, { $pull: { travels: ObjectID(travelId) } });
-
 };
-
 
 
 
