@@ -1,4 +1,4 @@
-import { connection, getDb } from '../utils/connection.js';
+import { getDb } from '../utils/connection.js';
 import { ObjectID } from 'mongodb';
 
 

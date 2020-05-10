@@ -32,6 +32,8 @@ const performSignup = async (username, password, user, id) => {
 
     const newUser = new User(username, password, user, id);
 
+    await usersDb.insertOne(newUser);
+
     const sessionId = uuidv1();
 
     return {
