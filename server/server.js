@@ -1,8 +1,12 @@
 // Node Express WS
-const express = require('express');
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
+import { initMongo } from "./utils/connection";
+import { authController, travelController, chatroomController } from './controllers';
 const app = express();
 const expressWs = require('express-ws')(app);
-const multer = require('multer');
+import multer from 'multer';
 
 // Automatic reload
 const reloadMagic = require('./reload-magic.js');
@@ -16,22 +20,18 @@ const config = require("./config.js");
 // Database
 let dbo = undefined;
 
-let aWss = expressWs.getWss('/'); // Web Socket
-
 // Build
 app.use('/', express.static('build'));
 app.use('/assets', express.static('src/client/assets'));
 app.use(cookieParser());
 
 // NEW STUFF
-import path from 'path';
-import bodyParser from 'body-parser';
-import { initMongo } from "./utils/connection";
-import { authController, travelController, chatroomController } from './controllers';
 
 
-// Add global body parser, it's easier to use globally than multer
 app.use(bodyParser.json());
+
+
+// Endpoints
 
 app.use('/auth', upload.none(), authController)
 
@@ -39,7 +39,6 @@ app.use('/travel', upload.none(), travelController)
 
 app.use('/chatroom', upload.none(), chatroomController)
 
-// Endpoints
 
 app.ws('/init', function (ws, req) {
   ws.on('message', (msg) => {
